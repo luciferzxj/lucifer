@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="study">
+<meta property="og:type" content="article">
+<meta property="og:title" content="solidity学习笔记第四篇">
+<meta property="og:url" content="http://example.com/2022/12/01/solidity%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%9B%9B%E7%AF%87/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="study">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-01T06:26:44.000Z">
+<meta property="article:modified_time" content="2022-12-01T07:21:50.898Z">
+<meta property="article:author" content="lucifer">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/12/01/solidity%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%9B%9B%E7%AF%87/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>solidity学习笔记第四篇 | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/01/solidity%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%9B%9B%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="我的老婆严菡是猪">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          solidity学习笔记第四篇
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-01 14:26:44 / 修改时间：15:21:50" itemprop="dateCreated datePublished" datetime="2022-12-01T14:26:44+08:00">2022-12-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/" itemprop="url" rel="index"><span itemprop="name">study</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>study<br> <span id="more"></span><br><em>这是个人学习solidity的第四篇笔记</em></p>
+<h1 id="payable-修饰符"><a href="#payable-修饰符" class="headerlink" title="payable 修饰符"></a>payable 修饰符</h1><p>payable 方法是让 Solidity 和以太坊变得如此酷的一部分 —— 它们是一种可以接收以太的特殊函数。</p>
+<p>先放一下。当你在调用一个普通网站服务器上的API函数的时候，你无法用你的函数传送美元——你也不能传送比特币。</p>
+<p>但是在以太坊中， 因为钱 (<em>以太</em>), 数据 (事务负载)， 以及合约代码本身都存在于以太坊。你可以在同时调用函数 并付钱给另外一个合约。</p>
+<p>这就允许出现很多有趣的逻辑， 比如向一个合约要求支付一定的钱来运行一个函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">contract <span class="title class_">OnlineStore</span> &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">buySomething</span>(<span class="params"></span>) external payable &#123;</span><br><span class="line">    <span class="comment">// 检查以确定0.001以太发送出去来运行函数:</span></span><br><span class="line">    <span class="built_in">require</span>(msg.<span class="property">value</span> == <span class="number">0.001</span> ether);</span><br><span class="line">    <span class="comment">// 如果为真，一些用来向函数调用者发送数字内容的逻辑</span></span><br><span class="line">    <span class="title function_">transferThing</span>(msg.<span class="property">sender</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这里，msg.value 是一种可以查看向合约发送了多少以太的方法，另外 ether 是一个內建单元。</p>
+<h1 id="用-keccak256-来制造随机数。"><a href="#用-keccak256-来制造随机数。" class="headerlink" title="用 keccak256 来制造随机数。"></a>用 keccak256 来制造随机数。</h1><p>Solidity 中最好的随机数生成器是 keccak256 哈希函数.</p>
+<p>我们可以这样来生成一些随机数</p>
+<p>// 生成一个0到100的随机数:<br>uint randNonce = 0;<br>uint random = uint(keccak256(now, msg.sender, randNonce)) % 100;<br>randNonce++;<br>uint random2 = uint(keccak256(now, msg.sender, randNonce)) % 100;<br>这个方法首先拿到 now 的时间戳、 msg.sender、 以及一个自增数 nonce （一个仅会被使用一次的数，这样我们就不会对相同的输入值调用一次以上哈希函数了）。</p>
+<p>然后利用 keccak 把输入的值转变为一个哈希值, 再将哈希值转换为 uint, 然后利用 % 100 来取最后两位, 就生成了一个0到100之间随机数了。</p>
+<h1 id="以太坊上的代币"><a href="#以太坊上的代币" class="headerlink" title="以太坊上的代币"></a>以太坊上的代币</h1><p>如果你对以太坊的世界有一些了解，你很可能听过人们聊到代币——尤其是 ERC20 代币.</p>
+<p>一个 <em>代币</em> 在以太坊基本上就是一个遵循一些共同规则的智能合约——即它实现了所有其他代币合约共享的一组标准函数，例如 transfer(address _to, uint256 _value) 和 balanceOf(address _owner).</p>
+<p>在智能合约内部，通常有一个映射， mapping(address =&gt; uint256) balances，用于追踪每个地址还有多少余额。</p>
+<p>所以基本上一个代币只是一个追踪谁拥有多少该代币的合约，和一些可以让那些用户将他们的代币转移到其他地址的函数。</p>
+<h2 id="它为什么重要呢？"><a href="#它为什么重要呢？" class="headerlink" title="它为什么重要呢？"></a>它为什么重要呢？</h2><p>由于所有 ERC20 代币共享具有相同名称的同一组函数，它们都可以以相同的方式进行交互。</p>
+<p>这意味着如果你构建的应用程序能够与一个 ERC20 代币进行交互，那么它就也能够与任何 ERC20 代币进行交互。 这样一来，将来你就可以轻松地将更多的代币添加到你的应用中，而无需进行自定义编码。 你可以简单地插入新的代币合约地址，然后哗啦，你的应用程序有另一个它可以使用的代币了。</p>
+<p>其中一个例子就是交易所。 当交易所添加一个新的 ERC20 代币时，实际上它只需要添加与之对话的另一个智能合约。 用户可以让那个合约将代币发送到交易所的钱包地址，然后交易所可以让合约在用户要求取款时将代币发送回给他们。</p>
+<p>交易所只需要实现这种转移逻辑一次，然后当它想要添加一个新的 ERC20 代币时，只需将新的合约地址添加到它的数据库即可。</p>
+<h2 id="其他代币标准"><a href="#其他代币标准" class="headerlink" title="其他代币标准"></a>其他代币标准</h2><p>对于像货币一样的代币来说，ERC20 代币非常酷。 但是要在我们僵尸游戏中代表僵尸就并不是特别有用。</p>
+<p>首先，僵尸不像货币可以分割 —— 我可以发给你 0.237 以太，但是转移给你 0.237 的僵尸听起来就有些搞笑。</p>
+<p>其次，并不是所有僵尸都是平等的。 你的2级僵尸”Steve”完全不能等同于我732级的僵尸”H4XF13LD MORRIS 💯💯😎💯💯”。（你差得远呢，Steve）。</p>
+<p>有另一个代币标准更适合如 CryptoZombies 这样的加密收藏品——它们被称为ERC721 代币.</p>
+<p>ERC721 代币是不能互换的，因为每个代币都被认为是唯一且不可分割的。 你只能以整个单位交易它们，并且每个单位都有唯一的 ID。 这些特性正好让我们的僵尸可以用来交易。</p>
+<blockquote>
+<p>请注意，使用像 ERC721 这样的标准的优势就是，我们不必在我们的合约中实现拍卖或托管逻辑，这决定了玩家能够如何交易／出售我们的僵尸。<br>如果我们符合规范，其他人可以为加密可交易的 ERC721 资产搭建一个交易所平台，我们的 ERC721 僵尸将可以在该平台上使用。<br>所以使用代币标准相较于使用你自己的交易逻辑有明显的好处。</p>
+</blockquote>
+<h1 id="ERC721-标准-多重继承"><a href="#ERC721-标准-多重继承" class="headerlink" title="ERC721 标准, 多重继承"></a>ERC721 标准, 多重继承</h1><p>让我们来看一看 ERC721 标准：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">contract <span class="title class_">ERC721</span> &#123;</span><br><span class="line">  event <span class="title class_">Transfer</span>(address indexed _from, address indexed _to, uint256 _tokenId);</span><br><span class="line">  event <span class="title class_">Approval</span>(address indexed _owner, address indexed _approved, uint256 _tokenId);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">balanceOf</span>(<span class="params">address _owner</span>) public view returns (uint256 _balance);</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">ownerOf</span>(<span class="params">uint256 _tokenId</span>) public view returns (address _owner);</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">transfer</span>(<span class="params">address _to, uint256 _tokenId</span>) public;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">approve</span>(<span class="params">address _to, uint256 _tokenId</span>) public;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">takeOwnership</span>(<span class="params">uint256 _tokenId</span>) public;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实现一个代币合约"><a href="#实现一个代币合约" class="headerlink" title="实现一个代币合约"></a>实现一个代币合约</h2><p>在实现一个代币合约的时候，我们首先要做的是将接口复制到它自己的 Solidity 文件并导入它，import “./erc721.sol”;。 接着，让我们的合约继承它，然后我们用一个函数定义来重写每个方法。<br>在Solidity，你的合约可以继承自多个合约，参考如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">contract <span class="title class_">SatoshiNakamoto</span> is <span class="title class_">NickSzabo</span>, <span class="title class_">HalFinney</span> &#123;</span><br><span class="line">  <span class="comment">// 啧啧啧，宇宙的奥秘泄露了</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>正如你所见，当使用多重继承的时候，你只需要用逗号 , 来隔开几个你想要继承的合约。在上面的例子中，我们的合约继承自 NickSzabo 和 HalFinney。</p>
+<h2 id="balanceOf"><a href="#balanceOf" class="headerlink" title="balanceOf"></a>balanceOf</h2><p>  function balanceOf(address _owner) public view returns (uint256 _balance);<br>这个函数只需要一个传入 address 参数，然后返回这个 address 拥有多少代币。</p>
+<h2 id="ownerOf"><a href="#ownerOf" class="headerlink" title="ownerOf"></a>ownerOf</h2><p>  function ownerOf(uint256 _tokenId) public view returns (address _owner);<br>这个函数需要传入一个代币 ID 作为参数 (我们的情况就是一个僵尸 ID)，然后返回该代币拥有者的 address。</p>
+<h2 id="ERC721-转移标准"><a href="#ERC721-转移标准" class="headerlink" title="ERC721: 转移标准"></a>ERC721: 转移标准</h2><p>注意 ERC721 规范有两种不同的方法来转移代币：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">transfer</span>(<span class="params">address _to, uint256 _tokenId</span>) public;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">approve</span>(<span class="params">address _to, uint256 _tokenId</span>) public;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">takeOwnership</span>(<span class="params">uint256 _tokenId</span>) public;</span><br></pre></td></tr></table></figure>
+
+<p>第一种方法是代币的拥有者调用transfer 方法，传入他想转移到的 address 和他想转移的代币的 _tokenId。</p>
+<p>第二种方法是代币拥有者首先调用 approve，然后传入与以上相同的参数。接着，该合约会存储谁被允许提取代币，通常存储到一个 mapping (uint256 =&gt; address) 里。然后，当有人调用 takeOwnership 时，合约会检查 msg.sender 是否得到拥有者的批准来提取代币，如果是，则将代币转移给他。</p>
+<h2 id="ERC721-批准"><a href="#ERC721-批准" class="headerlink" title="ERC721: 批准"></a>ERC721: 批准</h2><p>使用 approve 或者 takeOwnership 的时候，转移有2个步骤：</p>
+<p>1.你，作为所有者，用新主人的 address 和你希望他获取的 _tokenId 来调用 approve</p>
+<p>2.新主人用 _tokenId 来调用 takeOwnership，合约会检查确保他获得了批准，然后把代币转移给他。</p>
+<p>因为这发生在2个函数的调用中，所以在函数调用之间，我们需要一个数据结构来存储什么人被批准获取什么。</p>
+<h2 id="ERC721-takeOwnership"><a href="#ERC721-takeOwnership" class="headerlink" title="ERC721: takeOwnership"></a>ERC721: takeOwnership</h2><p>最后一个函数 takeOwnership， 应该只是简单地检查以确保 msg.sender 已经被批准来提取这个代币或者僵尸。若确认，就调用 _transfer；</p>
+<h1 id="预防溢出"><a href="#预防溢出" class="headerlink" title="预防溢出"></a>预防溢出</h1><h2 id="合约安全增强-溢出和下溢"><a href="#合约安全增强-溢出和下溢" class="headerlink" title="合约安全增强: 溢出和下溢"></a>合约安全增强: 溢出和下溢</h2><p>我们将来学习你在编写智能合约的时候需要注意的一个主要的安全特性：防止溢出和下溢。</p>
+<p><strong>什么是 <em>溢出</em> (overflow)?</strong></p>
+<p>假设我们有一个 uint8, 只能存储8 bit数据。这意味着我们能存储的最大数字就是二进制 11111111 (或者说十进制的 2^8 - 1 = 255).</p>
+<p>来看看下面的代码。最后 number 将会是什么值？</p>
+<p>uint8 number = 255;<br>number++;<br>在这个例子中，我们导致了溢出 — 虽然我们加了1， 但是 number 出乎意料地等于 0了。 (如果你给二进制 11111111 加1, 它将被重置为 00000000，就像钟表从 23:59 走向 00:00)。</p>
+<p><strong>下溢</strong>(underflow)也类似，如果你从一个等于 0 的 uint8 减去 1, 它将变成 255 (因为 uint 是无符号的，其不能等于负数)。</p>
+<p>虽然我们在这里不使用 uint8，而且每次给一个 uint256 加 1 也不太可能溢出 (2^256 真的是一个很大的数了)，在我们的合约中添加一些保护机制依然是非常有必要的，以防我们的 DApp 以后出现什么异常情况。</p>
+<h2 id="使用-SafeMath"><a href="#使用-SafeMath" class="headerlink" title="使用 SafeMath"></a>使用 SafeMath</h2><p>为了防止这些情况，OpenZeppelin 建立了一个叫做 SafeMath 的 <em>库</em>(library)，默认情况下可以防止这些问题。<br>一个_库_ 是 Solidity 中一种特殊的合约。其中一个有用的功能是给原始数据类型增加一些方法。</p>
+<p>比如，使用 SafeMath 库的时候，我们将使用 using SafeMath for uint256 这样的语法。 SafeMath 库有四个方法 — add， sub， mul， 以及 div。现在我们可以这样来让 uint256 调用这些方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">using <span class="title class_">SafeMath</span> <span class="keyword">for</span> uint256;</span><br><span class="line"></span><br><span class="line">uint256 a = <span class="number">5</span>;</span><br><span class="line">uint256 b = a.<span class="title function_">add</span>(<span class="number">3</span>); <span class="comment">// 5 + 3 = 8</span></span><br><span class="line">uint256 c = a.<span class="title function_">mul</span>(<span class="number">2</span>); <span class="comment">// 5 * 2 = 10</span></span><br></pre></td></tr></table></figure>
+<p>看看 SafeMath 的部分代码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">library <span class="title class_">SafeMath</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">mul</span>(<span class="params">uint256 a, uint256 b</span>) internal pure returns (uint256) &#123;</span><br><span class="line">    <span class="keyword">if</span> (a == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    uint256 c = a * b;</span><br><span class="line">    <span class="title function_">assert</span>(c / a == b);</span><br><span class="line">    <span class="keyword">return</span> c;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">div</span>(<span class="params">uint256 a, uint256 b</span>) internal pure returns (uint256) &#123;</span><br><span class="line">    <span class="comment">// assert(b &gt; 0); // Solidity automatically throws when dividing by 0</span></span><br><span class="line">    uint256 c = a / b;</span><br><span class="line">    <span class="comment">// assert(a == b * c + a % b); // There is no case in which this doesn&#x27;t hold</span></span><br><span class="line">    <span class="keyword">return</span> c;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">sub</span>(<span class="params">uint256 a, uint256 b</span>) internal pure returns (uint256) &#123;</span><br><span class="line">    <span class="title function_">assert</span>(b &lt;= a);</span><br><span class="line">    <span class="keyword">return</span> a - b;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">uint256 a, uint256 b</span>) internal pure returns (uint256) &#123;</span><br><span class="line">    uint256 c = a + b;</span><br><span class="line">    <span class="title function_">assert</span>(c &gt;= a);</span><br><span class="line">    <span class="keyword">return</span> c;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先我们有了 library 关键字 — 库和 合约很相似，但是又有一些不同。 就我们的目的而言，库允许我们使用 using 关键字，它可以自动把库的所有方法添加给一个数据类型：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">using <span class="title class_">SafeMath</span> <span class="keyword">for</span> uint;</span><br><span class="line"><span class="comment">// 这下我们可以为任何 uint 调用这些方法了</span></span><br><span class="line">uint test = <span class="number">2</span>;</span><br><span class="line">test = test.<span class="title function_">mul</span>(<span class="number">3</span>); <span class="comment">// test 等于 6 了</span></span><br><span class="line">test = test.<span class="title function_">add</span>(<span class="number">5</span>); <span class="comment">// test 等于 11 了</span></span><br></pre></td></tr></table></figure>
+
+<p>注意 mul 和 add 其实都需要两个参数。 在我们声明了 using SafeMath for uint 后，我们用来调用这些方法的 uint 就自动被作为第一个参数传递进去了(在此例中就是 test)</p>
+<p>我们来看看 add 的源代码看 SafeMath 做了什么:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">uint256 a, uint256 b</span>) internal pure returns (uint256) &#123;</span><br><span class="line">  uint256 c = a + b;</span><br><span class="line">  <span class="title function_">assert</span>(c &gt;= a);</span><br><span class="line">  <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>基本上 add 只是像 + 一样对两个 uint 相加， 但是它用一个 assert 语句来确保结果大于 a。这样就防止了溢出。</p>
+<p>assert 和 require 相似，若结果为否它就会抛出错误。 assert 和 require 区别在于，require 若失败则会返还给用户剩下的 gas， assert 则不会。所以大部分情况下，你写代码的时候会比较喜欢 require，assert 只在代码可能出现严重错误的时候使用，比如 uint 溢出。</p>
+<p>所以简而言之， SafeMath 的 add， sub， mul， 和 div 方法只做简单的四则运算，然后在发生溢出或下溢的时候抛出错误。</p>
+<h1 id="注释语法"><a href="#注释语法" class="headerlink" title="注释语法"></a>注释语法</h1><p>Solidity 里的注释和 JavaScript 相同。在我们的课程中你已经看到了不少单行注释了：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这是一个单行注释，可以理解为给自己或者别人看的笔记</span></span><br></pre></td></tr></table></figure>
+
+<p>只要在任何地方添加一个 // 就意味着你在注释。如此简单所以你应该经常这么做。</p>
+<p>不过我们也知道你的想法：有时候单行注释是不够的。毕竟你生来话痨。</p>
+<p>所以我们有了多行注释：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">contract <span class="title class_">CryptoZombies</span> &#123;</span><br><span class="line">  <span class="comment">/* 这是一个多行注释。</span></span><br><span class="line"><span class="comment">  </span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>特别是，最好为你合约中每个方法添加注释来解释它的预期行为。这样其他开发者（或者你自己，在6个月以后再回到这个项目中）可以很快地理解你的代码而不需要逐行阅读所有代码。</p>
+<p>Solidity 社区所使用的一个标准是使用一种被称作 natspec 的格式，看起来像这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// @title 一个简单的基础运算合约</span></span><br><span class="line"><span class="comment">/// @author H4XF13LD MORRIS 💯💯😎💯💯</span></span><br><span class="line"><span class="comment">/// @notice 现在，这个合约只添加一个乘法</span></span><br><span class="line">contract <span class="title class_">Math</span> &#123;</span><br><span class="line">  <span class="comment">/// @notice 两个数相乘</span></span><br><span class="line">  <span class="comment">/// @param x 第一个 uint</span></span><br><span class="line">  <span class="comment">/// @param y  第二个 uint</span></span><br><span class="line">  <span class="comment">/// @return z  (x * y) 的结果</span></span><br><span class="line">  <span class="comment">/// @dev 现在这个方法不检查溢出</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">multiply</span>(<span class="params">uint x, uint y</span>) returns (uint z) &#123;</span><br><span class="line">    <span class="comment">// 这只是个普通的注释，不会被 natspec 解释</span></span><br><span class="line">    z = x * y;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@title（标题） 和 @author （作者）很直接了.</p>
+<p>@notice （须知）向 用户 解释这个方法或者合约是做什么的。 @dev （开发者） 是向开发者解释更多的细节。</p>
+<p>@param （参数）和 @return （返回） 用来描述这个方法需要传入什么参数以及返回什么值。</p>
+<p>注意你并不需要每次都用上所有的标签，它们都是可选的。不过最少，写下一个 @dev 注释来解释每个方法是做什么的。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/12/01/solidity%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%9B%9B%E7%AF%87/" title="solidity学习笔记第四篇">http://example.com/2022/12/01/solidity学习笔记第四篇/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/01/solidity%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AF%87/" rel="prev" title="solidity学习笔记第三篇">
+      <i class="fa fa-chevron-left"></i> solidity学习笔记第三篇
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/01/%E5%AF%B9%E9%87%8D%E5%85%A5%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%88%86%E6%9E%90-%E5%A4%8D%E7%8E%B0%E4%BB%A5%E5%8F%8A%E4%BF%AE%E5%A4%8D%E6%96%B9%E6%A1%88/" rel="next" title="对重入漏洞的分析,复现以及修复方案">
+      对重入漏洞的分析,复现以及修复方案 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#payable-%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.</span> <span class="nav-text">payable 修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8-keccak256-%E6%9D%A5%E5%88%B6%E9%80%A0%E9%9A%8F%E6%9C%BA%E6%95%B0%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">用 keccak256 来制造随机数。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%8A%E7%9A%84%E4%BB%A3%E5%B8%81"><span class="nav-number">3.</span> <span class="nav-text">以太坊上的代币</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%83%E4%B8%BA%E4%BB%80%E4%B9%88%E9%87%8D%E8%A6%81%E5%91%A2%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">它为什么重要呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%BB%A3%E5%B8%81%E6%A0%87%E5%87%86"><span class="nav-number">3.2.</span> <span class="nav-text">其他代币标准</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ERC721-%E6%A0%87%E5%87%86-%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF"><span class="nav-number">4.</span> <span class="nav-text">ERC721 标准, 多重继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E4%BB%A3%E5%B8%81%E5%90%88%E7%BA%A6"><span class="nav-number">4.1.</span> <span class="nav-text">实现一个代币合约</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#balanceOf"><span class="nav-number">4.2.</span> <span class="nav-text">balanceOf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ownerOf"><span class="nav-number">4.3.</span> <span class="nav-text">ownerOf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ERC721-%E8%BD%AC%E7%A7%BB%E6%A0%87%E5%87%86"><span class="nav-number">4.4.</span> <span class="nav-text">ERC721: 转移标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ERC721-%E6%89%B9%E5%87%86"><span class="nav-number">4.5.</span> <span class="nav-text">ERC721: 批准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ERC721-takeOwnership"><span class="nav-number">4.6.</span> <span class="nav-text">ERC721: takeOwnership</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%84%E9%98%B2%E6%BA%A2%E5%87%BA"><span class="nav-number">5.</span> <span class="nav-text">预防溢出</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E7%BA%A6%E5%AE%89%E5%85%A8%E5%A2%9E%E5%BC%BA-%E6%BA%A2%E5%87%BA%E5%92%8C%E4%B8%8B%E6%BA%A2"><span class="nav-number">5.1.</span> <span class="nav-text">合约安全增强: 溢出和下溢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-SafeMath"><span class="nav-number">5.2.</span> <span class="nav-text">使用 SafeMath</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A%E8%AF%AD%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">注释语法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">我的老婆严菡是猪</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">190k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:53</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

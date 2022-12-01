@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="study">
+<meta property="og:type" content="article">
+<meta property="og:title" content="solidity学习笔记第三篇">
+<meta property="og:url" content="http://example.com/2022/12/01/solidity%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AF%87/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="study">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-01T06:26:31.000Z">
+<meta property="article:modified_time" content="2022-12-01T07:21:47.295Z">
+<meta property="article:author" content="lucifer">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/12/01/solidity%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AF%87/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>solidity学习笔记第三篇 | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/01/solidity%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="我的老婆严菡是猪">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          solidity学习笔记第三篇
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-01 14:26:31 / 修改时间：15:21:47" itemprop="dateCreated datePublished" datetime="2022-12-01T14:26:31+08:00">2022-12-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/" itemprop="url" rel="index"><span itemprop="name">study</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>study<br> <span id="more"></span><br><em>这是个人学习solidity的第三篇笔记</em></p>
+<h1 id="智能协议的永固性"><a href="#智能协议的永固性" class="headerlink" title="智能协议的永固性"></a>智能协议的永固性</h1><p>有几点以太坊上的 DApp 跟普通的应用程序有着天壤之别。</p>
+<p>第一个例子，在你把智能协议传上以太坊之后，它就变得不可更改, 这种永固性意味着你的代码永远不能被调整或更新。</p>
+<p>你编译的程序会一直，永久的，不可更改的，存在以太坊上。这就是 Solidity 代码的安全性如此重要的一个原因。如果你的智能协议有任何漏洞，即使你发现了也无法补救。你只能让你的用户们放弃这个智能协议，然后转移到一个新的修复后的合约上。</p>
+<p>但这恰好也是智能合约的一大优势。代码说明一切。如果你去读智能合约的代码，并验证它，你会发现，一旦函数被定义下来，每一次的运行，程序都会严格遵照函数中原有的代码逻辑一丝不苟地执行，完全不用担心函数被人篡改而得到意外的结果。</p>
+<h2 id="OpenZeppelin库的Ownable-合约"><a href="#OpenZeppelin库的Ownable-合约" class="headerlink" title="OpenZeppelin库的Ownable 合约"></a>OpenZeppelin库的Ownable 合约</h2><p>下面是一个 Ownable 合约的例子： 来自 _ OpenZeppelin _ Solidity 库的 Ownable 合约。 OpenZeppelin 是主打安保和社区审查的智能合约库。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">Ownable</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@dev</span> The Ownable contract has an owner address, and provides basic authorization control</span></span><br><span class="line"><span class="comment"> * functions, this simplifies the implementation of &quot;user permissions&quot;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">Ownable</span> &#123;</span><br><span class="line">  address public owner;</span><br><span class="line">  event <span class="title class_">OwnershipTransferred</span>(address indexed previousOwner, address indexed newOwner);</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@dev</span> The Ownable constructor sets the original `owner` of the contract to the sender</span></span><br><span class="line"><span class="comment">   * account.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">Ownable</span>(<span class="params"></span>) public &#123;</span><br><span class="line">    owner = msg.<span class="property">sender</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@dev</span> Throws if called by any account other than the owner.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  modifier <span class="title function_">onlyOwner</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="built_in">require</span>(msg.<span class="property">sender</span> == owner);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@dev</span> Allows the current owner to transfer control of the contract to a newOwner.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> newOwner The address to transfer ownership to.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">transferOwnership</span>(<span class="params">address newOwner</span>) public onlyOwner &#123;</span><br><span class="line">    <span class="built_in">require</span>(newOwner != <span class="title function_">address</span>(<span class="number">0</span>));</span><br><span class="line">    <span class="title class_">OwnershipTransferred</span>(owner, newOwner);</span><br><span class="line">    owner = newOwner;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>构造函数：function Ownable()是一个 _ constructor_<br>(构造函数)，构造函数不是必须的，它与合约同名，构造函数一生中唯一的一次执行，就是在合约最初被创建的时候。</p>
+<p>函数修饰符：modifier onlyOwner()。 修饰符跟函数很类似，不过是用来修饰其他已有函数用的，<br>在其他语句执行前，为它检查下先验条件。 在这个例子中，我们就可以写个修饰符 onlyOwner<br>检查下调用者，确保只有合约的主人才能运行本函数。</p>
+</blockquote>
+<h2 id="onlyOwner-函数修饰符"><a href="#onlyOwner-函数修饰符" class="headerlink" title="onlyOwner 函数修饰符"></a>onlyOwner 函数修饰符</h2><p>函数修饰符看起来跟函数没什么不同，不过关键字modifier 告诉编译器，这是个modifier(修饰符)，而不是个function(函数)。它不能像函数那样被直接调用，只能被添加到函数定义的末尾，用以改变函数的行为。<br>onlyOwner 函数修饰符是这么用的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">contract <span class="title class_">MyContract</span> is <span class="title class_">Ownable</span> &#123;</span><br><span class="line">  event <span class="title class_">LaughManiacally</span>(string laughter);</span><br><span class="line"></span><br><span class="line">  <span class="comment">//注意！ `onlyOwner`上场 :</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">likeABoss</span>(<span class="params"></span>) external onlyOwner &#123;</span><br><span class="line">    <span class="title class_">LaughManiacally</span>(<span class="string">&quot;Muahahahaha&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Gas"><a href="#Gas" class="headerlink" title="Gas"></a>Gas</h1><p>Gas - 驱动以太坊DApps的能源<br>在 Solidity 中，你的用户想要每次执行你的 DApp 都需要支付一定的 gas，gas 可以用以太币购买，因此，用户每次跑 DApp 都得花费以太币。</p>
+<p>一个 DApp 收取多少 gas 取决于功能逻辑的复杂程度。每个操作背后，都在计算完成这个操作所需要的计算资源，（比如，存储数据就比做个加法运算贵得多）， 一次操作所需要花费的 gas 等于这个操作背后的所有运算花销的总和。</p>
+<p>由于运行你的程序需要花费用户的真金白银，在以太坊中代码的编程语言，比其他任何编程语言都更强调优化。同样的功能，使用笨拙的代码开发的程序，比起经过精巧优化的代码来，运行花费更高，这显然会给成千上万的用户带来大量不必要的开销。</p>
+<h2 id="为什么要用-gas-来驱动？"><a href="#为什么要用-gas-来驱动？" class="headerlink" title="为什么要用 gas 来驱动？"></a>为什么要用 gas 来驱动？</h2><p>以太坊就像一个巨大、缓慢、但非常安全的电脑。当你运行一个程序的时候，网络上的每一个节点都在进行相同的运算，以验证它的输出 —— 这就是所谓的“去中心化” 由于数以千计的节点同时在验证着每个功能的运行，这可以确保它的数据不会被被监控，或者被刻意修改。</p>
+<p>可能会有用户用无限循环堵塞网络，抑或用密集运算来占用大量的网络资源，为了防止这种事情的发生，以太坊的创建者为以太坊上的资源制定了价格，想要在以太坊上运算或者存储，你需要先付费。</p>
+<h2 id="省-gas-的招数：结构封装-（Struct-packing）"><a href="#省-gas-的招数：结构封装-（Struct-packing）" class="headerlink" title="省 gas 的招数：结构封装 （Struct packing）"></a>省 gas 的招数：结构封装 （Struct packing）</h2><p>通常情况下我们不会考虑使用 uint 变种，因为无论如何定义 uint的大小，Solidity 为它保留256位的存储空间。例如，使用 uint8 而不是uint（uint256）不会为你节省任何 gas。</p>
+<p>除非，把 uint 绑定到 struct 里面。</p>
+<p>如果一个 struct 中有多个 uint，则尽可能使用较小的 uint, Solidity 会将这些 uint 打包在一起，从而占用较少的存储空间。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">NormalStruct</span> &#123;</span></span><br><span class="line">  uint a;</span><br><span class="line">  uint b;</span><br><span class="line">  uint c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">MiniMe</span> &#123;</span></span><br><span class="line">  uint32 a;</span><br><span class="line">  uint32 b;</span><br><span class="line">  uint c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>// 因为使用了结构打包，<code>mini</code> 比 <code>normal</code> 占用的空间更少</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">NormalStruct</span> normal = <span class="title class_">NormalStruct</span>(<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>);</span><br><span class="line"><span class="title class_">MiniMe</span> mini = <span class="title class_">MiniMe</span>(<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>); </span><br></pre></td></tr></table></figure>
+
+
+<p>所以，当 uint 定义在一个 struct 中的时候，尽量使用最小的整数子类型以节约空间。 并且把同样类型的变量放一起（即在 struct 中将把变量按照类型依次放置），这样 Solidity 可以将存储空间最小化。例如，有两个 struct：</p>
+<p>uint c; uint32 a; uint32 b; 和 uint32 a; uint c; uint32 b;</p>
+<p>前者比后者需要的gas更少，因为前者把uint32放一起了。</p>
+<h1 id="时间单位"><a href="#时间单位" class="headerlink" title="时间单位"></a>时间单位</h1><p>Solidity 使用自己的本地时间单位。</p>
+<p>变量 now 将返回当前的unix时间戳（自1970年1月1日以来经过的秒数）。<br>Solidity 还包含秒(seconds)，分钟(minutes)，小时(hours)，天(days)，周(weeks) 和 年(years) 等时间单位。它们都会转换成对应的秒数放入 uint 中。所以 1分钟 就是 60，1小时是 3600（60秒×60分钟），1天是86400（24小时×60分钟×60秒），以此类推。</p>
+<h1 id="将结构体作为参数传入"><a href="#将结构体作为参数传入" class="headerlink" title="将结构体作为参数传入"></a>将结构体作为参数传入</h1><p>由于结构体的存储指针可以以参数的方式传递给一个 private 或 internal 的函数，因此结构体可以在多个函数之间相互传递。</p>
+<p>遵循这样的语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">_doStuff</span>(<span class="params">Zombie storage _zombie</span>) internal &#123;</span><br><span class="line">  <span class="comment">// do stuff with _zombie</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="带参数的函数修饰符"><a href="#带参数的函数修饰符" class="headerlink" title="带参数的函数修饰符"></a>带参数的函数修饰符</h1><p>之前我们已经读过一个简单的函数修饰符了：onlyOwner。函数修饰符也可以带参数。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 存储用户年龄的映射</span></span><br><span class="line">mapping (<span class="function"><span class="params">uint</span> =&gt;</span> uint) public age;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 限定用户年龄的修饰符</span></span><br><span class="line">modifier <span class="title function_">olderThan</span>(<span class="params">uint _age, uint _userId</span>) &#123;</span><br><span class="line">  <span class="built_in">require</span>(age[_userId] &gt;= _age);</span><br><span class="line">  _;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 必须年满16周岁才允许开车 (至少在美国是这样的).</span></span><br><span class="line"><span class="comment">// 我们可以用如下参数调用`olderThan` 修饰符:</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">driveCar</span>(<span class="params">uint _userId</span>) public <span class="title function_">olderThan</span>(<span class="params"><span class="number">16</span>, _userId</span>) &#123;</span><br><span class="line">  <span class="comment">// 其余的程序逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到了吧， olderThan 修饰符可以像函数一样接收参数，是“宿主”函数 driveCar 把参数传递给它的修饰符的。</p>
+<h1 id="利用-‘View’-函数节省-Gas"><a href="#利用-‘View’-函数节省-Gas" class="headerlink" title="利用 ‘View’ 函数节省 Gas"></a>利用 ‘View’ 函数节省 Gas</h1><h2 id="“view”-函数不花-“gas”"><a href="#“view”-函数不花-“gas”" class="headerlink" title="“view” 函数不花 “gas”"></a>“view” 函数不花 “gas”</h2><p>当玩家从外部调用一个view函数，是不需要支付一分 gas 的。</p>
+<p>这是因为 view 函数不会真正改变区块链上的任何数据 - 它们只是读取。因此用 view 标记一个函数，意味着告诉 web3.js，运行这个函数只需要查询你的本地以太坊节点，而不需要在区块链上创建一个事务（事务需要运行在每个节点上，因此花费 gas）。</p>
+<blockquote>
+<p>注意：如果一个 view 函数在另一个函数的内部被调用，而调用函数与 view<br>函数的不属于同一个合约，也会产生调用成本。这是因为如果主调函数在以太坊创建了一个事务，它仍然需要逐个节点去验证。所以标记为 view<br>的函数只有在外部调用时才是免费的。</p>
+</blockquote>
+<h2 id="存储非常昂贵"><a href="#存储非常昂贵" class="headerlink" title="存储非常昂贵"></a>存储非常昂贵</h2><p>Solidity 使用storage(存储)是相当昂贵的，”写入“操作尤其贵。</p>
+<p>这是因为，无论是写入还是更改一段数据， 这都将永久性地写入区块链。”永久性“啊！需要在全球数千个节点的硬盘上存入这些数据，随着区块链的增长，拷贝份数更多，存储量也就越大。这是需要成本的！</p>
+<p>为了降低成本，不到万不得已，避免将数据写入存储。这也会导致效率低下的编程逻辑 - 比如每次调用一个函数，都需要在 memory(内存) 中重建一个数组，而不是简单地将上次计算的数组给存储下来以便快速查找。</p>
+<p>在大多数编程语言中，遍历大数据集合都是昂贵的。但是在 Solidity 中，使用一个标记了external view的函数，遍历比 storage 要便宜太多，因为 view 函数不会产生任何花销。</p>
+<h2 id="在内存中声明数组"><a href="#在内存中声明数组" class="headerlink" title="在内存中声明数组"></a>在内存中声明数组</h2><p>在数组后面加上 memory关键字， 表明这个数组是仅仅在内存中创建，不需要写入外部存储，并且在函数调用结束时它就解散了。与在程序结束时把数据保存进 storage 的做法相比，内存运算可以大大节省gas开销 – 把这数组放在view里用，完全不用花钱。</p>
+<p>以下是申明一个内存数组的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getArray</span>(<span class="params"></span>) external pure <span class="title function_">returns</span>(<span class="params">uint[]</span>) &#123;</span><br><span class="line">  <span class="comment">// 初始化一个长度为3的内存数组</span></span><br><span class="line">  uint[] memory values = <span class="keyword">new</span> uint[](<span class="number">3</span>);</span><br><span class="line">  <span class="comment">// 赋值</span></span><br><span class="line">  values.<span class="title function_">push</span>(<span class="number">1</span>);</span><br><span class="line">  values.<span class="title function_">push</span>(<span class="number">2</span>);</span><br><span class="line">  values.<span class="title function_">push</span>(<span class="number">3</span>);</span><br><span class="line">  <span class="comment">// 返回数组</span></span><br><span class="line">  <span class="keyword">return</span> values;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="For-循环"><a href="#For-循环" class="headerlink" title="For 循环"></a>For 循环</h1><p>for循环的语法在 Solidity 和 JavaScript 中类似。</p>
+<p>来看一个创建偶数数组的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getEvens</span>(<span class="params"></span>) pure external <span class="title function_">returns</span>(<span class="params">uint[]</span>) &#123;</span><br><span class="line">  uint[] memory evens = <span class="keyword">new</span> uint[](<span class="number">5</span>);</span><br><span class="line">  <span class="comment">// 在新数组中记录序列号</span></span><br><span class="line">  uint counter = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// 在循环从1迭代到10：</span></span><br><span class="line">  <span class="keyword">for</span> (uint i = <span class="number">1</span>; i &lt;= <span class="number">10</span>; i++) &#123;</span><br><span class="line">    <span class="comment">// 如果 `i` 是偶数...</span></span><br><span class="line">    <span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="comment">// 把它加入偶数数组</span></span><br><span class="line">      evens[counter] = i;</span><br><span class="line">      <span class="comment">//索引加一， 指向下一个空的‘even’</span></span><br><span class="line">      counter++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> evens;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个函数将返回一个形为 [2,4,6,8,10] 的数组。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/12/01/solidity%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%B8%89%E7%AF%87/" title="solidity学习笔记第三篇">http://example.com/2022/12/01/solidity学习笔记第三篇/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/01/solidity%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%AC%AC%E4%BA%8C%E7%AF%87/" rel="prev" title="solidity学习笔记第二篇">
+      <i class="fa fa-chevron-left"></i> solidity学习笔记第二篇
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/01/solidity%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%AC%AC%E5%9B%9B%E7%AF%87/" rel="next" title="solidity学习笔记第四篇">
+      solidity学习笔记第四篇 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E5%8D%8F%E8%AE%AE%E7%9A%84%E6%B0%B8%E5%9B%BA%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">智能协议的永固性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenZeppelin%E5%BA%93%E7%9A%84Ownable-%E5%90%88%E7%BA%A6"><span class="nav-number">1.1.</span> <span class="nav-text">OpenZeppelin库的Ownable 合约</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onlyOwner-%E5%87%BD%E6%95%B0%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">1.2.</span> <span class="nav-text">onlyOwner 函数修饰符</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gas"><span class="nav-number">2.</span> <span class="nav-text">Gas</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8-gas-%E6%9D%A5%E9%A9%B1%E5%8A%A8%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">为什么要用 gas 来驱动？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%81-gas-%E7%9A%84%E6%8B%9B%E6%95%B0%EF%BC%9A%E7%BB%93%E6%9E%84%E5%B0%81%E8%A3%85-%EF%BC%88Struct-packing%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">省 gas 的招数：结构封装 （Struct packing）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%8D%95%E4%BD%8D"><span class="nav-number">3.</span> <span class="nav-text">时间单位</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86%E7%BB%93%E6%9E%84%E4%BD%93%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0%E4%BC%A0%E5%85%A5"><span class="nav-number">4.</span> <span class="nav-text">将结构体作为参数传入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">5.</span> <span class="nav-text">带参数的函数修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-%E2%80%98View%E2%80%99-%E5%87%BD%E6%95%B0%E8%8A%82%E7%9C%81-Gas"><span class="nav-number">6.</span> <span class="nav-text">利用 ‘View’ 函数节省 Gas</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%80%9Cview%E2%80%9D-%E5%87%BD%E6%95%B0%E4%B8%8D%E8%8A%B1-%E2%80%9Cgas%E2%80%9D"><span class="nav-number">6.1.</span> <span class="nav-text">“view” 函数不花 “gas”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E9%9D%9E%E5%B8%B8%E6%98%82%E8%B4%B5"><span class="nav-number">6.2.</span> <span class="nav-text">存储非常昂贵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E5%A3%B0%E6%98%8E%E6%95%B0%E7%BB%84"><span class="nav-number">6.3.</span> <span class="nav-text">在内存中声明数组</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#For-%E5%BE%AA%E7%8E%AF"><span class="nav-number">7.</span> <span class="nav-text">For 循环</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">我的老婆严菡是猪</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">190k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:53</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

