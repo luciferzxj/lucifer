@@ -24,42 +24,42 @@
 
   <meta name="description" content="博主最近在巩固foundry，正巧碰上QuillCTF,就用foundry做一遍。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="QuillCTF题解（一）">
-<meta property="og:url" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:title" content="QuillCTF POC（一）">
+<meta property="og:url" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="lucifer&#39;s blog">
 <meta property="og:description" content="博主最近在巩固foundry，正巧碰上QuillCTF,就用foundry做一遍。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213630508.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213708844.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213749125.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213833214.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214013208.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214018965.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214321345.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214128812.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031162650029.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031162811149.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163234562.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163412767.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163406019.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175155554.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175401192.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175624784.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175636610.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175652518.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184524376.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184647752.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184755564.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184913918.png">
-<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184920463.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213630508.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213708844.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213749125.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213833214.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214013208.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214018965.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214321345.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214128812.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031162650029.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031162811149.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163234562.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163412767.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163406019.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175155554.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175401192.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175624784.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175636610.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175652518.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184524376.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184647752.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184755564.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184913918.png">
+<meta property="og:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184920463.png">
 <meta property="article:published_time" content="2023-10-26T13:27:38.000Z">
-<meta property="article:modified_time" content="2023-10-31T10:49:30.675Z">
+<meta property="article:modified_time" content="2023-10-31T13:31:00.420Z">
 <meta property="article:author" content="lucifer">
 <meta property="article:tag" content="CTF">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213630508.png">
+<meta name="twitter:image" content="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213630508.png">
 
-<link rel="canonical" href="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/">
+<link rel="canonical" href="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/">
 
 
 <script id="page-configurations">
@@ -72,7 +72,7 @@
   };
 </script>
 
-  <title>QuillCTF题解（一） | lucifer's blog</title>
+  <title>QuillCTF POC（一） | lucifer's blog</title>
   
 
 
@@ -202,7 +202,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -215,7 +215,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          QuillCTF题解（一）
+          QuillCTF POC（一）
         </h1>
 
         <div class="post-meta">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-31 18:49:30" itemprop="dateModified" datetime="2023-10-31T18:49:30+08:00">2023-10-31</time>
+                <time title="修改时间：2023-10-31 21:31:00" itemprop="dateModified" datetime="2023-10-31T21:31:00+08:00">2023-10-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -272,54 +272,54 @@
         <p>博主最近在巩固foundry，正巧碰上<a target="_blank" rel="noopener" href="https://academy.quillaudits.com/challenges">QuillCTF</a>,就用foundry做一遍。</p>
  <span id="more"></span>
 
-<h1 id="TemporaryVariable"><a href="#TemporaryVariable" class="headerlink" title="TemporaryVariable"></a>TemporaryVariable</h1><h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213630508.png" alt="image-20231026213630508"></p>
+<h1 id="TemporaryVariable"><a href="#TemporaryVariable" class="headerlink" title="TemporaryVariable"></a>TemporaryVariable</h1><h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213630508.png" alt="image-20231026213630508"></p>
 <p>很简单的重复金额计数。</p>
-<h2 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213708844.png" alt="image-20231026213708844"></p>
+<h2 id="攻击"><a href="#攻击" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213708844.png" alt="image-20231026213708844"></p>
 <p>给自己转账即可。</p>
-<h1 id="Lottery"><a href="#Lottery" class="headerlink" title="Lottery"></a>Lottery</h1><h2 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h2><p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213749125.png" alt="image-20231026213749125"></p>
+<h1 id="Lottery"><a href="#Lottery" class="headerlink" title="Lottery"></a>Lottery</h1><h2 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h2><p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213749125.png" alt="image-20231026213749125"></p>
 <p>初始条件直接给了0xA1地址200个ether,即我们需要拿回这200ether。</p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213833214.png" alt="image-20231026213833214"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026213833214.png" alt="image-20231026213833214"></p>
 <p>测试发现部署的Factory合约并不为0xA1地址，故猜测可能是由dep函数中经历某个nonce值部署到的合约为0xA1,计算一下。</p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214013208.png" alt="image-20231026214013208"></p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214018965.png" alt="image-20231026214018965"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214013208.png" alt="image-20231026214013208"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214018965.png" alt="image-20231026214018965"></p>
 <p>猜测成立，nonce值为17。所以我们只需要在第十七次调用dep函数时部署我们的可取回金额的合约即可。</p>
-<h2 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214321345.png" alt="image-20231026214321345"></p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214128812.png" alt="image-20231026214128812"></p>
+<h2 id="攻击-1"><a href="#攻击-1" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214321345.png" alt="image-20231026214321345"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231026214128812.png" alt="image-20231026214128812"></p>
 <p>只需要在前十六次部署合约时部署self合约，让部署合约交易失败返回零地址，在第十七次合约调用时部署attack合约并调用withdraw函数即可。</p>
 <h1 id="KeyCraft"><a href="#KeyCraft" class="headerlink" title="KeyCraft"></a>KeyCraft</h1><h2 id="解析-2"><a href="#解析-2" class="headerlink" title="解析"></a>解析</h2><p>题目需要我们取回合约中的1ether即可通关。</p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031162650029.png" alt="image-20231031162650029"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031162650029.png" alt="image-20231031162650029"></p>
 <p>tranfer在burn函数中，而我们需要mint出自己的一个nft即可调用burn函数取走ether，由于我们手里没有eth则需要使buyNFT为true，这就涉及到题目核心逻辑。</p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031162811149.png" alt="image-20231031162811149"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031162811149.png" alt="image-20231031162811149"></p>
 <p>要使buyNFT为true，则q 和w变量都需要为true。</p>
 <ol>
 <li>q变量为true的条件为我们传入的参数经过哈希计算后与我们的地址相等，很明显传入变量b需要是我们的公钥。</li>
 <li>w变量为true需要满足公钥哈希后（也就是我们的地址）在经过一系列位运算后等于13057。</li>
 </ol>
 <p>很明显题目要求是我们的地址需要满足一定的条件且我们需要拿到这个地址的公私钥。</p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163234562.png" alt="image-20231031163234562"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163234562.png" alt="image-20231031163234562"></p>
 <p>经过对13057的反运算后，得到题目要求为我们地址的第10-13位为3301。</p>
 <p>这样只要我们计算出对应10-13位为3301的地址的私钥，即可。</p>
-<h2 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163412767.png" alt="image-20231031163412767"></p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163406019.png" alt="image-20231031163406019"></p>
+<h2 id="攻击-2"><a href="#攻击-2" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163412767.png" alt="image-20231031163412767"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031163406019.png" alt="image-20231031163406019"></p>
 <p>通过脚本爆破出对应的私钥，随后攻击地址改为对应的地址并在mint时传入公钥即可。</p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175155554.png" alt="image-20231031175155554"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175155554.png" alt="image-20231031175155554"></p>
 <h1 id="PrivateClub"><a href="#PrivateClub" class="headerlink" title="PrivateClub"></a>PrivateClub</h1><h2 id="解析-3"><a href="#解析-3" class="headerlink" title="解析"></a>解析</h2><p>题目要求我们成为club的一员，使user4成为member的gas消耗很大，并最后得到owner权限取走合约余额。</p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175401192.png" alt="image-20231031175401192"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175401192.png" alt="image-20231031175401192"></p>
 <p>成为member很简单，而参数仅仅校验了数组长度与合约中数组是否相等，且最终使用传入的地址数组进行发送交易，我们只需要将传入的数组都构造成我们自己就能免费成为member。</p>
 <p>第二点也比较容易，构造出攻击合约同样加入member并在receive函数中做手脚即可</p>
 <p>这样我们即可保留10ether用来购买admin权限。</p>
-<h2 id="攻击-3"><a href="#攻击-3" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175624784.png" alt="image-20231031175624784"></p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175636610.png" alt="image-20231031175636610"></p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175652518.png" alt="image-20231031175652518"></p>
+<h2 id="攻击-3"><a href="#攻击-3" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175624784.png" alt="image-20231031175624784"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175636610.png" alt="image-20231031175636610"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031175652518.png" alt="image-20231031175652518"></p>
 <p>攻击即可。</p>
-<h1 id="VotingMachine"><a href="#VotingMachine" class="headerlink" title="VotingMachine"></a>VotingMachine</h1><h2 id="解析-4"><a href="#解析-4" class="headerlink" title="解析"></a>解析</h2><p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184524376.png" alt="image-20231031184524376"></p>
+<h1 id="VotingMachine"><a href="#VotingMachine" class="headerlink" title="VotingMachine"></a>VotingMachine</h1><h2 id="解析-4"><a href="#解析-4" class="headerlink" title="解析"></a>解析</h2><p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184524376.png" alt="image-20231031184524376"></p>
 <p>要求让hacker地址的vote为3000，balance为1000。初始我们拥有1000的balance和1000的vote。感觉要让我们凭空变出剩余的2000。</p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184647752.png" alt="image-20231031184647752"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184647752.png" alt="image-20231031184647752"></p>
 <p>代码中我们能够调用的只有delegate函数，在_delegate函数中很容易发现，在任意地址第一次调用此函数时，都会从零地址往delegatee地址中转移对应余额的vote。</p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184755564.png" alt="image-20231031184755564"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184755564.png" alt="image-20231031184755564"></p>
 <p>而在_movoDelegates函数中能发现，进行vote的转移并不会减少零地址中的vote，不会发生下溢回退，所以我们只需要使用我们的1000balance在三个地址中来回转移并调用delegate函数即可。</p>
-<h2 id="攻击-4"><a href="#攻击-4" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184913918.png" alt="image-20231031184913918"></p>
-<p><img src="/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184920463.png" alt="image-20231031184920463"></p>
+<h2 id="攻击-4"><a href="#攻击-4" class="headerlink" title="攻击"></a>攻击</h2><p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184913918.png" alt="image-20231031184913918"></p>
+<p><img src="/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/image-20231031184920463.png" alt="image-20231031184920463"></p>
 
     </div>
 
@@ -335,7 +335,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2023/10/26/QuillCTF%E9%A2%98%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/" title="QuillCTF题解（一）">http://example.com/2023/10/26/QuillCTF题解（一）/</a>
+    <a href="http://example.com/2023/10/26/QuillCTF%20POC%EF%BC%88%E4%B8%80%EF%BC%89/" title="QuillCTF POC（一）">http://example.com/2023/10/26/QuillCTF POC（一）/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -358,7 +358,10 @@
     <a href="/2023/03/20/EKO-CTF-%E4%B8%89/" rel="prev" title="EKO-CTF(三)">
       <i class="fa fa-chevron-left"></i> EKO-CTF(三)
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2023/10/31/QuillCTF-POC%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="QuillCTF POC（二）">
+      QuillCTF POC（二） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -431,7 +434,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -485,7 +488,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:54</span>
+    <span title="站点阅读时长">3:55</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
